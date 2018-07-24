@@ -1,2 +1,0 @@
-# weeb-seed
-sdm79
