@@ -15,5 +15,5 @@ import org.javalite.activejdbc.annotations.Table;
 })
 
 public class SdmHiring extends Model {
-
+	
 }
