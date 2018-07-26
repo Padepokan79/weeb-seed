@@ -29,7 +29,6 @@ import core.javalite.controllers.CRUDController;
 public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 	public class MengelolaSdmSkillDTO extends DTOModel{
 		public int sdmskillId;
-		public int sdmId;
 		public int sdmskillValue;
 		public String skilltypeName;
 		public String skillName;
