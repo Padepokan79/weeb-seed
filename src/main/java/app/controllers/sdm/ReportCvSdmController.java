@@ -56,19 +56,6 @@ public class ReportCvSdmController extends ReportController{
 		nourut = 1;
 		for (Map map : dataFromQuerySkillSdm) { 
 			map.put("nourut", nourut);
-			int nilai = (int) map.get("SDMSKILL_VALUE");
-			
-			if ((int) map.get("SKILLTYPE_ID") == 5 || (int) map.get("SKILLTYPE_ID") == 6) {
-				map.put("SDMSKILL_VALUE", "");
-			}else {
-				if (nilai >= 1 && nilai < 7) {
-					map.put("SDMSKILL_VALUE", "Beginner");
-				}else if (nilai >= 7 && nilai < 9) {
-					map.put("SDMSKILL_VALUE", "Intermediate");
-				}else if (nilai >= 9) {
-					map.put("SDMSKILL_VALUE", "Expert");
-				}
-			}
 			listDataSkillSdm.add(map);
 			nourut++;
 		}
