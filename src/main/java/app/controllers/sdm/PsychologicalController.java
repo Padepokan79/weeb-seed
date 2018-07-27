@@ -18,6 +18,7 @@ public class PsychologicalController extends CRUDController<Psychologicals> {
 		public String psycoName;
 	}
 	
+	//Created by Alifhar, 26/07/18, 14:55
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
 		LazyList<Psychologicals> items=Psychologicals.findAll();
@@ -26,6 +27,7 @@ public class PsychologicalController extends CRUDController<Psychologicals> {
 		return new CorePage(items.toMaps(), totalItems);
 	}
 	
+	//Created by Alifhar, 25/07/18, 15:03
 	@Override
 	public Psychologicals customInsertValidation(Psychologicals item) throws Exception {
 		LazyList<Psychologicals> listPsy = Psychologicals.findAll();
@@ -34,24 +36,33 @@ public class PsychologicalController extends CRUDController<Psychologicals> {
 			PsychologicalDTO dto = new PsychologicalDTO();
 			dto.fromModelMap(psy.toMap());
 			if(item.getString("psyco_name").equalsIgnoreCase(dto.psycoName))
-				Validation.required(null, "Data sudah ada");
+				Validation.required(null, "Psychology Name is already exist");
 		}
-		Validation.required(item.getString("psyco_name"), "Tidak boleh kosong");
+		Validation.required(item.getString("psyco_name"), "Value of Psychology Name can't be empty");
 		
 		return super.customInsertValidation(item);
 	}
 	
-//	@Override
-//	public Map<String, Object> customOnUpdate(Psychologicals item, Map<String, Object> mapRequest) throws Exception {
-//
-//		Map<String, Object> result=super.customOnUpdate(item, mapRequest);
-//		PsychologicalDTO dto = new PsychologicalDTO();
-//
-//
-//		dto.fromModelMap(result);
-//		return dto.toModelMap();
-//	}
-//	
+	//Created by Alifhar, 26/07/18, 10:49
+	@Override
+	public Map<String, Object> customOnUpdate(Psychologicals item, Map<String, Object> mapRequest) throws Exception {
+		LazyList<Psychologicals> listPsy=Psychologicals.findAll();
+		String input=mapRequest.get("psyco_name").toString();
+		
+		for(Psychologicals psy : listPsy) {
+			String data = psy.getString("psyco_name");
+			int lastId = item.getInteger("psyco_id");
+			int id=psy.getInteger("psyco_id");
+			if(data.equalsIgnoreCase(input) && lastId!=id)
+				Validation.required(null, "Psychology is already exist");
+		}
+		Validation.required(mapRequest.get("psyco_name"), "Value of Psychology Name can't be empty");
+		
+		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+
+		return result;
+	}
+	
 //	@Override
 //	public Map<String, Object> customOnDelete(Psychologicals item, Map<String, Object> mapRequest) throws Exception {
 //		Map<String, Object> result=super.customOnDelete(item, mapRequest);
