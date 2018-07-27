@@ -136,7 +136,7 @@ public class Sdm extends Model{
 				"				IF(DAY(c.COURSE_DATE)=0,'',CONCAT(DAY(c.COURSE_DATE), ', ')),\r\n" + 
 				"			  '',\r\n" + 
 				"			  YEAR(c.COURSE_DATE)) as COURSE_DATE,\r\n" + 
-				"c.COURSE_DURATION, IF(c.COURSE_CERTIFICATES = 1, 'YES', '-') AS COURSE_CERTIFICATES\r\n" + 
+				"c.COURSE_DURATION, c.COURSE_CERTIFICATES\r\n" + 
 				"FROM course AS c\r\n" + 
 				"WHERE c.SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
