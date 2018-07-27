@@ -1,5 +1,9 @@
 package app.models;
-
+/**
+ * @author NURDHIAT CHAUDHARY MALIK
+ * @date   25 July 2018
+ * @update 26 July 2018 
+ */
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,24 +37,28 @@ public class Sdm extends Model{
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
-		query.append("select sdm.SDM_NAME, gender.GENDER_NAME, religion.RELIGION_NAME, sdm.SDM_PLACEBIRTH, \r\n" + 
-				"sdm.SDM_DATEBIRTH, health.HEALTH_STATUS, sdm.SDM_OBJECTIVE \r\n" + 
-				"FROM sdm, religion, health, gender \r\n" + 
-				"WHERE sdm.RELIGION_ID = religion.RELIGION_ID and sdm.HEALTH_ID = health.HEALTH_ID \r\n" + 
-				"AND sdm.GENDER_ID = gender.GENDER_ID and sdm.SDM_ID = ?");
+		query.append("SELECT sdm.SDM_NAME, gender.GENDER_NAME, \r\n" + 
+				"religion.RELIGION_NAME, sdm.SDM_PLACEBIRTH,\r\n" + 
+				"sdm.SDM_DATEBIRTH, health.HEALTH_STATUS, sdm.SDM_OBJECTIVE\r\n" + 
+				"FROM sdm, religion, health, gender\r\n" + 
+				"WHERE sdm.RELIGION_ID = religion.RELIGION_ID \r\n" + 
+				"AND sdm.HEALTH_ID = health.HEALTH_ID\r\n" + 
+				"AND sdm.GENDER_ID = gender.GENDER_ID \r\n" + 
+				"AND sdm.SDM_ID = ?");
 		System.out.println("query : "+query.toString());
 		params.add(sdmId);
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
 		return lisdata;
 	}
+	
 	@SuppressWarnings("rawtypes")
 	public static List<Map> getDataLanguage(int sdmId) {	
 		List<Object> params = new ArrayList<Object>();		
 		StringBuilder query = new StringBuilder();		
 		query.append("SELECT GROUP_CONCAT(l.LANGUAGE_NAME SEPARATOR ', ') AS LANGUAGE_NAME\r\n" + 
 				"FROM sdmlanguage AS sl, languages AS l\r\n" + 
-				"WHERE sl.LANGUAGE_ID = l.LANGUAGE_ID \r\n" + 
+				"WHERE sl.LANGUAGE_ID = l.LANGUAGE_ID\r\n" + 
 				"AND sl.SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
 		params.add(sdmId);
@@ -75,10 +83,16 @@ public class Sdm extends Model{
 	public static List<Map> getDataSkillSdm(int sdmId) {	
 		List<Object> params = new ArrayList<Object>();		
 		StringBuilder query = new StringBuilder();	
-		query.append("SELECT st.SKILLTYPE_NAME, s.SKILL_NAME, sk.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT st.SKILLTYPE_NAME, s.SKILL_NAME,\r\n" + 
+				"IF(sk.SKILLTYPE_ID=5,'',\r\n" + 
+				"	IF(sk.SKILLTYPE_ID=6,'',\r\n" + 
+				"	  IF(sk.SDMSKILL_VALUE<=6,'Beginner',\r\n" + 
+				"			IF(sk.SDMSKILL_VALUE<=8,'Intermediate',\r\n" + 
+				"				IF(sk.SDMSKILL_VALUE<=10,'Expert', ''))))) AS SDMSKILL_VALUE\r\n" + 
 				"FROM sdmskill AS sk, skilltype AS st, skills AS s\r\n" + 
-				"WHERE sk.SKILLTYPE_ID = st.SKILLTYPE_ID \r\n" + 
-				"AND sk.SKILL_ID = s.SKILL_ID AND sk.SKILLTYPE_ID <> 1\r\n" + 
+				"WHERE sk.SKILLTYPE_ID = st.SKILLTYPE_ID\r\n" + 
+				"AND sk.SKILL_ID = s.SKILL_ID \r\n" + 
+				"AND sk.SKILLTYPE_ID <> 1\r\n" + 
 				"AND sk.SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
 		params.add(sdmId);
