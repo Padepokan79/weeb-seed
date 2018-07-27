@@ -36,9 +36,9 @@ public class PsychologicalController extends CRUDController<Psychologicals> {
 			PsychologicalDTO dto = new PsychologicalDTO();
 			dto.fromModelMap(psy.toMap());
 			if(item.getString("psyco_name").equalsIgnoreCase(dto.psycoName))
-				Validation.required(null, "Data sudah ada");
+				Validation.required(null, "Psychology Name is already exist");
 		}
-		Validation.required(item.getString("psyco_name"), "Tidak boleh kosong");
+		Validation.required(item.getString("psyco_name"), "Value of Psychology Name can't be empty");
 		
 		return super.customInsertValidation(item);
 	}
@@ -54,9 +54,9 @@ public class PsychologicalController extends CRUDController<Psychologicals> {
 			int lastId = item.getInteger("psyco_id");
 			int id=psy.getInteger("psyco_id");
 			if(data.equalsIgnoreCase(input) && lastId!=id)
-				Validation.required(null, "Data sudah ada");
+				Validation.required(null, "Psychology is already exist");
 		}
-		Validation.required(mapRequest.get("psyco_name"), "Tidak boleh kosong");
+		Validation.required(mapRequest.get("psyco_name"), "Value of Psychology Name can't be empty");
 		
 		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
 
