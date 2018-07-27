@@ -136,7 +136,7 @@ public class Sdm extends Model{
 				"				IF(DAY(c.COURSE_DATE)=0,'',CONCAT(DAY(c.COURSE_DATE), ', ')),\r\n" + 
 				"			  '',\r\n" + 
 				"			  YEAR(c.COURSE_DATE)) as COURSE_DATE,\r\n" + 
-				"c.COURSE_DURATION, IF(c.COURSE_CERIFICATE = 1, 'YES', '-') AS COURSE_CERIFICATE\r\n" + 
+				"c.COURSE_DURATION, IF(c.COURSE_CERTIFICATES = 1, 'YES', '-') AS COURSE_CERTIFICATES\r\n" + 
 				"FROM course AS c\r\n" + 
 				"WHERE c.SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
@@ -149,42 +149,44 @@ public class Sdm extends Model{
 	public static List<Map> getDataEmployment(int sdmId) {	
 		List<Object> params = new ArrayList<Object>();		
 		StringBuilder query = new StringBuilder();	
-		query.append("SELECT e.EMPLOYMENT_CORPNAME, \r\n" + 
+		query.append("SELECT e.EMPLOYMENT_CORPNAME,\r\n" + 
 				"CONCAT(IF(MONTH(e.EMPLOYMENT_STARTDATE)=1,'Januari',\r\n" + 
-				"			  IF(MONTH(e.EMPLOYMENT_STARTDATE)=2,'Februari',\r\n" + 
-				"				  IF(MONTH(e.EMPLOYMENT_STARTDATE)=3,'Maret',\r\n" + 
-				"					  IF(MONTH(e.EMPLOYMENT_STARTDATE)=4,'April',\r\n" + 
-				"						  IF(MONTH(e.EMPLOYMENT_STARTDATE)=5,'Mei',\r\n" + 
-				"							  IF(MONTH(e.EMPLOYMENT_STARTDATE)=6,'Juni',\r\n" + 
-				"								  IF(MONTH(e.EMPLOYMENT_STARTDATE)=7,'Juli',\r\n" + 
-				"									  IF(MONTH(e.EMPLOYMENT_STARTDATE)=8,'Agustus',\r\n" + 
-				"										  IF(MONTH(e.EMPLOYMENT_STARTDATE)=9,'September',\r\n" + 
-				"											  IF(MONTH(e.EMPLOYMENT_STARTDATE)=10,'Oktober',\r\n" + 
-				"												  IF(MONTH(e.EMPLOYMENT_STARTDATE)=11,'Nopember',\r\n" + 
-				"													  IF(MONTH(e.EMPLOYMENT_STARTDATE)=12,'Desember','')))))))))))),\r\n" + 
-				"			  ' ',\r\n" + 
-				"				IF(DAY(e.EMPLOYMENT_STARTDATE)=0,'',CONCAT(DAY(e.EMPLOYMENT_STARTDATE), ',')),\r\n" + 
-				"			  ' ',\r\n" + 
-				"			  YEAR(e.EMPLOYMENT_STARTDATE)) as EMPLOYMENT_STARTDATE,\r\n" + 
-				"CONCAT(IF(MONTH(e.EMPLOYMENT_ENDDATE)=1,'Januari',\r\n" + 
-				"			  IF(MONTH(e.EMPLOYMENT_ENDDATE)=2,'Februari',\r\n" + 
-				"				  IF(MONTH(e.EMPLOYMENT_ENDDATE)=3,'Maret',\r\n" + 
-				"					  IF(MONTH(e.EMPLOYMENT_ENDDATE)=4,'April',\r\n" + 
-				"						  IF(MONTH(e.EMPLOYMENT_ENDDATE)=5,'Mei',\r\n" + 
-				"							  IF(MONTH(e.EMPLOYMENT_ENDDATE)=6,'Juni',\r\n" + 
-				"								  IF(MONTH(e.EMPLOYMENT_ENDDATE)=7,'Juli',\r\n" + 
-				"									  IF(MONTH(e.EMPLOYMENT_ENDDATE)=8,'Agustus',\r\n" + 
-				"										  IF(MONTH(e.EMPLOYMENT_ENDDATE)=9,'September',\r\n" + 
-				"											  IF(MONTH(e.EMPLOYMENT_ENDDATE)=10,'Oktober',\r\n" + 
-				"												  IF(MONTH(e.EMPLOYMENT_ENDDATE)=11,'Nopember',\r\n" + 
-				"													  IF(MONTH(e.EMPLOYMENT_ENDDATE)=12,'Desember','')))))))))))),\r\n" + 
-				"			  ' ',\r\n" + 
-				"				IF(DAY(e.EMPLOYMENT_ENDDATE)=0,'',CONCAT(DAY(e.EMPLOYMENT_ENDDATE), ',')),\r\n" + 
-				"			  ' ',\r\n" + 
-				"			  YEAR(e.EMPLOYMENT_ENDDATE)) as EMPLOYMENT_ENDDATE,\r\n" + 
-				"e.EMPLOYMENT_ROLEJOB\r\n" + 
-				"FROM sdm AS s, employment AS e\r\n" + 
-				"WHERE s.SDM_ID = e.SDM_ID\r\n" + 
+				"				IF(MONTH(e.EMPLOYMENT_STARTDATE)=2,'Februari',\r\n" + 
+				"					IF(MONTH(e.EMPLOYMENT_STARTDATE)=3,'Maret',\r\n" + 
+				"						IF(MONTH(e.EMPLOYMENT_STARTDATE)=4,'April', \r\n" + 
+				"							IF(MONTH(e.EMPLOYMENT_STARTDATE)=5,'Mei',\r\n" + 
+				"								IF(MONTH(e.EMPLOYMENT_STARTDATE)=6,'Juni',\r\n" + 
+				"									IF(MONTH(e.EMPLOYMENT_STARTDATE)=7,'Juli',\r\n" + 
+				"										IF(MONTH(e.EMPLOYMENT_STARTDATE)=8,'Agustus',\r\n" + 
+				"											IF(MONTH(e.EMPLOYMENT_STARTDATE)=9,'September',\r\n" + 
+				"												IF(MONTH(e.EMPLOYMENT_STARTDATE)=10,'Oktober', \r\n" + 
+				"													IF(MONTH(e.EMPLOYMENT_STARTDATE)=11,'Nopember',\r\n" + 
+				"														IF(MONTH(e.EMPLOYMENT_STARTDATE)=12,'Desember','')))))))))))),\r\n" + 
+				"				' ',\r\n" + 
+				"				IF(DAY(e.EMPLOYMENT_STARTDATE)=0,'',CONCAT(DAY(e.EMPLOYMENT_STARTDATE), ',')), \r\n" + 
+				"				' ',\r\n" + 
+				"				YEAR(e.EMPLOYMENT_STARTDATE)) as EMPLOYMENT_STARTDATE,\r\n" + 
+				"\r\n" + 
+				"IF(e.EMPLOYMENT_ENDDATE > CURRENT_DATE(),'Current',				\r\n" + 
+				"CONCAT(IF(MONTH(e.EMPLOYMENT_ENDDATE)=1,'Januari', \r\n" + 
+				"				IF(MONTH(e.EMPLOYMENT_ENDDATE)=2,'Februari', \r\n" + 
+				"					IF(MONTH(e.EMPLOYMENT_ENDDATE)=3,'Maret', \r\n" + 
+				"						IF(MONTH(e.EMPLOYMENT_ENDDATE)=4,'April', \r\n" + 
+				"							IF(MONTH(e.EMPLOYMENT_ENDDATE)=5,'Mei', \r\n" + 
+				"								IF(MONTH(e.EMPLOYMENT_ENDDATE)=6,'Juni', \r\n" + 
+				"									IF(MONTH(e.EMPLOYMENT_ENDDATE)=7,'Juli', \r\n" + 
+				"										IF(MONTH(e.EMPLOYMENT_ENDDATE)=8,'Agustus', \r\n" + 
+				"											IF(MONTH(e.EMPLOYMENT_ENDDATE)=9,'September', \r\n" + 
+				"												IF(MONTH(e.EMPLOYMENT_ENDDATE)=10,'Oktober', \r\n" + 
+				"													IF(MONTH(e.EMPLOYMENT_ENDDATE)=11,'Nopember', \r\n" + 
+				"														IF(MONTH(e.EMPLOYMENT_ENDDATE)=12,'Desember','')))))))))))), \r\n" + 
+				"				' ', \r\n" + 
+				"				IF(DAY(e.EMPLOYMENT_ENDDATE)=0,'',CONCAT(DAY(e.EMPLOYMENT_ENDDATE), ',')), \r\n" + 
+				"				' ', \r\n" + 
+				"				YEAR(e.EMPLOYMENT_ENDDATE))) as EMPLOYMENT_ENDDATE, \r\n" + 
+				"e.EMPLOYMENT_ROLEJOB \r\n" + 
+				"FROM sdm AS s, employment AS e \r\n" + 
+				"WHERE s.SDM_ID = e.SDM_ID \r\n" + 
 				"AND s.SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
 		params.add(sdmId);
@@ -196,40 +198,41 @@ public class Sdm extends Model{
 	public static List<Map> getDataProject(int sdmId) {	
 		List<Object> params = new ArrayList<Object>();		
 		StringBuilder query = new StringBuilder();	
-		query.append("SELECT p.PROJECT_NAME,  \r\n" + 
-				"p.PROJECT_DESC, p.PROJECT_ROLE, \r\n" + 
-				"CONCAT(IF(MONTH(p.PROJECT_STARTDATE)=1,'Januari',\r\n" + 
-				"			  IF(MONTH(p.PROJECT_STARTDATE)=2,'Februari',\r\n" + 
-				"				  IF(MONTH(p.PROJECT_STARTDATE)=3,'Maret',\r\n" + 
-				"					  IF(MONTH(p.PROJECT_STARTDATE)=4,'April',\r\n" + 
-				"						  IF(MONTH(p.PROJECT_STARTDATE)=5,'Mei',\r\n" + 
-				"							  IF(MONTH(p.PROJECT_STARTDATE)=6,'Juni',\r\n" + 
-				"								  IF(MONTH(p.PROJECT_STARTDATE)=7,'Juli',\r\n" + 
-				"									  IF(MONTH(p.PROJECT_STARTDATE)=8,'Agustus',\r\n" + 
-				"										  IF(MONTH(p.PROJECT_STARTDATE)=9,'September',\r\n" + 
-				"											  IF(MONTH(p.PROJECT_STARTDATE)=10,'Oktober',\r\n" + 
-				"												  IF(MONTH(p.PROJECT_STARTDATE)=11,'Nopember',\r\n" + 
-				"													  IF(MONTH(p.PROJECT_STARTDATE)=12,'Desember','')))))))))))),\r\n" + 
-				"			  ' ',\r\n" + 
-				"				IF(DAY(p.PROJECT_STARTDATE)=0,'',CONCAT(DAY(p.PROJECT_STARTDATE), ',')),\r\n" + 
-				"			  ' ',\r\n" + 
+		query.append("SELECT p.PROJECT_NAME,   \r\n" + 
+				"p.PROJECT_DESC, p.PROJECT_ROLE,  \r\n" + 
+				"CONCAT(IF(MONTH(p.PROJECT_STARTDATE)=1,'Januari', \r\n" + 
+				"			  IF(MONTH(p.PROJECT_STARTDATE)=2,'Februari', \r\n" + 
+				"				  IF(MONTH(p.PROJECT_STARTDATE)=3,'Maret', \r\n" + 
+				"					  IF(MONTH(p.PROJECT_STARTDATE)=4,'April', \r\n" + 
+				"						  IF(MONTH(p.PROJECT_STARTDATE)=5,'Mei', \r\n" + 
+				"							  IF(MONTH(p.PROJECT_STARTDATE)=6,'Juni', \r\n" + 
+				"								  IF(MONTH(p.PROJECT_STARTDATE)=7,'Juli', \r\n" + 
+				"									  IF(MONTH(p.PROJECT_STARTDATE)=8,'Agustus', \r\n" + 
+				"										  IF(MONTH(p.PROJECT_STARTDATE)=9,'September', \r\n" + 
+				"											  IF(MONTH(p.PROJECT_STARTDATE)=10,'Oktober', \r\n" + 
+				"												  IF(MONTH(p.PROJECT_STARTDATE)=11,'Nopember', \r\n" + 
+				"													  IF(MONTH(p.PROJECT_STARTDATE)=12,'Desember','')))))))))))), \r\n" + 
+				"			  ' ', \r\n" + 
+				"				IF(DAY(p.PROJECT_STARTDATE)=0,'',CONCAT(DAY(p.PROJECT_STARTDATE), ',')), \r\n" + 
+				"			  ' ', \r\n" + 
 				"			  YEAR(p.PROJECT_STARTDATE)) as PROJECT_STARTDATE,\r\n" + 
+				"IF(p.PROJECT_ENDDATE > CURRENT_DATE(),'Current',	\r\n" + 
 				"CONCAT(IF(MONTH(p.PROJECT_ENDDATE)=1,'Januari',\r\n" + 
-				"			  IF(MONTH(p.PROJECT_ENDDATE)=2,'Februari',\r\n" + 
-				"				  IF(MONTH(p.PROJECT_ENDDATE)=3,'Maret',\r\n" + 
-				"					  IF(MONTH(p.PROJECT_ENDDATE)=4,'April',\r\n" + 
-				"						  IF(MONTH(p.PROJECT_ENDDATE)=5,'Mei',\r\n" + 
-				"							  IF(MONTH(p.PROJECT_ENDDATE)=6,'Juni',\r\n" + 
-				"								  IF(MONTH(p.PROJECT_ENDDATE)=7,'Juli',\r\n" + 
-				"									  IF(MONTH(p.PROJECT_ENDDATE)=8,'Agustus',\r\n" + 
-				"										  IF(MONTH(p.PROJECT_ENDDATE)=9,'September',\r\n" + 
+				"			  IF(MONTH(p.PROJECT_ENDDATE)=2,'Februari', \r\n" + 
+				"				  IF(MONTH(p.PROJECT_ENDDATE)=3,'Maret', \r\n" + 
+				"					  IF(MONTH(p.PROJECT_ENDDATE)=4,'April', \r\n" + 
+				"						  IF(MONTH(p.PROJECT_ENDDATE)=5,'Mei', \r\n" + 
+				"							  IF(MONTH(p.PROJECT_ENDDATE)=6,'Juni', \r\n" + 
+				"								  IF(MONTH(p.PROJECT_ENDDATE)=7,'Juli', \r\n" + 
+				"									  IF(MONTH(p.PROJECT_ENDDATE)=8,'Agustus', \r\n" + 
+				"										  IF(MONTH(p.PROJECT_ENDDATE)=9,'September', \r\n" + 
 				"											  IF(MONTH(p.PROJECT_ENDDATE)=10,'Oktober',\r\n" + 
-				"												  IF(MONTH(p.PROJECT_ENDDATE)=11,'Nopember',\r\n" + 
-				"													  IF(MONTH(p.PROJECT_ENDDATE)=12,'Desember','')))))))))))),\r\n" + 
-				"			  ' ',\r\n" + 
-				"				IF(DAY(p.PROJECT_ENDDATE)=0,'',CONCAT(DAY(p.PROJECT_ENDDATE), ',')),\r\n" + 
-				"			  ' ',\r\n" + 
-				"			  IF(YEAR(p.PROJECT_ENDDATE)=0,'',YEAR(p.PROJECT_ENDDATE))) as PROJECT_ENDDATE,\r\n" + 
+				"												  IF(MONTH(p.PROJECT_ENDDATE)=11,'Nopember', \r\n" + 
+				"													  IF(MONTH(p.PROJECT_ENDDATE)=12,'Desember','')))))))))))), \r\n" + 
+				"			  ' ', \r\n" + 
+				"				IF(DAY(p.PROJECT_ENDDATE)=0,'',CONCAT(DAY(p.PROJECT_ENDDATE), ',')), \r\n" + 
+				"			  ' ', \r\n" + 
+				"			  IF(YEAR(p.PROJECT_ENDDATE)=0,'',YEAR(p.PROJECT_ENDDATE)))) as PROJECT_ENDDATE, \r\n" + 
 				"p.PROJECT_PROJECTSITE, p.PROJECT_CUSTOMER,  \r\n" + 
 				"p.PROJECT_APPTYPE, p.PROJECT_SERVEROS,  \r\n" + 
 				"p.PROJECT_DEVLANGUAGE, p.PROJECT_FRAMEWORK,  \r\n" + 
