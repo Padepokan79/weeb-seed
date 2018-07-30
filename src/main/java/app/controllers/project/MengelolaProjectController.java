@@ -48,6 +48,7 @@ import app.models.core.master.MasterUserActivity;
 public class MengelolaProjectController extends CRUDController<Project> {
 	
 	public class MengelolaProject extends DTOModel{
+		public int projectId;
 		public int sdmId;
 		public int sdmNIK;
 		public String sdmName;
@@ -73,7 +74,8 @@ public class MengelolaProjectController extends CRUDController<Project> {
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapProject = new ArrayList<Map<String, Object>>();
 		LazyList<Project> listProject = Project.findAll();
-		
+		params.setOrderBy("project_name");
+
 		Long totalitems = this.getTotalItems(params);
 		
 		for(Project project : listProject) {
@@ -81,9 +83,11 @@ public class MengelolaProjectController extends CRUDController<Project> {
 			
 			MengelolaProject dto = new MengelolaProject();
 			dto.fromModelMap(project.toMap());
+			// dto.fromModelMap(sdm.toMap());
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 			dto.projectStartdate = Convert.toString(project.get("project_startdate"));
 			dto.projectEnddate = Convert.toString(project.get("project_enddate"));
+			
 			listMapProject.add(dto.toModelMap());
 			
 		}
