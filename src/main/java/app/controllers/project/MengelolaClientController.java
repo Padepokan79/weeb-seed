@@ -1,7 +1,7 @@
 /*
  * Created By  : Khairil
  * Date Assign : 24-07-2018 13:24
- * 
+ * Role : Controller Clients
  */
 package app.controllers.project;
 
@@ -34,7 +34,7 @@ public class MengelolaClientController extends CRUDController<Clients> {
     	LazyList<Clients> listClient = Clients.findAll();
     	
     	String clientName = item.getString("CLIENT_NAME");
-		String clientAddress = item.getString("CLEINT_ADDRESS");
+		String clientAddress = item.getString("CLIENT_ADDRESS");
 		String clientPicclient = item.getString("CLIENT_PICCLIENT");
 		String clientMobileclient = item.getString("CLIENT_MOBILECLIENT");
 		
@@ -48,7 +48,6 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		Validation.required(clientAddress, "Address must filled");
 		Validation.required(clientPicclient, "PIC Client must filled");
 		Validation.required(clientMobileclient, "Mobile Client must filled");
-		
 		
 		return super.customInsertValidation(item);
 	}
