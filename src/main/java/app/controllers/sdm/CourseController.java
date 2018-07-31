@@ -35,7 +35,7 @@ public class CourseController extends CRUDController<Course>{
 		public String course_provider;
 		public String course_place;
 		public String course_duration;
-		public String course_cerificate;
+		public String course_certificate;
 		public String course_date;
 	}
 	
