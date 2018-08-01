@@ -30,7 +30,6 @@ public class MengelolaClientController extends CRUDController<Clients> {
     
     @Override
 	public Clients customInsertValidation(Clients item) throws Exception {
-    	List<Map<String, Object>> listMapClient = new ArrayList<Map<String, Object>>();
     	LazyList<Clients> listClient = Clients.findAll();
     	
     	String clientName = item.getString("CLIENT_NAME");
