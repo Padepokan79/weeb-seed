@@ -71,26 +71,26 @@ public class SkillController extends CRUDController<Skill> {
 //		return dto.toModelMap();
 //	}
 //	
-//	@Override
-//	public Map<String, Object> customOnUpdate(Skill item, Map<String, Object> mapRequest) throws Exception {
-//				
-//		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
-//		SkillDTO dto = new SkillDTO();
-//		dto.fromModelMap(result);
-//
-//				
-//		return dto.toModelMap();
-//	}
-//	
-//	@Override
-//	public Map<String, Object> customOnDelete(Skill item, Map<String, Object> mapRequest) throws Exception {
-//		
-//		
-//		Map<String, Object> result = super.customOnDelete(item, mapRequest);		
-//		SkillDTO dto = new SkillDTO();
-//		dto.fromModelMap(result);
-//		
-//		
-//		return dto.toModelMap();
-//	}	
+	@Override
+	public Map<String, Object> customOnUpdate(Skill item, Map<String, Object> mapRequest) throws Exception {
+				
+		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+		SkillDTO dto = new SkillDTO();
+		dto.fromModelMap(result);
+
+				
+		return dto.toModelMap();
+	}
+	
+	@Override
+	public Map<String, Object> customOnDelete(Skill item, Map<String, Object> mapRequest) throws Exception {
+		
+		
+		Map<String, Object> result = super.customOnDelete(item, mapRequest);		
+		SkillDTO dto = new SkillDTO();
+		dto.fromModelMap(result);
+		
+		
+		return dto.toModelMap();
+	}	
 }
