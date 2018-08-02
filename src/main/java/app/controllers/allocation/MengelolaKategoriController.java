@@ -18,9 +18,12 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 		public String skilltypeName;
 	}
 	
+//	Update By 	: Nurdhiat Chaudhary Malik
+//	Update Date	: 02 Agustus 2018
+	
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
 	    List<Map<String, Object>> listMapCategory = new ArrayList<Map<String, Object>>();
-	    LazyList<SkillType> listCategory = SkillType.findAll();
+	    LazyList<SkillType> listCategory = (LazyList<SkillType>)this.getItems(params);
 	    params.setOrderBy("skilltype_id");
 	    
 	    Long totalItems = this.getTotalItems(params);
