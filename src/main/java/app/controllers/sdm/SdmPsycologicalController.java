@@ -29,6 +29,7 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		public String psycoName;
 		public String sdmpsycologicalDesc;
 		public Date psycologicalDate;
+		public int num;
 	}
 	
 	@Override
@@ -37,6 +38,7 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		Long totalItems = this.getTotalItems(params);
 		
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
+		int nu = 1;
 		for(SdmPsycological sdmPsy : items) {
 			Sdm sdm = sdmPsy.parent(Sdm.class);
 			Psychologicals psy = sdmPsy.parent(Psychologicals.class);
@@ -45,7 +47,9 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 			dto.fromModelMap(sdmPsy.toMap());
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 			dto.psycoName = Convert.toString(psy.get("psyco_name"));
+			dto.num = nu;
 			ListMapSdmPsy.add(dto.toModelMap());
+			nu++;
 		}
 		return new CorePage(ListMapSdmPsy, totalItems);
 	}
