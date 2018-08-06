@@ -81,7 +81,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			Religion religion = sdm.parent(Religion.class);
 			Health health = sdm.parent(Health.class);
 			SdmDTO dto = new SdmDTO();
-			System.out.println(dto);
+			dto.fromModelMap(sdm.toMap());
 			dto.norut = noruts;
 			noruts++;
 			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
@@ -99,7 +99,6 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			dto.gender = Convert.toString(gender.get("gender_name"));
 			dto.religion = Convert.toString(religion.get("religion_name"));
 			dto.health = Convert.toString(health.get("health_status"));
-			dto.fromModelMap(sdm.toMap());
 			listMapSdm.add(dto.toModelMap());
 		}
 	
