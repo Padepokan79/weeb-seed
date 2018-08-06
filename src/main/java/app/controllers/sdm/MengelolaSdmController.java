@@ -14,15 +14,20 @@ import org.javalite.common.Convert;
 
 import com.ibm.icu.util.Calendar;
 
+import app.controllers.sdm.CourseController.CourseDTO;
+import app.models.ContractType;
 import app.models.Course;
 import app.models.Education;
 import app.models.Employment;
+import app.models.Gender;
+import app.models.Health;
 import app.models.Profiling;
+import app.models.Religion;
 import app.models.Sdm;
 import app.models.SdmLanguage;
-import app.models.core.master.MasterUser;
-import app.models.core.master.MasterUserActivity;
+import app.models.SdmLvl;
 import core.io.model.CorePage;
+import core.io.model.DTOModel;
 import core.io.model.PagingParams;
 import core.javalite.controllers.CRUDController;
 
@@ -34,13 +39,72 @@ import core.javalite.controllers.CRUDController;
  * 13.51.48 24 Jul 2018
  */
 public class MengelolaSdmController extends CRUDController<Sdm> {
-//		@Override
-//		public CorePage customOnReadAll(PagingParams params) throws Exception {
-//			params.setOrderBy("sdm_id");
-//			LazyList<? extends Model> items = this.getItems(params);
-//			Long totalItems = this.getTotalItems(params);
-//			return new CorePage(items.toMaps(), totalItems);			
-//		}
+	public class SdmDTO extends DTOModel {
+		public int sdm_id;
+		public int sdmlvl_id;
+		public String sdm_level;
+		public String contracttype;
+		public String gender;
+		public String religion;
+		public String health;
+		public String sdm_name;
+		public String sdm_nik;
+		public String sdm_ktp;
+		public String sdm_contractloc;
+		public String sdm_objective;
+		public String sdm_address;
+		public String sdm_email;
+		public String sdm_placebirth;
+		public String sdm_postcode;
+		public String sdm_phone;
+		public String sdm_image;
+		public String sdm_linkedin;
+		public String sdm_startcontract;
+		public String sdm_endcontract;
+		public String sdm_status;
+		public int norut;
+		public String sdm_datebirth;
+	}
+
+	@Override
+	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+	List<Map<String, Object>> listMapSdm = new ArrayList<Map<String, Object>>();
+	LazyList<Sdm> listSdm = (LazyList<Sdm>)this.getItems(params);	
+	params.setOrderBy("sdm_id");
+	
+	Long totalItems = this.getTotalItems(params);
+	int noruts=1;
+		for (Sdm sdm : listSdm) {
+			SdmLvl sdmlvl = sdm.parent(SdmLvl.class);
+			ContractType ct = sdm.parent(ContractType.class);
+			Gender gender = sdm.parent(Gender.class);
+			Religion religion = sdm.parent(Religion.class);
+			Health health = sdm.parent(Health.class);
+			SdmDTO dto = new SdmDTO();
+			System.out.println(dto);
+			dto.norut = noruts;
+			noruts++;
+			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
+			dto.sdm_endcontract = Convert.toString(sdm.get("sdm_endcontract"));
+			dto.sdm_datebirth = Convert.toString(sdm.get("sdm_datebirth"));
+			String status = Convert.toString(sdm.get("sdm_status"));
+			if(status.equals("1")) {
+				dto.sdm_status = "Aktif";
+			}
+			else {
+				dto.sdm_status = "Non-Aktif";
+			}
+			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
+			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
+			dto.gender = Convert.toString(gender.get("gender_name"));
+			dto.religion = Convert.toString(religion.get("religion_name"));
+			dto.health = Convert.toString(health.get("health_status"));
+			dto.fromModelMap(sdm.toMap());
+			listMapSdm.add(dto.toModelMap());
+		}
+	
+	return new CorePage(listMapSdm, totalItems);		
+	}
 		
 		@Override
 		public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception{		
