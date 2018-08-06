@@ -36,9 +36,11 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		public String sdmName;
 		public String clientName;
 		public String hirestatName;
+		public String clientMobileclient;
 	}
 	
-	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+	public CorePage customOnReadAll(PagingParams params) throws Exception {
+		
 		List<Map<String, Object>> listMapHiring = new ArrayList<Map<String, Object>>();
 		LazyList<SdmHiring> listHiring = SdmHiring.findAll();	
 		params.setOrderBy("sdmhiring_id");
@@ -56,6 +58,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 				dto.clientName = Convert.toString(clients.get("client_name"));
 				dto.hirestatName = Convert.toString(statushiring.get("hirestat_name"));
+				dto.clientMobileclient = Convert.toString(clients.get("client_mobileclient"));
 				listMapHiring.add(dto.toModelMap());
 			}
 		
