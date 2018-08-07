@@ -31,9 +31,14 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		public Date psycologicalDate;
 	}
 	
+	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
-		LazyList<SdmPsycological> items = SdmPsycological.findAll();
+		LazyList<SdmPsycological> items = (LazyList<SdmPsycological>)this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
 		
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
