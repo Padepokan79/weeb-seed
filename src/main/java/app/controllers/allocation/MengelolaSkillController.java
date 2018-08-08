@@ -22,10 +22,13 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		public String skillName;
 	}
 	 
+//	Update By 	: Nurdhiat Chaudhary Malik
+//	Update Date	: 02 Agustus 2018
+	
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
 		List<Map<String, Object>> listMapSkill = new ArrayList<Map<String, Object>>();
-		LazyList<Skill> listSkill = Skill.findAll();
+		LazyList<Skill> listSkill = (LazyList<Skill>)this.getItems(params);
 		
 		Long totalitems = this.getTotalItems(params);
 		
