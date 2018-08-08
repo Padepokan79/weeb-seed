@@ -33,10 +33,15 @@ import core.javalite.controllers.CRUDController;
 public class MengelolaHiringController extends CRUDController<SdmHiring>{
 	public class HiringDTO extends DTOModel {
 		public int sdmhiringId;
+		public int hirestatId;
+		public int sdmId;
+		public int clientId;
 		public String sdmName;
 		public String clientName;
-		public String hirestatName;
+		public String clientAddress;
+		public String clientPicclient;
 		public String clientMobileclient;
+		public String hirestatName;
 	}
 	
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
@@ -55,8 +60,12 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				
 				HiringDTO dto = new HiringDTO();
 				dto.fromModelMap(hiring.toMap());
+				// dto.clientId = Convert.toInteger(client.get("client_id"));
+				// dto.sdmhiringId = Convert.toInteger(SdmHiring.get("sdmhiring_id"));
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 				dto.clientName = Convert.toString(clients.get("client_name"));
+				dto.clientAddress = Convert.toString(clients.get("client_address"));
+				dto.clientPicclient = Convert.toString(clients.get("client_picclient"));
 				dto.hirestatName = Convert.toString(statushiring.get("hirestat_name"));
 				dto.clientMobileclient = Convert.toString(clients.get("client_mobileclient"));
 				listMapHiring.add(dto.toModelMap());

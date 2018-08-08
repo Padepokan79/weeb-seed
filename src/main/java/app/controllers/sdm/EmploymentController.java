@@ -55,13 +55,13 @@ public class EmploymentController extends CRUDController<Employment>{
 			KelolaEmployment dto = new KelolaEmployment();
 			dto.fromModelMap(employment.toMap());
 			dto.fromModelMap(sdm.toMap());
-			// dto.sdmId = Convert.toString(sdm.get("sdm_id"));
+			dto.sdmId = Convert.toInteger(sdm.get("sdm_id"));
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-			// dto.employmentId = Convert.toString(employment.get("employment_id"));
+			dto.employmentId = Convert.toInteger(employment.get("employment_id"));
 			dto.employmentCorpname = Convert.toString(employment.get("employment_corpname"));
-			// dto.employmentStartdate = Convert.toString("employment_startdate");
-			// dto.employmentEnddate = Convert.toString("employment_enddate");
-			// dto.employmentRolejob = Convert.toString(employment.get("employment_rolejob"));
+			dto.employmentStartdate = Convert.toString(employment.get("employment_startdate"));
+			dto.employmentEnddate = Convert.toString(employment.get("employment_enddate"));
+			dto.employmentRolejob = Convert.toString(employment.get("employment_rolejob"));
 			listMapEmployment.add(dto.toModelMap());
 			
 		}		
