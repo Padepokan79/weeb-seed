@@ -99,7 +99,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			
 			/*
 			 * Updated by Nurdhiat Chaudhary Malik
-			 * 07 Agustus 2018
+			 * 08 Agustus 2018
 			 */
 			java.util.Date judAwl = dateAwal.parse(getCurrentDate());
 			java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(sdm.get("sdm_endcontract").toString()));
@@ -114,19 +114,19 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
             String diff = Convert.toString(mothsBetween(cal1, cal2));
             
             if (Integer.parseInt(diff) == 0) {
-            	dto.sdm_notification = "0"; // notif warna hitam
+            	dto.sdm_notification = "black"; // notif warna hitam
             	
 			}else if(Integer.parseInt(diff) <= 1) {
-				dto.sdm_notification = "1"; // notif warna merah
+				dto.sdm_notification = "red"; // notif warna merah
 				
 			}else if(Integer.parseInt(diff) <= 2) {
-				dto.sdm_notification = "2"; // notif warna kuning
+				dto.sdm_notification = "yellow"; // notif warna kuning
 				
 			}else if(Integer.parseInt(diff) <= 4) {
-				dto.sdm_notification = "4"; // notif warna hijau
+				dto.sdm_notification = "green"; // notif warna hijau
 				
 			}else if(Integer.parseInt(diff) > 4) {
-				dto.sdm_notification = "5"; // notif warna putih
+				dto.sdm_notification = "grey"; // notif warna grey
 			}
             
 			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
