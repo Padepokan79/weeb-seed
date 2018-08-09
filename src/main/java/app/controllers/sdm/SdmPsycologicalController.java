@@ -66,6 +66,15 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		Validation.required(desc, "Valued of Description can't be empty");
 		
 		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
-		return result;
+		
+		SdmPsycologicalDTO dto = new SdmPsycologicalDTO();
+		dto.fromModelMap(result);
+		
+		Sdm sdm = item.parent(Sdm.class);
+		Psychologicals psy = item.parent(Psychologicals.class);
+		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+		dto.psycoName = Convert.toString(psy.get("psyco_name"));
+		
+		return dto.toModelMap();
 	}
 }
