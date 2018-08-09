@@ -36,10 +36,14 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 		public String sdmNik;
 	}
 	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
-		LazyList<SdmSkill> asd = SdmSkill.findAll();	
+		LazyList<SdmSkill> asd = (LazyList<SdmSkill>)this.getItems(params);	
 		params.setOrderBy("sdm_id");
 		
 //		LazyList<? extends Model> items = this.getItems(params);
