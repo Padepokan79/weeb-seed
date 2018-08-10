@@ -131,6 +131,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		Sdm sdm = item.parent(Sdm.class);
 		StatusHiring hirestat = item.parent(StatusHiring.class);
 		Clients client = item.parent(Clients.class);
+		dto.sdmhiringId = Convert.toInteger(hirestat.get("sdmhiring_id"));
 		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
 		dto.clientName = Convert.toString(client.get("client_name"));
