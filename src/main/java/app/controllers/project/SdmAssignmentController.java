@@ -55,7 +55,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception{
 		
-		DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat date = new SimpleDateFormat("dd/MM/yyyy"); 
 		
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
 		LazyList<SdmAssignment> listSdmAssignment 		= (LazyList<SdmAssignment>)this.getItems(params);	
