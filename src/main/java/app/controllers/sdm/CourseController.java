@@ -40,7 +40,7 @@ public class CourseController extends CRUDController<Course>{
 	}
 	
 	@Override
-	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+	public CorePage customOnReadAll(PagingParams params) throws Exception {
 		List<Map<String, Object>> listMapCourse = new ArrayList<Map<String, Object>>();
 		LazyList<Course> listCourse = Course.findAll();	
 		params.setOrderBy("course_id");
@@ -53,6 +53,11 @@ public class CourseController extends CRUDController<Course>{
 				dto.fromModelMap(course.toMap());
 				dto.nama = Convert.toString(sdm.get("sdm_name"));
 				dto.course_date = Convert.toString(course.get("course_date"));
+				dto.course_certificate = Convert.toString(course.get("course_certificates"));
+				dto.course_provider = Convert.toString(course.get("course_provider"));
+				dto.course_title = Convert.toString(course.get("course_title"));
+				dto.course_duration = Convert.toString(course.get("course_duration"));
+				dto.course_place = Convert.toString(course.get("course_place"));
 				listMapCourse.add(dto.toModelMap());
 			}
 		

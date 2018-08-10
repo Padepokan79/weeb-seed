@@ -152,7 +152,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	
 	/*
 	 * Updated by Nurdhiat Chaudhary Malik
-	 * 07 Agustus 2018
+	 * 09 Agustus 2018
 	 */
 	private static long mothsBetween(Calendar tanggalAwal, Calendar tanggalAkhir) {
         long lama = 0;
@@ -161,7 +161,18 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
             tanggal.add(Calendar.DAY_OF_MONTH, 1);
             lama++;
         }
-        return (lama)/30;
+        
+        if (lama > 30) {
+        	lama = (lama)/30;
+        	
+		}else if(lama < 30 && lama > 0) {
+			lama = 1;
+		
+		}else {
+			lama = 0;
+		}
+        return lama;
+        
     }
 	
 	/*

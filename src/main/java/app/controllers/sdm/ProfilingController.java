@@ -43,6 +43,7 @@ public class ProfilingController extends CRUDController <Profiling> {
 	
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
+		System.out.println("MASUK SINI !!!");
 		List<Map<String, Object>> listMapProfiling = new ArrayList<Map<String, Object>>();
 		LazyList<Profiling> listProfiling = Profiling.findAll();
 		
@@ -54,6 +55,7 @@ public class ProfilingController extends CRUDController <Profiling> {
 			KelolaProfiling dto = new KelolaProfiling();
 			dto.fromModelMap(profiling.toMap());
 			dto.fromModelMap(sdm.toMap());
+			dto.profilingId = Convert.toInteger(profiling.get("profiling_id"));
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 			dto.profilingName = Convert.toString(profiling.get("profiling_name"));
 			
