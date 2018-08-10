@@ -10,7 +10,8 @@ import org.javalite.activejdbc.annotations.Table;
 @IdName("sdmassign_id")
 @BelongsToParents({
 	@BelongsTo(foreignKeyName="method_id", parent = ProjectMethod.class),
-	@BelongsTo(foreignKeyName="method_id", parent = SdmHiring.class),
+	@BelongsTo(foreignKeyName="sdmhiring_id", parent = SdmHiring.class),
+	@BelongsTo(foreignKeyName="client_id", parent = Clients.class),
 })
 public class SdmAssignment extends Model{
 

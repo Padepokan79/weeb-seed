@@ -33,8 +33,14 @@ import core.javalite.controllers.CRUDController;
 public class MengelolaHiringController extends CRUDController<SdmHiring>{
 	public class HiringDTO extends DTOModel {
 		public int sdmhiringId;
+		public int hirestatId;
+		public int sdmId;
+		public int clientId;
 		public String sdmName;
 		public String clientName;
+		public String clientAddress;
+		public String clientPicclient;
+		public String clientMobileclient;
 		public String hirestatName;
 	}
 	
@@ -43,6 +49,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 	 * 07 Agustus 2018
 	 */
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+    
 		List<Map<String, Object>> listMapHiring = new ArrayList<Map<String, Object>>();
 		LazyList<SdmHiring> listHiring = (LazyList<SdmHiring>)this.getItems(params);	
 		params.setOrderBy("sdmhiring_id");
@@ -57,9 +64,14 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				
 				HiringDTO dto = new HiringDTO();
 				dto.fromModelMap(hiring.toMap());
+				// dto.clientId = Convert.toInteger(client.get("client_id"));
+				// dto.sdmhiringId = Convert.toInteger(SdmHiring.get("sdmhiring_id"));
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 				dto.clientName = Convert.toString(clients.get("client_name"));
+				dto.clientAddress = Convert.toString(clients.get("client_address"));
+				dto.clientPicclient = Convert.toString(clients.get("client_picclient"));
 				dto.hirestatName = Convert.toString(statushiring.get("hirestat_name"));
+				dto.clientMobileclient = Convert.toString(clients.get("client_mobileclient"));
 				listMapHiring.add(dto.toModelMap());
 			}
 		
@@ -123,6 +135,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		Sdm sdm = item.parent(Sdm.class);
 		StatusHiring hirestat = item.parent(StatusHiring.class);
 		Clients client = item.parent(Clients.class);
+		dto.sdmhiringId = Convert.toInteger(hirestat.get("sdmhiring_id"));
 		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
 		dto.clientName = Convert.toString(client.get("client_name"));

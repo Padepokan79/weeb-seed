@@ -32,10 +32,14 @@ import core.javalite.controllers.CRUDController;
 public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	public class SdmAssignmentDTO extends DTOModel{
  		public int sdmassignId;
+		public int sdmhiringId;
+ 		public int methodId;
+		public int sdmId;
 		public String sdmassignLoc;
 		public String sdmassignPicclient;
 		public String sdmassignPicclientphone;
 		public String methodName;
+
 		public int sdmhiringId;
 		
 		/*
@@ -46,6 +50,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
  		public Date sdmassignEnddate;
 
  		public String sdmassign_notification;
+
 	}
 	
 	/*
@@ -54,13 +59,11 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception{
-		
-		DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-		
+
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
 		LazyList<SdmAssignment> listSdmAssignment 		= (LazyList<SdmAssignment>)this.getItems(params);	
 		List<Map<String, Object>> listMapSdmHiring 		= new ArrayList<Map<String, Object>>();
-		LazyList<SdmHiring> listSdmHiring		= SdmHiring.findAll();	
+		LazyList<SdmHiring> listSdmHiring				= SdmHiring.findAll();	
 
 		params.setOrderBy("sdmassign_id");
 		Long totalItems = this.getTotalItems(params);
@@ -68,8 +71,10 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		for(SdmAssignment sdmassign : listSdmAssignment) {
 			ProjectMethod method 	= sdmassign.parent(ProjectMethod.class);
 			SdmHiring hiring 		= sdmassign.parent(SdmHiring.class);
+			Sdm sdm					= hiring.parent(Sdm.class);
 			SdmAssignmentDTO dto = new SdmAssignmentDTO();
 			dto.fromModelMap(sdmassign.toMap());
+
 			dto.methodName 	= Convert.toString(method.get("method_name"));
 			
 			/*
