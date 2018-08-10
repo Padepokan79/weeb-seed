@@ -40,7 +40,6 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		public String sdmassignPicclientphone;
 		public String methodName;
 
-		public int sdmhiringId;
 		
 		/*
 		 * Updated by Alifhar Juliansyah
