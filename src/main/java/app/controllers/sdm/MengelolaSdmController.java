@@ -4,6 +4,8 @@
 package app.controllers.sdm;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +66,20 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public String sdm_status;
 		public int norut;
 		public String sdm_datebirth;
+		public String sdm_notification;
 	}
 
+	
 	@Override
-	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+	public CorePage customOnReadAll(PagingParams params) throws Exception {
+	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
+	DateFormat dateAwal = new SimpleDateFormat("dd/MM/yyyy");
+	DateFormat dateAkhir = new SimpleDateFormat("dd/MM/yyyy");
+		
 	List<Map<String, Object>> listMapSdm = new ArrayList<Map<String, Object>>();
 	LazyList<Sdm> listSdm = (LazyList<Sdm>)this.getItems(params);	
 	params.setOrderBy("sdm_id");
@@ -84,15 +96,48 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			dto.fromModelMap(sdm.toMap());
 			dto.norut = noruts;
 			noruts++;
-			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
-			dto.sdm_endcontract = Convert.toString(sdm.get("sdm_endcontract"));
-			dto.sdm_datebirth = Convert.toString(sdm.get("sdm_datebirth"));
+			
+			/*
+			 * Updated by Nurdhiat Chaudhary Malik
+			 * 08 Agustus 2018
+			 */
+			java.util.Date judAwl = dateAwal.parse(getCurrentDate());
+			java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(sdm.get("sdm_endcontract").toString()));
+			java.sql.Date tglAwal = new java.sql.Date(judAwl.getTime());
+			java.sql.Date tglAkhir = new java.sql.Date(judAkhir.getTime());
+			Date TGLAwal = tglAwal;
+            Date TGLAkhir = tglAkhir;
+            Calendar cal1 = Calendar.getInstance();
+            Calendar cal2 = Calendar.getInstance();
+            cal1.setTime(TGLAwal);
+            cal2.setTime(TGLAkhir);
+            String diff = Convert.toString(mothsBetween(cal1, cal2));
+            
+            if (Integer.parseInt(diff) == 0) {
+            	dto.sdm_notification = "black"; // notif warna hitam
+            	
+			}else if(Integer.parseInt(diff) <= 1) {
+				dto.sdm_notification = "red"; // notif warna merah
+				
+			}else if(Integer.parseInt(diff) <= 2) {
+				dto.sdm_notification = "yellow"; // notif warna kuning
+				
+			}else if(Integer.parseInt(diff) <= 4) {
+				dto.sdm_notification = "green"; // notif warna hijau
+				
+			}else if(Integer.parseInt(diff) > 4) {
+				dto.sdm_notification = "grey"; // notif warna grey
+			}
+            
+			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
+			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
+			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
 			String status = Convert.toString(sdm.get("sdm_status"));
 			if(status.equals("1")) {
-				dto.sdm_status = "Aktif";
+				dto.sdm_status = "Active";
 			}
 			else {
-				dto.sdm_status = "Non-Aktif";
+				dto.sdm_status = "Non-Active";
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
@@ -103,6 +148,58 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		}
 	
 	return new CorePage(listMapSdm, totalItems);		
+	}
+	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 09 Agustus 2018
+	 */
+	private static long mothsBetween(Calendar tanggalAwal, Calendar tanggalAkhir) {
+        long lama = 0;
+        Calendar tanggal = (Calendar) tanggalAwal.clone();
+        while (tanggal.before(tanggalAkhir)) {
+            tanggal.add(Calendar.DAY_OF_MONTH, 1);
+            lama++;
+        }
+        
+        if (lama > 30) {
+        	lama = (lama)/30;
+        	
+		}else if(lama < 30 && lama > 0) {
+			lama = 1;
+		
+		}else {
+			lama = 0;
+		}
+        return lama;
+        
+    }
+	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
+	public String getCurrentDate(){
+	    final Calendar c = Calendar.getInstance();
+	    int year, month, day;
+	    year = c.get(Calendar.YEAR);
+	    month = c.get(Calendar.MONTH);
+	    day = c.get(Calendar.DATE);
+	    return day + "/" + (month+1) + "/" + year;
+	}
+	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
+	public String getConvertBulan(String now) {
+		String bulan[] = {"01","02","03","04","05","06","07","08","09","10","11","12"};
+		String tanggal = now.substring(8,10);
+		String bln = now.substring(5,7);
+		String tahun = now.substring(0,4);
+		String hasil =tanggal+"/"+bulan[Integer.parseInt(bln)-1]+"/"+tahun;
+		System.out.println("cek : " + hasil);
+		return hasil;
 	}
 		
 		@Override

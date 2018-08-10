@@ -44,10 +44,14 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		public String hirestatName;
 	}
 	
-	public CorePage customOnReadAll(PagingParams params) throws Exception {
-		
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
+	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+    
 		List<Map<String, Object>> listMapHiring = new ArrayList<Map<String, Object>>();
-		LazyList<SdmHiring> listHiring = SdmHiring.findAll();	
+		LazyList<SdmHiring> listHiring = (LazyList<SdmHiring>)this.getItems(params);	
 		params.setOrderBy("sdmhiring_id");
 		
 //		LazyList<? extends Model> items = this.getItems(params);

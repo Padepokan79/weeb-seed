@@ -24,6 +24,8 @@ import core.io.model.DTOModel;
 import core.io.model.PagingParams;
 import core.javalite.controllers.CRUDController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,10 +70,15 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		public String projectOtherinfo;
 		public String projectStartdate;
 		public String projectEnddate;
+		public String project_notification;
 	}
 	
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+		
+		DateFormat dateAwal = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dateAkhir = new SimpleDateFormat("dd/MM/yyyy");
+		
 		List<Map<String, Object>> listMapProject = new ArrayList<Map<String, Object>>();
 		LazyList<Project> listProject = Project.findAll();
 		params.setOrderBy("project_id");
@@ -99,55 +106,74 @@ public class MengelolaProjectController extends CRUDController<Project> {
 			dto.projectProjectsite 		= Convert.toString(project.get("project_projectsite"));			
 			dto.projectTechnicalinfo 	= Convert.toString(project.get("project_technicalinfo"));
 			
+//			Updated by Vikri
+//			09/08/2018
+			
+			java.util.Date judAwl = dateAwal.parse(getCurrentDate());
+			java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(project.get("project_enddate").toString()));
+			
+			java.sql.Date tglAwal = new java.sql.Date(judAwl.getTime());
+			java.sql.Date tglAkhir = new java.sql.Date(judAkhir.getTime());
+			
+			Date TGLAwal = tglAwal;
+            Date TGLAkhir = tglAkhir;
+            Calendar cal1 = Calendar.getInstance();
+            Calendar cal2 = Calendar.getInstance();
+            cal1.setTime(TGLAwal);
+            cal2.setTime(TGLAkhir);
+            String diff = Convert.toString(mothsBetween(cal1, cal2));
+            
+            if (Convert.toDouble(diff) == 0) {
+            	dto.project_notification = "black"; // notif warna hitam
+            	
+			}else if(Convert.toDouble(diff) <= 1) {
+				dto.project_notification  = "red"; // notif warna merah
+				
+			}else if(Convert.toDouble(diff) <= 2) {
+				dto.project_notification  = "yellow"; // notif warna kuning
+				
+			}else if(Convert.toDouble(diff) <= 4) {
+				dto.project_notification  = "green"; // notif warna hijau
+				
+			}else if(Convert.toDouble(diff) > 4) {
+				dto.project_notification  = "grey"; // notif warna grey
+			}
+			
 			listMapProject.add(dto.toModelMap());
 		}
 		return new CorePage(listMapProject, totalitems);				
 	}
 	
-	// @Override
-	// public Map<String, Object> customOnInsert(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
-	// 	Map<String, Object> result = super.customOnInsert(item, mapRequest);
-	// 	ProjectDTO dto = new ProjectDTO();
-	// 	dto.fromModelMap(result);
-		
-	// 	Project project = item.parent(Project.class);
-	// 	Sdm sdm = item.parent(Sdm.class);
-	// 	dto.sdmId = Convert.toInteger(sdm.get("sdm_id"));
-	// 	dto.projectName 			= Convert.toString(project.get("project_name"));
-	// 	dto.projectDesc 			= Convert.toString(project.get("project_desc"));			
-	// 	dto.projectRole 			= Convert.toString(project.get("project_role"));			
-	// 	dto.projectApptype 			= Convert.toString(project.get("project_apptype"));			
-	// 	dto.projectDevtool 			= Convert.toString(project.get("project_devtool"));
-	// 	dto.projectEnddate 			= Convert.toString(project.get("project_enddate"));
-	// 	dto.projectDatabase 		= Convert.toString(project.get("project_database"));			
-	// 	dto.projectCustomer 		= Convert.toString(project.get("project_customer"));			
-	// 	dto.projectServeros 		= Convert.toString(project.get("project_serveros"));			
-	// 	dto.projectFramework 		= Convert.toString(project.get("project_framework"));
-	// 	dto.projectAppserver 		= Convert.toString(project.get("project_appserver"));			
-	// 	dto.projectOtherinfo 		= Convert.toString(project.get("project_otherinfo"));
-	// 	dto.projectStartdate 		= Convert.toString(project.get("project_startdate"));
-	// 	dto.projectDevlanguage 		= Convert.toString(project.get("project_devlanguage"));
-	// 	dto.projectProjectsite 		= Convert.toString(project.get("project_projectsite"));			
-	// 	dto.projectTechnicalinfo 	= Convert.toString(project.get("project_technicalinfo"));
-	// 	dto.set("project_name", projectName);
-	// 	dto.set("project_desc", projectDesc);
-	// 	dto.set("project_role", projectRole);
-	// 	dto.set("project_apptype", projectApptype);
-	// 	dto.set("project_devtool", projectDevtool);
-	// 	dto.set("project_enddate", projectEnddate);
-	// 	dto.set("project_startdate," projectStartdate);
-	// 	dto.set("project_database", projectDatabase);
-	// 	dto.set("project_customer", projectCustomer);
-	// 	dto.set("project_serveros", projectServeros);
-	// 	dto.set("project_framework", projectFramework);
-	// 	dto.set("project_appserver", projectAppserver);
-	// 	dto.set("project_otherinfo", projectOtherinfo);
-	// 	dto.set("project_devlanguage", projectDevlanguage);
-	// 	dto.set("project_projectsite", projectProjectsite);
-	// 	dto.set("project_technicalinfo", projectTechnicalinfo);
-	// 	dto.save();
-	// 	return dto.toModelMap();
-	// }
+	private static double mothsBetween(Calendar tanggalAwal, Calendar tanggalAkhir) {
+        long lama = 0;
+        double hasil = 0;
+        Calendar tanggal = (Calendar) tanggalAwal.clone();
+        while (tanggal.before(tanggalAkhir)) {
+            tanggal.add(Calendar.DAY_OF_MONTH, 1);
+            lama++;
+        }
+        hasil = (lama)/30.0;
+        return hasil;
+    }
+	
+	public String getCurrentDate(){
+	    final Calendar c = Calendar.getInstance();
+	    int year, month, day;
+	    year = c.get(Calendar.YEAR);
+	    month = c.get(Calendar.MONTH);
+	    day = c.get(Calendar.DATE);
+	    return day + "/" + (month+1) + "/" + year;
+	}
+	
+	public String getConvertBulan(String now) {
+		String bulan[] = {"01","02","03","04","05","06","07","08","09","10","11","12"};
+		String tanggal = now.substring(8,10);
+		String bln = now.substring(5,7);
+		String tahun = now.substring(0,4);
+		String hasil =tanggal+"/"+bulan[Integer.parseInt(bln)-1]+"/"+tahun;
+		System.out.println("cek : " + hasil);
+		return hasil;
+	}
 
 	@Override
 	public Project customInsertValidation(Project item) throws Exception {
