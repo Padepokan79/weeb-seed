@@ -140,32 +140,6 @@ public class MengelolaProjectController extends CRUDController<Project> {
 			}
 			
 			listMapProject.add(dto.toModelMap());
-			
-			Date TGLAwal = tglAwal;
-            Date TGLAkhir = tglAkhir;
-            Calendar cal1 = Calendar.getInstance();
-            Calendar cal2 = Calendar.getInstance();
-            cal1.setTime(TGLAwal);
-            cal2.setTime(TGLAkhir);
-            String diff = Convert.toString(mothsBetween(cal1, cal2));
-            
-            if (Convert.toDouble(diff) == 0) {
-            	dto.project_notification = "black"; // notif warna hitam
-            	
-			}else if(Convert.toDouble(diff) <= 1) {
-				dto.project_notification  = "red"; // notif warna merah
-				
-			}else if(Convert.toDouble(diff) <= 2) {
-				dto.project_notification  = "yellow"; // notif warna kuning
-				
-			}else if(Convert.toDouble(diff) <= 4) {
-				dto.project_notification  = "green"; // notif warna hijau
-				
-			}else if(Convert.toDouble(diff) > 4) {
-				dto.project_notification  = "grey"; // notif warna grey
-			}
-			
-			listMapProject.add(dto.toModelMap());
 		}
 		return new CorePage(listMapProject, totalitems);				
 	}
