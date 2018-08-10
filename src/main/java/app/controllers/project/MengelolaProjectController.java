@@ -81,19 +81,30 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		
 		List<Map<String, Object>> listMapProject = new ArrayList<Map<String, Object>>();
 		LazyList<Project> listProject = Project.findAll();
-		params.setOrderBy("project_name");
-
+		params.setOrderBy("project_id");
 		Long totalitems = this.getTotalItems(params);
-		
+	
 		for(Project project : listProject) {
-			Sdm sdm = project.parent(Sdm.class);
-			
+			Sdm sdm = project.parent(Sdm.class);		
 			MengelolaProject dto = new MengelolaProject();
 			dto.fromModelMap(project.toMap());
-			// dto.fromModelMap(sdm.toMap());
-			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-			dto.projectStartdate = Convert.toString(project.get("project_startdate"));
-			dto.projectEnddate = Convert.toString(project.get("project_enddate"));
+			dto.sdmName 				= Convert.toString(sdm.get("sdm_name"));
+			dto.projectName 			= Convert.toString(project.get("project_name"));
+			dto.projectDesc 			= Convert.toString(project.get("project_desc"));			
+			dto.projectRole 			= Convert.toString(project.get("project_role"));			
+			dto.projectApptype 			= Convert.toString(project.get("project_apptype"));			
+			dto.projectDevtool 			= Convert.toString(project.get("project_devtool"));
+			dto.projectEnddate 			= Convert.toString(project.get("project_enddate"));
+			dto.projectDatabase 		= Convert.toString(project.get("project_database"));			
+			dto.projectCustomer 		= Convert.toString(project.get("project_customer"));			
+			dto.projectServeros 		= Convert.toString(project.get("project_serveros"));			
+			dto.projectFramework 		= Convert.toString(project.get("project_framework"));
+			dto.projectAppserver 		= Convert.toString(project.get("project_appserver"));			
+			dto.projectOtherinfo 		= Convert.toString(project.get("project_otherinfo"));
+			dto.projectStartdate 		= Convert.toString(project.get("project_startdate"));
+			dto.projectDevlanguage 		= Convert.toString(project.get("project_devlanguage"));
+			dto.projectProjectsite 		= Convert.toString(project.get("project_projectsite"));			
+			dto.projectTechnicalinfo 	= Convert.toString(project.get("project_technicalinfo"));
 			
 //			Updated by Vikri
 //			09/08/2018
@@ -130,8 +141,32 @@ public class MengelolaProjectController extends CRUDController<Project> {
 			
 			listMapProject.add(dto.toModelMap());
 			
+			Date TGLAwal = tglAwal;
+            Date TGLAkhir = tglAkhir;
+            Calendar cal1 = Calendar.getInstance();
+            Calendar cal2 = Calendar.getInstance();
+            cal1.setTime(TGLAwal);
+            cal2.setTime(TGLAkhir);
+            String diff = Convert.toString(mothsBetween(cal1, cal2));
+            
+            if (Convert.toDouble(diff) == 0) {
+            	dto.project_notification = "black"; // notif warna hitam
+            	
+			}else if(Convert.toDouble(diff) <= 1) {
+				dto.project_notification  = "red"; // notif warna merah
+				
+			}else if(Convert.toDouble(diff) <= 2) {
+				dto.project_notification  = "yellow"; // notif warna kuning
+				
+			}else if(Convert.toDouble(diff) <= 4) {
+				dto.project_notification  = "green"; // notif warna hijau
+				
+			}else if(Convert.toDouble(diff) > 4) {
+				dto.project_notification  = "grey"; // notif warna grey
+			}
+			
+			listMapProject.add(dto.toModelMap());
 		}
-		
 		return new CorePage(listMapProject, totalitems);				
 	}
 	
@@ -183,6 +218,61 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		Validation.required(name, "Nama project harus diisi");
 		return super.customInsertValidation(item);
 	}
+
+	// public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
+			
+	// 	Map<String, Object> result = super.customOnDelete(item, mapRequest);		
+	// 	ProjectDTO dto = new ProjectDTO();
+	// 	dto.fromModelMap(result);
+		
+	// 	Sdm sdm = item.parent(Sdm.class);
+	// 	dto.projectName 			= Convert.toString(project.get("project_name"));
+	// 	dto.projectDesc 			= Convert.toString(project.get("project_desc"));			
+	// 	dto.projectRole 			= Convert.toString(project.get("project_role"));			
+	// 	dto.projectApptype 			= Convert.toString(project.get("project_apptype"));			
+	// 	dto.projectDevtool 			= Convert.toString(project.get("project_devtool"));
+	// 	dto.projectEnddate 			= Convert.toString(project.get("project_enddate"));
+	// 	dto.projectDatabase 		= Convert.toString(project.get("project_database"));			
+	// 	dto.projectCustomer 		= Convert.toString(project.get("project_customer"));			
+	// 	dto.projectServeros 		= Convert.toString(project.get("project_serveros"));			
+	// 	dto.projectFramework 		= Convert.toString(project.get("project_framework"));
+	// 	dto.projectAppserver 		= Convert.toString(project.get("project_appserver"));			
+	// 	dto.projectOtherinfo 		= Convert.toString(project.get("project_otherinfo"));
+	// 	dto.projectStartdate 		= Convert.toString(project.get("project_startdate"));
+	// 	dto.projectDevlanguage 		= Convert.toString(project.get("project_devlanguage"));
+	// 	dto.projectProjectsite 		= Convert.toString(project.get("project_projectsite"));			
+	// 	dto.projectTechnicalinfo 	= Convert.toString(project.get("project_technicalinfo"));
+		
+	// 	return dto.toModelMap();
+	// }
+
+	// @Override
+	// public Map<String, Object> customOnUpdate(Project item, Map<String, Object> mapRequest) throws Exception {
+	// 	Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+	// 	ProjectDTO dto = new ProjectDTO();
+	// 	dto.fromModelMap(result);
+		
+	// 	sdm = item.parent(Sdm.class);
+	// 	Project project = item.parent(Project.class);
+	// 	dto.projectName 			= Convert.toString(project.get("project_name"));
+	// 	dto.projectDesc 			= Convert.toString(project.get("project_desc"));			
+	// 	dto.projectRole 			= Convert.toString(project.get("project_role"));			
+	// 	dto.projectApptype 			= Convert.toString(project.get("project_apptype"));			
+	// 	dto.projectDevtool 			= Convert.toString(project.get("project_devtool"));
+	// 	dto.projectEnddate 			= Convert.toString(project.get("project_enddate"));
+	// 	dto.projectDatabase 		= Convert.toString(project.get("project_database"));			
+	// 	dto.projectCustomer 		= Convert.toString(project.get("project_customer"));			
+	// 	dto.projectServeros 		= Convert.toString(project.get("project_serveros"));			
+	// 	dto.projectFramework 		= Convert.toString(project.get("project_framework"));
+	// 	dto.projectAppserver 		= Convert.toString(project.get("project_appserver"));			
+	// 	dto.projectOtherinfo 		= Convert.toString(project.get("project_otherinfo"));
+	// 	dto.projectStartdate 		= Convert.toString(project.get("project_startdate"));
+	// 	dto.projectDevlanguage 		= Convert.toString(project.get("project_devlanguage"));
+	// 	dto.projectProjectsite 		= Convert.toString(project.get("project_projectsite"));			
+	// 	dto.projectTechnicalinfo 	= Convert.toString(project.get("project_technicalinfo"));
+		
+	// 	return dto.toModelMap();
+	// }
 	
 	
 }
