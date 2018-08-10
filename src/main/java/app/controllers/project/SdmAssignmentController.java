@@ -37,11 +37,15 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
  		public String sdmassignEnddate;
 	}
 	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception{
 		
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
-		LazyList<SdmAssignment> listSdmAssignment 		= SdmAssignment.findAll();	
+		LazyList<SdmAssignment> listSdmAssignment 		= (LazyList<SdmAssignment>)this.getItems(params);	
 		List<Map<String, Object>> listMapSdmHiring 		= new ArrayList<Map<String, Object>>();
 		LazyList<SdmHiring> listSdmHiring		= SdmHiring.findAll();	
 
