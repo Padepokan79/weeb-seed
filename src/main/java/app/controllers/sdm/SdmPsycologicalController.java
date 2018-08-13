@@ -31,9 +31,14 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		public Date psycologicalDate;
 	}
 	
+	
+	/*
+	 * Updated by Nurdhiat Chaudhary Malik
+	 * 07 Agustus 2018
+	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
-		LazyList<SdmPsycological> items = SdmPsycological.findAll();
+		LazyList<SdmPsycological> items = (LazyList<SdmPsycological>)this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
 		
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
@@ -66,6 +71,15 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		Validation.required(desc, "Valued of Description can't be empty");
 		
 		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
-		return result;
+		
+		SdmPsycologicalDTO dto = new SdmPsycologicalDTO();
+		dto.fromModelMap(result);
+		
+		Sdm sdm = item.parent(Sdm.class);
+		Psychologicals psy = item.parent(Psychologicals.class);
+		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+		dto.psycoName = Convert.toString(psy.get("psyco_name"));
+		
+		return dto.toModelMap();
 	}
 }
