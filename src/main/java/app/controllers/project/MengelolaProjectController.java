@@ -53,6 +53,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		public int projectId;
 		public int sdmId;
 		public int sdmNIK;
+		public int norut;
 		public String sdmName;
 		public String projectName;
 		public String projectDesc;
@@ -83,11 +84,13 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		LazyList<Project> listProject = Project.findAll();
 		params.setOrderBy("project_id");
 		Long totalitems = this.getTotalItems(params);
-	
+		int number = 1;
 		for(Project project : listProject) {
 			Sdm sdm = project.parent(Sdm.class);		
 			MengelolaProject dto = new MengelolaProject();
 			dto.fromModelMap(project.toMap());
+			dto.norut					= number;
+			number++;
 			dto.sdmName 				= Convert.toString(sdm.get("sdm_name"));
 			dto.projectName 			= Convert.toString(project.get("project_name"));
 			dto.projectDesc 			= Convert.toString(project.get("project_desc"));			

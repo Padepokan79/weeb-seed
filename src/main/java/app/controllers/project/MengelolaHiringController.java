@@ -32,6 +32,7 @@ import core.io.model.PagingParams;
 import core.javalite.controllers.CRUDController;
 public class MengelolaHiringController extends CRUDController<SdmHiring>{
 	public class HiringDTO extends DTOModel {
+		public int norut;
 		public int sdmhiringId;
 		public int hirestatId;
 		public int sdmId;
@@ -56,7 +57,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		
 //		LazyList<? extends Model> items = this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
-					
+			int number = 1;
 			for (SdmHiring hiring : listHiring) {
 				Sdm sdm = hiring.parent(Sdm.class);
 				StatusHiring statushiring = hiring.parent(StatusHiring.class);
@@ -66,6 +67,8 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				dto.fromModelMap(hiring.toMap());
 				// dto.clientId = Convert.toInteger(client.get("client_id"));
 				// dto.sdmhiringId = Convert.toInteger(SdmHiring.get("sdmhiring_id"));
+				dto.norut = number;
+				number++;
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 				dto.clientName = Convert.toString(clients.get("client_name"));
 				dto.clientAddress = Convert.toString(clients.get("client_address"));
