@@ -80,7 +80,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		DateFormat dateAkhir = new SimpleDateFormat("dd/MM/yyyy");
 		
 		List<Map<String, Object>> listMapProject = new ArrayList<Map<String, Object>>();
-		LazyList<Project> listProject = Project.findAll();
+		LazyList<Project> listProject = (LazyList<Project>)this.getItems(params);
 		params.setOrderBy("project_id");
 		Long totalitems = this.getTotalItems(params);
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
@@ -58,5 +59,20 @@ public class Project extends Model {
 		}
 				
 		return Base.findAll(query.toString(), new Object[params.size()]);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List<Map> groupByProjectName () {
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT PROJECT_ID, PROJECT_NAME\r\n" + 
+				"FROM project\r\n" + 
+				"GROUP BY PROJECT_NAME\r\n" + 
+				";\r\n" + 
+				"");
+		System.out.println("query : "+query.toString());
+		List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()])); 
+		
+		return listdata;
 	}
 }
