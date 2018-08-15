@@ -72,6 +72,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				dto.clientPicclient = Convert.toString(clients.get("client_picclient"));
 				dto.hirestatName = Convert.toString(statushiring.get("hirestat_name"));
 				dto.clientMobileclient = Convert.toString(clients.get("client_mobileclient"));
+				dto.hirestatId = Convert.toInteger(statushiring.get("hirestat_id")).intValue();
 				listMapHiring.add(dto.toModelMap());
 			}
 		
@@ -109,38 +110,38 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		return super.customInsertValidation(item);
 	}
 	
-	public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
-			
-		Map<String, Object> result = super.customOnDelete(item, mapRequest);		
-		HiringDTO dto = new HiringDTO();
-		dto.fromModelMap(result);
-		
-		Sdm sdm = item.parent(Sdm.class);
-		StatusHiring hirestat = item.parent(StatusHiring.class);
-		Clients client = item.parent(Clients.class);
-		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
-		dto.clientName = Convert.toString(client.get("client_name"));
-		
-		return dto.toModelMap();
-	}
+//	public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
+//			
+//		Map<String, Object> result = super.customOnDelete(item, mapRequest);		
+//		HiringDTO dto = new HiringDTO();
+//		dto.fromModelMap(result);
+//		
+//		Sdm sdm = item.parent(Sdm.class);
+//		StatusHiring hirestat = item.parent(StatusHiring.class);
+//		Clients client = item.parent(Clients.class);
+//		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+//		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
+//		dto.clientName = Convert.toString(client.get("client_name"));
+//		
+//		return dto.toModelMap();
+//	}
 	
-	@Override
-	public Map<String, Object> customOnUpdate(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
-				
-		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
-		HiringDTO dto = new HiringDTO();
-		dto.fromModelMap(result);
-		
-		Sdm sdm = item.parent(Sdm.class);
-		StatusHiring hirestat = item.parent(StatusHiring.class);
-		Clients client = item.parent(Clients.class);
-		dto.sdmhiringId = Convert.toInteger(hirestat.get("sdmhiring_id"));
-		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
-		dto.clientName = Convert.toString(client.get("client_name"));
-		
-		return dto.toModelMap();
-	}
+//	@Override
+//	public Map<String, Object> customOnUpdate(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
+//				
+//		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+//		HiringDTO dto = new HiringDTO();
+//		dto.fromModelMap(result);
+//		
+//		Sdm sdm = item.parent(Sdm.class);
+//		StatusHiring hirestat = item.parent(StatusHiring.class);
+//		Clients client = item.parent(Clients.class);
+//		dto.sdmhiringId = Convert.toInteger(hirestat.get("sdmhiring_id"));
+//		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+//		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
+//		dto.clientName = Convert.toString(client.get("client_name"));
+//		
+//		return dto.toModelMap();
+//	}
 	
 }

@@ -39,7 +39,8 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		public String sdmassignPicclient;
 		public String sdmassignPicclientphone;
 		public String methodName;
-
+		public String sdmName;
+		public String sdmPhone;
 		
 		/*
 		 * Updated by Alifhar Juliansyah
@@ -75,8 +76,10 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			Sdm sdm					= hiring.parent(Sdm.class);
 			SdmAssignmentDTO dto = new SdmAssignmentDTO();
 			dto.fromModelMap(sdmassign.toMap());
-
+			
 			dto.methodName 	= Convert.toString(method.get("method_name"));
+			dto.sdmName 	= Convert.toString(sdm.get("sdm_name"));
+			dto.sdmPhone 	= Convert.toString(sdm.get("sdm_phone"));
 			
 			/*
 			 * Updated by Alifhar Juliansyah
