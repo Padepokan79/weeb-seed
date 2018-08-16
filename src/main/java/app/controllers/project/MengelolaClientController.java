@@ -26,15 +26,47 @@ import org.apache.lucene.analysis.miscellaneous.TrimFilter;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.common.Convert;
+import core.io.model.DTOModel;
+import core.io.model.PagingParams;
 
 public class MengelolaClientController extends CRUDController<Clients> {
     
-    @Override
-    public CorePage customOnReadAll(PagingParams params) throws Exception {
-        LazyList<? extends Model> items = this.getItems(params);
-        Long totalItems = this.getTotalItems(params);
-        return new CorePage(items.toMaps(), totalItems);
-    }
+    // @Override
+    // public CorePage customOnReadAll(PagingParams params) throws Exception {
+    //     LazyList<? extends Model> items = this.getItems(params);
+    //     Long totalItems = this.getTotalItems(params);
+    //     return new CorePage(items.toMaps(), totalItems);
+	// }
+
+	public class ClientDTO extends DTOModel{// pakai yang dto biar bisa nambahin atribute norut
+		public int norut;
+		public int clientId;
+		public String clientName;
+		public String clientAddress;
+		public String clientPicclient;
+		public String clientMobileclient;
+	}
+	public CorePage customOnReadAll(PagingParams params) throws Exception {
+		List<Map<String, Object>> listMapClient = new ArrayList<Map<String, Object>>();
+		LazyList<Clients> listClients = (LazyList<Clients>)this.getItems(params);	
+		params.setOrderBy("client_id");
+
+		Long totalItems = this.getTotalItems(params);
+		int number = 1;
+		for (Clients client : listClients){
+			ClientDTO dto = new ClientDTO();
+			dto.fromModelMap(client.toMap());
+			dto.norut = number;
+			number++;
+			dto.clientId = Convert.toInteger(client.get("client_id"));
+			dto.clientName = Convert.toString(client.get("client_name"));
+			dto.clientAddress = Convert.toString(client.get("client_address"));
+			dto.clientPicclient = Convert.toString(client.get("client_picclient"));
+			dto.clientPicclient = Convert.toString(client.get("client_mobileclient"));
+			listMapClient.add(dto.toModelMap());
+		}
+		return new CorePage(listMapClient, totalItems);
+	}
     
     @Override
 	public Clients customInsertValidation(Clients item) throws Exception {
