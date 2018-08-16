@@ -57,6 +57,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		public int projectId;
 		public int sdmId;
 		public String sdmNik;
+		public int norut;
 		public String sdmName;
 		public String projectName;
 		public String projectDesc;
