@@ -186,14 +186,14 @@ public class MengelolaProjectController extends CRUDController<Project> {
 	@Override
 	public Project customInsertValidation(Project item) throws Exception {
 		LazyList<Project> listProjVal = Project.findAll();
-		String name = item.getString("project_name");
+		String project_name = item.getString("project_name");
 		
 		String sdm_name = item.getString("sdm_id");
 		String p_role = item.getString("project_role");
-		String p_site = item.getString("project_site");
+		String p_site = item.getString("project_projectsite");
 		String p_enddate = item.getString("project_enddate");
 		String p_startdate = item.getString("project_startdate");
-		
+		String p_desc = item.getString("project_desc");
 		
 //		for(Project project : listProjVal) {
 //			MengelolaProject dto = new MengelolaProject();
@@ -204,7 +204,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 //			
 //		}
 		Validation.required(sdm_name, "SDM name harus diisi");
-		Validation.required(name, "Project name harus diisi");
+		Validation.required(project_name, "Project name harus diisi");
 		
 		Validation.required(p_site, "Project site harus diisi");
 		Validation.required(p_role, "Project role harus diisi");
