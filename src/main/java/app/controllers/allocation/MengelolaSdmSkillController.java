@@ -13,6 +13,7 @@ import org.javalite.activeweb.annotations.POST;
 import org.javalite.common.Convert;
 
 import app.models.SdmSkill;
+import app.models.Project;
 import app.models.Sdm;
 import app.models.Skill;
 import app.models.SkillType;
@@ -42,8 +43,12 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 		public String sdmName;
 		public int sdmskillId;
 		public int skillId;
+		public int skilltypeId;
 		public int sdmId;
 		public int sdmskillValue;
+		public String projectEnddate;
+		
+		
 	}
 	
 	/*
@@ -54,22 +59,35 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
 		LazyList<SdmSkill> asd = (LazyList<SdmSkill>)this.getItems(params);	
-		params.setOrderBy("sdm_id");
+		Long totalItems = this.getTotalItems(params);
 		
 //		LazyList<? extends Model> items = this.getItems(params);
-		Long totalItems = this.getTotalItems(params);
-					
+		
+//		  Updated by Hendra Kurniawan
+//		  16 Agustus 2018 9:02 AM
+		 
+		
+		List<Map> listData = new ArrayList<>();			
+		String endDate="";
 			for (SdmSkill mengelolaSdmSkill : asd) {
 				SkillType skillType = mengelolaSdmSkill.parent(SkillType.class);
 				Skill kemampuan = mengelolaSdmSkill.parent(Skill.class);
 				Sdm manusia = mengelolaSdmSkill.parent(Sdm.class);
+				endDate = "-";
 				
+				int sdmId = Convert.toInteger(mengelolaSdmSkill.get("sdm_id"));	
+				List<Map> dataFromQuery = SdmSkill.getEndContract(sdmId);
+					for(Map map : dataFromQuery) {
+						endDate = Convert.toString(map.get("project_enddate"));
+					}
+					
 				MengelolaSdmSkillDTO dto = new MengelolaSdmSkillDTO();
 				dto.fromModelMap(mengelolaSdmSkill.toMap());
 				dto.skilltypeName = Convert.toString(skillType.get("skilltype_name"));
 				dto.skillName = Convert.toString(kemampuan.get("skill_name"));
 				dto.sdmName = Convert.toString(manusia.get("sdm_name"));
 				dto.sdmNik = Convert.toString(manusia.get("sdm_nik"));
+				dto.projectEnddate = endDate;
 				listMapSdmSkill.add(dto.toModelMap());
 			}
 		
