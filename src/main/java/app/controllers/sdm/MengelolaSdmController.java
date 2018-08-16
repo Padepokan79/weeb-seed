@@ -202,10 +202,14 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		return hasil;
 	}
 		
-		@Override
-		public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception{		
-			Map<String, Object> result = super.customOnInsert(item, mapRequest);
-			Sdm sdm = Sdm.findFirst("Order by sdm_id desc");
+		/*
+		 * Updated (Commented) by Alifhar Juliansyah
+		 * 15 August 2018, 11:02
+		 */
+//		@Override
+//		public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception{		
+//			Map<String, Object> result = super.customOnInsert(item, mapRequest);
+//			Sdm sdm = Sdm.findFirst("Order by sdm_id desc");
 //			
 //			//input education
 //			Education edu = new Education();
@@ -264,7 +268,8 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 //			sdml.set("language_id", languageId);
 //			sdml.set("sdm_id", sdm.getId());
 //			sdml.save();
-			
-			return result;
-		}
+//			
+//			return result;
+//		}
+
 }
