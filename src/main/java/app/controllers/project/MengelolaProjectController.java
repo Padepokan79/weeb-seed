@@ -13,9 +13,12 @@
  * Copyright Rizaldi R_Nensia - >R<
  */
 
-
-
-
+/*
+ * ---------------
+ * Modified By    : Malik Chaudhary
+ * Last Modified  : Kamis, 16th Aug 2018 09:25 AM
+ * ---------------
+*/
 package app.controllers.project;
 
 import core.io.helper.Validation;
@@ -52,7 +55,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 	public class MengelolaProject extends DTOModel{
 		public int projectId;
 		public int sdmId;
-		public int sdmNIK;
+		public String sdmNik;
 		public String sdmName;
 		public String projectName;
 		public String projectDesc;
@@ -89,6 +92,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 			MengelolaProject dto = new MengelolaProject();
 			dto.fromModelMap(project.toMap());
 			dto.sdmName 				= Convert.toString(sdm.get("sdm_name"));
+			dto.sdmNik 					= Convert.toString(sdm.get("sdm_nik"));
 			dto.projectName 			= Convert.toString(project.get("project_name"));
 			dto.projectDesc 			= Convert.toString(project.get("project_desc"));			
 			dto.projectRole 			= Convert.toString(project.get("project_role"));			
