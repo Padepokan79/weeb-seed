@@ -1,7 +1,6 @@
 package app.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,50 +22,58 @@ import core.io.model.PagingParams;
 	@BelongsTo(foreignKeyName = "skill_id", parent = Skill.class),
 	@BelongsTo(foreignKeyName = "sdm_id", parent = Sdm.class)
 })
+
 public class SdmSkill extends Model {
 	
-	private static Object sdmskill_value;
-
+//	AUTHOR 	: Malik Chaudhary
+//	UPDATE  : 09-08-2018 16:00
+	
+	static int limit = 2;
 	@SuppressWarnings("rawtypes")
-	public static List<Map> search(String skill_id, PagingParams pagingParams) {	
-		List<Object> params = new ArrayList<Object>();		
+	public static List<Map> getGroupSdmSkill() {
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT sdmskill.SDMSKILL_ID as SDMSKILL_ID, sdm.SDM_NIK as SDM_NIK, sdm.SDM_NAME as SDM_NAME, \r\n" + 
+				"GROUP_CONCAT(skilltype.SKILLTYPE_NAME SEPARATOR '-') as SKILLTYPE_NAME,\r\n" + 
+				"GROUP_CONCAT(skills.SKILL_NAME SEPARATOR '-') as SKILL_NAME, \r\n" + 
+				"GROUP_CONCAT(sdmskill.SDMSKILL_VALUE SEPARATOR ',') as SDMSKILL_VALUE\r\n" + 
+				"FROM sdmskill\r\n" + 
+				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
+				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
+				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
+				"GROUP BY sdm.SDM_NIK, sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+		return lisdata;		
+	}
+	
+    @SuppressWarnings("rawtypes")
+	public static List<Map> getMultifiltering() {	
+    	int array[] = {5,7,6,7};
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
-
-		query.append("SELECT sdm.SDM_NIK, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE"
-					+ "FROM sdmskill "
-					+ "INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID"
-					+ "INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID"
-					+ "INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID");
-		
-		if (!Strings.isNullOrEmpty(skill_id)) {
-			query.append(" where sdmskill.SKILL_ID = ?");
-			params.add(skill_id);
-			query.append(" AND sdmskill.SDMSKILL_VALUE >= ?");
-			params.add(sdmskill_value);
-		}
-		
-		if (!Strings.isNullOrEmpty(pagingParams.filterQuery())) {
-			query.append(" OR ");
-			query.append(pagingParams.filterQuery());
-			params.addAll(Arrays.asList(pagingParams.filterParams()));
-		}
-		
-		if (!Strings.isNullOrEmpty(pagingParams.orderBy())) {
-			query.append(" order by ");
-			query.append(pagingParams.orderBy());
-			
-			if (pagingParams.limit() != null && pagingParams.offset() != null) {
-				query.append(" OFFSET ");
-				query.append(pagingParams.offset());
-				query.append(" ROWS");
-
-				query.append(" FETCH NEXT ");
-				query.append(pagingParams.limit());
-				query.append(" ROWS ONLY");
+		query.append("SELECT sdmskill.SDMSKILL_ID, sdm.SDM_ID, sdm.SDM_NIK, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE \r\n" + 
+				"FROM sdmskill\r\n" + 
+				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
+				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
+				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
+				"WHERE skills.SKILL_ID = "+array[0]+" AND sdmskill.SDMSKILL_VALUE >= "+array[1]+"");
+		if (limit > 1) {
+			for(int inc = 1; inc < limit; inc++) {
+				query.append(" OR skills.SKILL_ID = "+array[inc+1]+" AND sdmskill.SDMSKILL_VALUE >= "+array[inc+2]+"");
+//				params.add("skills.SKILL_ID");
+//				params.add("sdmskill.SDMSKILL_VALUE");
 			}
+			query.append(" ORDER BY sdm.SDM_NAME");
 		}
-				
-		return Base.findAll(query.toString(), new Object[params.size()]);
-	}	
-
+		System.out.println("query : "+query.toString());
+//		params.add(skillId);
+//		params.add(sdmskillValue);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+		return lisdata;
+	}
 }
