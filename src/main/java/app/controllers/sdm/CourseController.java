@@ -35,7 +35,7 @@ public class CourseController extends CRUDController<Course>{
 		public String course_provider;
 		public String course_place;
 		public String course_duration;
-		public String course_certificate;
+		public String course_certificates;
 		public String course_date;
 	}
 	
@@ -53,7 +53,7 @@ public class CourseController extends CRUDController<Course>{
 				dto.fromModelMap(course.toMap());
 				dto.nama = Convert.toString(sdm.get("sdm_name"));
 				dto.course_date = Convert.toString(course.get("course_date"));
-				dto.course_certificate = Convert.toString(course.get("course_certificates"));
+				dto.course_certificates = Convert.toString(course.get("course_certificates"));
 				dto.course_provider = Convert.toString(course.get("course_provider"));
 				dto.course_title = Convert.toString(course.get("course_title"));
 				dto.course_duration = Convert.toString(course.get("course_duration"));
