@@ -38,6 +38,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		public int sdmId;
 		public int clientId;
 		public String sdmName;
+		public String sdmPhone;
 		public String clientName;
 		public String clientAddress;
 		public String clientPicclient;
@@ -70,6 +71,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				dto.norut = number;
 				number++;
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+				dto.sdmPhone = Convert.toString(sdm.get("sdm_phone"));
 				dto.clientName = Convert.toString(clients.get("client_name"));
 				dto.clientAddress = Convert.toString(clients.get("client_address"));
 				dto.clientPicclient = Convert.toString(clients.get("client_picclient"));
