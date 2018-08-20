@@ -37,6 +37,7 @@ public class ProfilingController extends CRUDController <Profiling> {
 	public class KelolaProfiling extends DTOModel{
 		public int profilingId;
 		public int sdmId;
+		public int norut;
 		public String sdmName;
 		public String profilingName;
 	}
@@ -48,13 +49,15 @@ public class ProfilingController extends CRUDController <Profiling> {
 		LazyList<Profiling> listProfiling = Profiling.findAll();
 		
 		Long totalitems = this.getTotalItems(params);
-		
+		int number = 1;
 		for(Profiling profiling : listProfiling) {
 			Sdm sdm = profiling.parent(Sdm.class);
 			
 			KelolaProfiling dto = new KelolaProfiling();
 			dto.fromModelMap(profiling.toMap());
 			dto.fromModelMap(sdm.toMap());
+			dto.norut = number;
+			number++;
 			dto.profilingId = Convert.toInteger(profiling.get("profiling_id"));
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 			dto.profilingName = Convert.toString(profiling.get("profiling_name"));
