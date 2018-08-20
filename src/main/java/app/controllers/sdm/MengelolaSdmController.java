@@ -3,7 +3,8 @@
  */
 package app.controllers.sdm;
 
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import core.io.model.CorePage;
 import core.io.model.DTOModel;
 import core.io.model.PagingParams;
 import core.javalite.controllers.CRUDController;
+import java.text.SimpleDateFormat;
 
 /**
  *web-seed
@@ -44,11 +46,14 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	public class SdmDTO extends DTOModel {
 		public int sdm_id;
 		public int sdmlvl_id;
+		public int religion_id;
+		public int health_id;
+		public int status_id;
+		public int contracttype_id;
 		public String sdm_level;
 		public String contracttype;
-		public String gender;
-		public String religion;
-		public String health;
+		public int gender_id;
+		public String religion_name;
 		public String sdm_name;
 		public String sdm_nik;
 		public String sdm_ktp;
@@ -67,6 +72,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public int norut;
 		public String sdm_datebirth;
 		public String sdm_notification;
+		
 	}
 
 	
@@ -129,10 +135,17 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 				dto.sdm_notification = "grey"; // notif warna grey
 			}
             
-			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
-			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
-			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
-			String status = Convert.toString(sdm.get("sdm_status"));
+
+//			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
+//			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
+//			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
+			
+            dto.sdm_datebirth = Convert.toString(sdm.get("sdm_datebirth"));
+			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
+			dto.sdm_endcontract = Convert.toString(sdm.get("sdm_endcontract"));
+			
+			
+            String status = Convert.toString(sdm.get("sdm_status"));
 			if(status.equals("1")) {
 				dto.sdm_status = "Active";
 			}
@@ -141,9 +154,18 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
-			dto.gender = Convert.toString(gender.get("gender_name"));
-			dto.religion = Convert.toString(religion.get("religion_name"));
-			dto.health = Convert.toString(health.get("health_status"));
+			dto.sdm_contractloc = Convert.toString(sdm.get("sdm_contractloc"));
+			
+			if(dto.sdm_contractloc == "1" ) {
+				dto.sdm_contractloc = "Bandung";
+			}
+			else
+			{
+				dto.sdm_contractloc = "Luar Bandung";
+			}
+//			String date = Convert.toString("2018/09/08");
+//			Date d1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+//			dto.sdm_datebirth =Convert.toString(d1);
 			listMapSdm.add(dto.toModelMap());
 		}
 	
@@ -202,69 +224,74 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		return hasil;
 	}
 		
-		@Override
-		public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception{		
-			Map<String, Object> result = super.customOnInsert(item, mapRequest);
-			Sdm sdm = Sdm.findFirst("Order by sdm_id desc");
-			
-			//input education
-			Education edu = new Education();
-			String nama = Convert.toString(mapRequest.get("edu_name"));
-			Integer degree = Convert.toInteger(mapRequest.get("degree_id"));
-			String jurusan = Convert.toString(mapRequest.get("edu_subject"));
-			Date masuk = Convert.toSqlDate(mapRequest.get("edu_startdate"));
-			Date keluar = Convert.toSqlDate(mapRequest.get("edu_startdate"));
-			edu.set("EDU_NAME", nama);
-			edu.set("DEGREE_ID", degree);
-			edu.set("EDU_SUBJECT", jurusan);
-			edu.set("EDU_STARTDATE", masuk);
-			edu.set("EDU_ENDDATE", keluar);
-			edu.set("sdm_id", sdm.getId());
-			edu.save();
-			
-			//input COURSE
-			Course course = new Course();
-			String kursus = Convert.toString(mapRequest.get("course_title"));
-			String penyelenggara = Convert.toString(mapRequest.get("course_provider"));
-			String tempat = Convert.toString(mapRequest.get("course_place"));
-			Date waktu = Convert.toSqlDate(mapRequest.get("course_date")); 
-			String durasi = Convert.toString(mapRequest.get("course_duration"));
-			int sertifikat = Convert.toInteger(mapRequest.get("course_cerificate"));
-			course.set("COURSE_TITLE", kursus);
-			course.set("COURSE_PROVIDER", penyelenggara);
-			course.set("COURSE_PLACE", tempat);
-			course.set("COURSE_DATE", waktu);
-			course.set("COURSE_DURATION", durasi);
-			course.set("COURSE_CERIFICATE", sertifikat);
-			course.set("sdm_id", sdm.getId());
-			course.save();
-			
-			//input employment
-			Employment employment = new Employment();
-			String perusahaan = Convert.toString(mapRequest.get("employment_corpname"));
-			Date start = Convert.toSqlDate(mapRequest.get("employment_startdate"));
-			Date end = Convert.toSqlDate(mapRequest.get("employment_enddate"));
-			String job = Convert.toString(mapRequest.get("employment_rolejob"));
-			employment.set("EMPLOYMENT_CORPNAME", perusahaan);
-			employment.set("EMPLOYMENT_STARTDATE", start);
-			employment.set("EMPLOYMENT_ENDDATE", end);
-			employment.set("EMPLOYMENT_ROLEJOB", job);
-			employment.set("sdm_id", sdm.getId());
-			employment.save();
-			
-			//input profiling
-			Profiling profiling = new Profiling();
-			String profile = Convert.toString(mapRequest.get("profiling_name"));
-			profiling.set("PROFILING_NAME", profile);
-			profiling.set("sdm_id", sdm.getId());
-			
-			//input SDMLANGUAGE
-			SdmLanguage sdml = new SdmLanguage();
-			int languageId = Convert.toInteger(mapRequest.get("language_id"));
-			sdml.set("language_id", languageId);
-			sdml.set("sdm_id", sdm.getId());
-			sdml.save();
-			
-			return result;
-		}
+		/*
+		 * Updated (Commented) by Alifhar Juliansyah
+		 * 15 August 2018, 11:02
+		 */
+//		@Override
+//		public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception{		
+//			Map<String, Object> result = super.customOnInsert(item, mapRequest);
+//			Sdm sdm = Sdm.findFirst("Order by sdm_id desc");
+//			
+//			//input education
+//			Education edu = new Education();
+//			String nama = Convert.toString(mapRequest.get("edu_name"));
+//			Integer degree = Convert.toInteger(mapRequest.get("degree_id"));
+//			String jurusan = Convert.toString(mapRequest.get("edu_subject"));
+//			Date masuk = Convert.toSqlDate(mapRequest.get("edu_startdate"));
+//			Date keluar = Convert.toSqlDate(mapRequest.get("edu_startdate"));
+//			edu.set("EDU_NAME", nama);
+//			edu.set("DEGREE_ID", degree);
+//			edu.set("EDU_SUBJECT", jurusan);
+//			edu.set("EDU_STARTDATE", masuk);
+//			edu.set("EDU_ENDDATE", keluar);
+//			edu.set("sdm_id", sdm.getId());
+//			edu.save();
+//			
+//			//input COURSE
+//			Course course = new Course();
+//			String kursus = Convert.toString(mapRequest.get("course_title"));
+//			String penyelenggara = Convert.toString(mapRequest.get("course_provider"));
+//			String tempat = Convert.toString(mapRequest.get("course_place"));
+//			Date waktu = Convert.toSqlDate(mapRequest.get("course_date")); 
+//			String durasi = Convert.toString(mapRequest.get("course_duration"));
+//			int sertifikat = Convert.toInteger(mapRequest.get("course_cerificate"));
+//			course.set("COURSE_TITLE", kursus);
+//			course.set("COURSE_PROVIDER", penyelenggara);
+//			course.set("COURSE_PLACE", tempat);
+//			course.set("COURSE_DATE", waktu);
+//			course.set("COURSE_DURATION", durasi);
+//			course.set("COURSE_CERIFICATE", sertifikat);
+//			course.set("sdm_id", sdm.getId());
+//			course.save();
+//			
+//			//input employment
+//			Employment employment = new Employment();
+//			String perusahaan = Convert.toString(mapRequest.get("employment_corpname"));
+//			Date start = Convert.toSqlDate(mapRequest.get("employment_startdate"));
+//			Date end = Convert.toSqlDate(mapRequest.get("employment_enddate"));
+//			String job = Convert.toString(mapRequest.get("employment_rolejob"));
+//			employment.set("EMPLOYMENT_CORPNAME", perusahaan);
+//			employment.set("EMPLOYMENT_STARTDATE", start);
+//			employment.set("EMPLOYMENT_ENDDATE", end);
+//			employment.set("EMPLOYMENT_ROLEJOB", job);
+//			employment.set("sdm_id", sdm.getId());
+//			employment.save();
+//			
+//			//input profiling
+//			Profiling profiling = new Profiling();
+//			String profile = Convert.toString(mapRequest.get("profiling_name"));
+//			profiling.set("PROFILING_NAME", profile);
+//			profiling.set("sdm_id", sdm.getId());
+//			
+//			//input SDMLANGUAGE
+//			SdmLanguage sdml = new SdmLanguage();
+//			int languageId = Convert.toInteger(mapRequest.get("language_id"));
+//			sdml.set("language_id", languageId);
+//			sdml.set("sdm_id", sdm.getId());
+//			sdml.save();
+//			
+//			return result;
+//		}
+
 }

@@ -35,11 +35,13 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		public int sdmhiringId;
  		public int methodId;
 		public int sdmId;
+		public int norut;
 		public String sdmassignLoc;
 		public String sdmassignPicclient;
 		public String sdmassignPicclientphone;
 		public String methodName;
-
+		public String sdmName;
+		public String sdmPhone;
 		
 		/*
 		 * Updated by Alifhar Juliansyah
@@ -68,15 +70,18 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 
 		params.setOrderBy("sdmassign_id");
 		Long totalItems = this.getTotalItems(params);
-		
+		int number = 1;
 		for(SdmAssignment sdmassign : listSdmAssignment) {
 			ProjectMethod method 	= sdmassign.parent(ProjectMethod.class);
 			SdmHiring hiring 		= sdmassign.parent(SdmHiring.class);
 			Sdm sdm					= hiring.parent(Sdm.class);
 			SdmAssignmentDTO dto = new SdmAssignmentDTO();
 			dto.fromModelMap(sdmassign.toMap());
-
+			dto.norut = number;
+			number++;
 			dto.methodName 	= Convert.toString(method.get("method_name"));
+			dto.sdmName 	= Convert.toString(sdm.get("sdm_name"));
+			dto.sdmPhone 	= Convert.toString(sdm.get("sdm_phone"));
 			
 			/*
 			 * Updated by Alifhar Juliansyah

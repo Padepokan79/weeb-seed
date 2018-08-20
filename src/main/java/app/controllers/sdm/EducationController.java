@@ -4,6 +4,7 @@
 package app.controllers.sdm;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +32,10 @@ public class EducationController extends CRUDController<Education>{
 	public class EducationDTO extends DTOModel {
 		public int edu_id;
 		public String nama;
+		public int sdm_id;
 		public String edu_name;
 		public String edu_subject;
-		public String gelar;
+		public String degree_name;
 		public String edu_startdate;
 		public String edu_enddate;
 	}
@@ -43,6 +45,7 @@ public class EducationController extends CRUDController<Education>{
 		List<Map<String, Object>> listMapEducation = new ArrayList<Map<String, Object>>();
 		LazyList<Education> listEducation = Education.findAll();	
 		params.setOrderBy("edu_id");
+		String temp;
 		
 		Long totalItems = this.getTotalItems(params);
 					
@@ -53,7 +56,9 @@ public class EducationController extends CRUDController<Education>{
 				EducationDTO dto = new EducationDTO();
 				dto.fromModelMap(edu.toMap());
 				dto.nama = Convert.toString(sdm.get("sdm_name"));
-				dto.gelar = Convert.toString(degree.get("degree_name"));
+				dto.degree_name = Convert.toString(degree.get("degree_name"));
+				dto.edu_startdate = (Convert.toString(edu.get("edu_startdate"))).substring(0, 4);
+				dto.edu_enddate = (Convert.toString(edu.get("edu_enddate"))).substring(0, 4);
 				listMapEducation.add(dto.toModelMap());
 			}
 		

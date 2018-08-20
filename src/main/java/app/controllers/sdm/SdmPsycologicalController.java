@@ -25,6 +25,8 @@ import core.javalite.controllers.CRUDController;
 public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 	public class SdmPsycologicalDTO extends DTOModel {
 		public int sdmpsycologicalId;
+		public int sdmId;
+		public int psycoId;
 		public String sdmName;
 		public String psycoName;
 		public String sdmpsycologicalDesc;
@@ -48,6 +50,7 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		
 			SdmPsycologicalDTO dto = new SdmPsycologicalDTO();
 			dto.fromModelMap(sdmPsy.toMap());
+//			System.out.println(sdmPsy.toMap());
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 			dto.psycoName = Convert.toString(psy.get("psyco_name"));
 			ListMapSdmPsy.add(dto.toModelMap());
