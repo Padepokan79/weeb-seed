@@ -72,6 +72,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public int norut;
 		public String sdm_datebirth;
 		public String sdm_notification;
+		
 	}
 
 	
@@ -134,6 +135,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 				dto.sdm_notification = "grey"; // notif warna grey
 			}
             
+
 //			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
 //			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
 //			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
@@ -141,6 +143,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
             dto.sdm_datebirth = Convert.toString(sdm.get("sdm_datebirth"));
 			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
 			dto.sdm_endcontract = Convert.toString(sdm.get("sdm_endcontract"));
+			
 			
             String status = Convert.toString(sdm.get("sdm_status"));
 			if(status.equals("1")) {
