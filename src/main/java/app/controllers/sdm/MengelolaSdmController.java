@@ -156,13 +156,13 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
 			dto.sdm_contractloc = Convert.toString(sdm.get("sdm_contractloc"));
 			
-			if(dto.sdm_contractloc == "1" ) {
-				dto.sdm_contractloc = "Bandung";
-			}
-			else
-			{
-				dto.sdm_contractloc = "Luar Bandung";
-			}
+//			if(dto.sdm_contractloc == "1" ) {
+//				dto.sdm_contractloc = "Bandung";
+//			}
+//			else
+//			{
+//				dto.sdm_contractloc = "Luar Bandung";
+//			}
 //			String date = Convert.toString("2018/09/08");
 //			Date d1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 //			dto.sdm_datebirth =Convert.toString(d1);
