@@ -31,6 +31,7 @@ public class EducationController extends CRUDController<Education>{
 	
 	public class EducationDTO extends DTOModel {
 		public int edu_id;
+		public int norut;
 		public String nama;
 		public int sdm_id;
 		public String edu_name;
@@ -48,13 +49,15 @@ public class EducationController extends CRUDController<Education>{
 		String temp;
 		
 		Long totalItems = this.getTotalItems(params);
-					
+			int number = 1;
 			for (Education edu : listEducation) {
 				Sdm sdm = edu.parent(Sdm.class);
 				Degree degree = edu.parent(Degree.class);
 				
 				EducationDTO dto = new EducationDTO();
 				dto.fromModelMap(edu.toMap());
+				dto.norut = number;
+				number++;
 				dto.nama = Convert.toString(sdm.get("sdm_name"));
 				dto.degree_name = Convert.toString(degree.get("degree_name"));
 				dto.edu_startdate = (Convert.toString(edu.get("edu_startdate"))).substring(0, 4);

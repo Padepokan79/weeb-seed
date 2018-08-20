@@ -34,6 +34,7 @@ import core.javalite.controllers.CRUDController;
 public class EmploymentController extends CRUDController<Employment>{
 	public class KelolaEmployment extends DTOModel{
 		public int employmentId;
+		public int norut;
 		public int sdmId;
 		public String sdmName;
 		public String employmentCorpname;
@@ -48,13 +49,15 @@ public class EmploymentController extends CRUDController<Employment>{
 		LazyList<Employment> listEmployment = Employment.findAll();
 		
 		Long totalitems = this.getTotalItems(params);
-		
+		int number = 1;
 		for(Employment employment : listEmployment) {
 			Sdm sdm = employment.parent(Sdm.class);
 			
 			KelolaEmployment dto = new KelolaEmployment();
 			dto.fromModelMap(employment.toMap());
 			dto.fromModelMap(sdm.toMap());
+			dto.norut = number;
+			number++;
 			dto.sdmId = Convert.toInteger(sdm.get("sdm_id"));
 			dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 			dto.employmentId = Convert.toInteger(employment.get("employment_id"));
