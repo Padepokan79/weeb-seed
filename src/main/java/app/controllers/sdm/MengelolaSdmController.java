@@ -3,7 +3,8 @@
  */
 package app.controllers.sdm;
 
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import core.io.model.CorePage;
 import core.io.model.DTOModel;
 import core.io.model.PagingParams;
 import core.javalite.controllers.CRUDController;
+import java.text.SimpleDateFormat;
 
 /**
  *web-seed
@@ -44,11 +46,14 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	public class SdmDTO extends DTOModel {
 		public int sdm_id;
 		public int sdmlvl_id;
+		public int religion_id;
+		public int health_id;
+		public int status_id;
+		public int contracttype_id;
 		public String sdm_level;
 		public String contracttype;
-		public String gender;
-		public String religion;
-		public String health;
+		public int gender_id;
+		public String religion_name;
 		public String sdm_name;
 		public String sdm_nik;
 		public String sdm_ktp;
@@ -67,6 +72,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public int norut;
 		public String sdm_datebirth;
 		public String sdm_notification;
+		
 	}
 
 	
@@ -129,10 +135,17 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 				dto.sdm_notification = "grey"; // notif warna grey
 			}
             
-			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
-			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
-			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
-			String status = Convert.toString(sdm.get("sdm_status"));
+
+//			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
+//			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
+//			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
+			
+            dto.sdm_datebirth = Convert.toString(sdm.get("sdm_datebirth"));
+			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
+			dto.sdm_endcontract = Convert.toString(sdm.get("sdm_endcontract"));
+			
+			
+            String status = Convert.toString(sdm.get("sdm_status"));
 			if(status.equals("1")) {
 				dto.sdm_status = "Active";
 			}
@@ -141,9 +154,18 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
-			dto.gender = Convert.toString(gender.get("gender_name"));
-			dto.religion = Convert.toString(religion.get("religion_name"));
-			dto.health = Convert.toString(health.get("health_status"));
+			dto.sdm_contractloc = Convert.toString(sdm.get("sdm_contractloc"));
+			
+//			if(dto.sdm_contractloc == "1" ) {
+//				dto.sdm_contractloc = "Bandung";
+//			}
+//			else
+//			{
+//				dto.sdm_contractloc = "Luar Bandung";
+//			}
+//			String date = Convert.toString("2018/09/08");
+//			Date d1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+//			dto.sdm_datebirth =Convert.toString(d1);
 			listMapSdm.add(dto.toModelMap());
 		}
 	

@@ -30,7 +30,7 @@ public class SdmSkill extends Model {
 	
 	static int limit = 2;
 	@SuppressWarnings("rawtypes")
-	public static List<Map> getGroupSdmSkill() {
+	public static List<Map> getGroupSdmSkill(String filter) {
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();
@@ -42,6 +42,12 @@ public class SdmSkill extends Model {
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
 				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n");
+		
+		if(Strings.isNullOrEmpty(filter)) {
+			query.append("WHERE " + filter);
+		}
+				
+		query.append("GROUP BY sdmskill.SDM_NIK, sdmskill.SDM_NAME");
 
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -76,39 +82,16 @@ public class SdmSkill extends Model {
 		
 		return lisdata;
 	}
-<<<<<<< HEAD
-}
-=======
     
 //	AUTHOR 	: Hendra Kurniawan
 //	UPDATE  : 15-08-2018 16:00  
     public static List<Map> getEndContract(int sdmId) {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
-    	query.append("SELECT  CONCAT(IF(DAY(p.PROJECT_ENDDATE)=0,'',CONCAT(DAY(p.PROJECT_ENDDATE), '')), \r\n" + 
-    			"						' ', \r\n" + 
-    			"								IF(MONTH(p.PROJECT_ENDDATE)=1,'Januari',\r\n" + 
-    			"							  IF(MONTH(p.PROJECT_ENDDATE)=2,'Februari', \r\n" + 
-    			"								  IF(MONTH(p.PROJECT_ENDDATE)=3,'Maret', \r\n" + 
-    			"									  IF(MONTH(p.PROJECT_ENDDATE)=4,'April', \r\n" + 
-    			"										  IF(MONTH(p.PROJECT_ENDDATE)=5,'Mei', \r\n" + 
-    			"											  IF(MONTH(p.PROJECT_ENDDATE)=6,'Juni', \r\n" + 
-    			"												  IF(MONTH(p.PROJECT_ENDDATE)=7,'Juli', \r\n" + 
-    			"												  IF(MONTH(p.PROJECT_ENDDATE)=8,'Agustus', \r\n" + 
-    			"														  IF(MONTH(p.PROJECT_ENDDATE)=9,'September', \r\n" + 
-    			"															  IF(MONTH(p.PROJECT_ENDDATE)=10,'Oktober',\r\n" + 
-    			"																  IF(MONTH(p.PROJECT_ENDDATE)=11,'November', \r\n" + 
-    			"																	  IF(MONTH(p.PROJECT_ENDDATE)=12,'Desember','')))))))))))), \r\n" + 
-    			"							  ' ', \r\n" + 
-    			"							  IF(YEAR(p.PROJECT_ENDDATE)=0,'',YEAR(p.PROJECT_ENDDATE))) as PROJECT_ENDDATE \r\n" + 
-    			"				FROM sdm AS s, project AS p \r\n" + 
-    			"				WHERE s.SDM_ID = p.SDM_ID  \r\n" + 
-    			"				AND s.SDM_ID = ? ORDER BY p.PROJECT_ENDDATE DESC LIMIT 1");
-    	
-    	System.out.println("query : " + query.toString());
+    	query.append("Select project.project_enddate from sdm INNER JOIN project ON sdm.sdm_id = project.sdm_id WHERE sdm.sdm_id = ? ORDER BY project.PROJECT_ENDDATE DESC LIMIT 1\r\n" + 
+    			"");
     	params.add(sdmId);
     	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
     	return listdata;
     }
 }
->>>>>>> origin/master

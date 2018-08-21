@@ -20,6 +20,7 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		public int skillId;
 		public String skilltypeName;
 		public String skillName;
+		public int skilltypeId;
 	}
 	 
 //	Update By 	: Nurdhiat Chaudhary Malik
