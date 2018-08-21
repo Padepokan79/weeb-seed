@@ -76,4 +76,39 @@ public class SdmSkill extends Model {
 		
 		return lisdata;
 	}
+<<<<<<< HEAD
 }
+=======
+    
+//	AUTHOR 	: Hendra Kurniawan
+//	UPDATE  : 15-08-2018 16:00  
+    public static List<Map> getEndContract(int sdmId) {
+    	List<Object> params = new ArrayList<Object>();
+    	StringBuilder query = new StringBuilder();
+    	query.append("SELECT  CONCAT(IF(DAY(p.PROJECT_ENDDATE)=0,'',CONCAT(DAY(p.PROJECT_ENDDATE), '')), \r\n" + 
+    			"						' ', \r\n" + 
+    			"								IF(MONTH(p.PROJECT_ENDDATE)=1,'Januari',\r\n" + 
+    			"							  IF(MONTH(p.PROJECT_ENDDATE)=2,'Februari', \r\n" + 
+    			"								  IF(MONTH(p.PROJECT_ENDDATE)=3,'Maret', \r\n" + 
+    			"									  IF(MONTH(p.PROJECT_ENDDATE)=4,'April', \r\n" + 
+    			"										  IF(MONTH(p.PROJECT_ENDDATE)=5,'Mei', \r\n" + 
+    			"											  IF(MONTH(p.PROJECT_ENDDATE)=6,'Juni', \r\n" + 
+    			"												  IF(MONTH(p.PROJECT_ENDDATE)=7,'Juli', \r\n" + 
+    			"												  IF(MONTH(p.PROJECT_ENDDATE)=8,'Agustus', \r\n" + 
+    			"														  IF(MONTH(p.PROJECT_ENDDATE)=9,'September', \r\n" + 
+    			"															  IF(MONTH(p.PROJECT_ENDDATE)=10,'Oktober',\r\n" + 
+    			"																  IF(MONTH(p.PROJECT_ENDDATE)=11,'November', \r\n" + 
+    			"																	  IF(MONTH(p.PROJECT_ENDDATE)=12,'Desember','')))))))))))), \r\n" + 
+    			"							  ' ', \r\n" + 
+    			"							  IF(YEAR(p.PROJECT_ENDDATE)=0,'',YEAR(p.PROJECT_ENDDATE))) as PROJECT_ENDDATE \r\n" + 
+    			"				FROM sdm AS s, project AS p \r\n" + 
+    			"				WHERE s.SDM_ID = p.SDM_ID  \r\n" + 
+    			"				AND s.SDM_ID = ? ORDER BY p.PROJECT_ENDDATE DESC LIMIT 1");
+    	
+    	System.out.println("query : " + query.toString());
+    	params.add(sdmId);
+    	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+    	return listdata;
+    }
+}
+>>>>>>> origin/master

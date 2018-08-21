@@ -5,6 +5,7 @@ package app.models;
  * @update 26 July 2018 
  */
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
+
+import com.ibm.icu.util.Calendar;
 
 import app.models.ContractType;
 import app.models.Gender;
@@ -260,5 +263,47 @@ public class Sdm extends Model{
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString());
 		return lisdata;
+	}
+	
+	
+//	@AUHTOR 	: Malik Chaudhary
+//	@DATE	 	: Aug 15 2018, 09:20AM
+	
+	@SuppressWarnings("rawtypes")
+	public static List<Map> getDataSdm() {	
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT * FROM sdm");
+		System.out.println("query : "+query.toString());
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+		return lisdata;
+	}
+//	@AUHTOR 	: Malik Chaudhary
+//	@DATE	 	: Aug 15 2018, 09:20AM
+	@SuppressWarnings("rawtypes")
+	public static int setSdmHistori(int sdmId, String sdmhistoryStartdate, String sdmhistoryEnddate) {	
+		List<Object> params = new ArrayList<Object>();			
+		String query = ("\r\n" + 
+				"INSERT INTO sdmhistory (SDM_ID, SDMHISTORY_STARTDATE, SDMHISTORY_ENDDATE) \r\n" + 
+				"VALUES (?,?,?)");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId);
+		params.add(sdmhistoryStartdate);
+		params.add(sdmhistoryEnddate);
+		return Base.exec(query, params.toArray(new Object[params.size()]));
+	}
+//	@AUHTOR 	: Malik Chaudhary
+//	@DATE	 	: Aug 15 2018, 04:37PM
+	@SuppressWarnings("rawtypes")
+	public static int updateSdmStatus(int sdmId) {	
+		List<Object> params = new ArrayList<Object>();			
+		String query = ("\r\n" + 
+				"UPDATE sdm SET SDM_STATUS = 0 \r\n" + 
+				"WHERE SDM_ID = ?;");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId);
+		return Base.exec(query, params.toArray(new Object[params.size()]));
 	}
 }
