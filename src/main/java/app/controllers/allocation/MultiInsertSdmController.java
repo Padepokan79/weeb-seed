@@ -59,7 +59,7 @@ public class MultiInsertSdmController extends CRUDController<SdmSkill>{
 				System.out.println("SDM DTO : " + JsonHelper.toJson(sdmDto.toMap()));
 
 				SdmSkill sdmModel = new SdmSkill();
-				sdmModel.fromMap(sdmDto.toModelMap());
+				sdmModel.fromMap(sdmDto.toMap());
 				if (sdmModel.insert()) {
 					System.out.println("Inserted SDM : " + sdmDto.sdm_id);
 				}

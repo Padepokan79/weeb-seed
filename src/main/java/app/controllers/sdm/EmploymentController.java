@@ -46,7 +46,8 @@ public class EmploymentController extends CRUDController<Employment>{
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
 		List<Map<String, Object>> listMapEmployment = new ArrayList<Map<String, Object>>();
-		LazyList<Employment> listEmployment = Employment.findAll();
+		params.setOrderBy("employment_id");
+		LazyList<Employment> listEmployment = (LazyList<Employment>) this.getItems(params);
 		
 		Long totalitems = this.getTotalItems(params);
 		int number = 1;
