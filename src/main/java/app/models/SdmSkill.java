@@ -1,6 +1,7 @@
 package app.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,6 @@ import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 
 import com.google.common.base.Strings;
-
 import core.io.model.PagingParams;
 
 @Table("sdmskill")
@@ -41,8 +41,8 @@ public class SdmSkill extends Model {
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
 				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
-				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
-				"GROUP BY sdm.SDM_NIK, sdm.SDM_NAME");
+				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n");
+
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
