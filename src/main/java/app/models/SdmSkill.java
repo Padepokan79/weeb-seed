@@ -76,4 +76,16 @@ public class SdmSkill extends Model {
 		
 		return lisdata;
 	}
+  
+//	AUTHOR 	: Hendra Kurniawan
+//	UPDATE  : 15-08-2018 16:00  
+    public static List<Map> getEndContract(int sdmId) {
+    	List<Object> params = new ArrayList<Object>();
+    	StringBuilder query = new StringBuilder();
+    	query.append("Select project.project_enddate from sdm INNER JOIN project ON sdm.sdm_id = project.sdm_id WHERE sdm.sdm_id = ? ORDER BY project.PROJECT_ENDDATE DESC LIMIT 1\r\n" + 
+    			"");
+    	params.add(sdmId);
+    	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+    	return listdata;
+    }
 }

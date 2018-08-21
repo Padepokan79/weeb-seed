@@ -13,9 +13,12 @@
  * Copyright Rizaldi R_Nensia - >R<
  */
 
-
-
-
+/*
+ * ---------------
+ * Modified By    : Malik Chaudhary
+ * Last Modified  : Kamis, 16th Aug 2018 09:25 AM
+ * ---------------
+*/
 package app.controllers.project;
 
 import core.io.helper.Validation;
@@ -40,6 +43,7 @@ import com.ibm.icu.util.Calendar;
 
 import app.controllers.allocation.MengelolaSkillController.KelolaSkill;
 import app.controllers.example.crud.CustomAllInOneDTOController.CustomAllInOneDTO;
+import app.models.Clients;
 import app.models.Project;
 import app.models.Sdm;
 import app.models.Skill;
@@ -52,7 +56,8 @@ public class MengelolaProjectController extends CRUDController<Project> {
 	public class MengelolaProject extends DTOModel{
 		public int projectId;
 		public int sdmId;
-		public int sdmNIK;
+		public String sdmNik;
+		public int norut;
 		public String sdmName;
 		public String projectName;
 		public String projectDesc;
@@ -80,15 +85,18 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		DateFormat dateAkhir = new SimpleDateFormat("dd/MM/yyyy");
 		
 		List<Map<String, Object>> listMapProject = new ArrayList<Map<String, Object>>();
-		LazyList<Project> listProject = Project.findAll();
+		LazyList<Project> listProject = (LazyList<Project>)this.getItems(params);
 		params.setOrderBy("project_id");
 		Long totalitems = this.getTotalItems(params);
-	
+		int number = 1;
 		for(Project project : listProject) {
 			Sdm sdm = project.parent(Sdm.class);		
 			MengelolaProject dto = new MengelolaProject();
 			dto.fromModelMap(project.toMap());
+			dto.norut					= number;
+			number++;
 			dto.sdmName 				= Convert.toString(sdm.get("sdm_name"));
+			dto.sdmNik 					= Convert.toString(sdm.get("sdm_nik"));
 			dto.projectName 			= Convert.toString(project.get("project_name"));
 			dto.projectDesc 			= Convert.toString(project.get("project_desc"));			
 			dto.projectRole 			= Convert.toString(project.get("project_role"));			
@@ -178,21 +186,95 @@ public class MengelolaProjectController extends CRUDController<Project> {
 	@Override
 	public Project customInsertValidation(Project item) throws Exception {
 		LazyList<Project> listProjVal = Project.findAll();
-		String name = item.getString("project_name");
+		String project_name = item.getString("project_name");
 		
-		for(Project project : listProjVal) {
-			MengelolaProject dto = new MengelolaProject();
-			dto.fromModelMap(project.toMap());
-			if (name.equalsIgnoreCase(dto.projectName)) {
-				Validation.required(null, "Nama project sudah ada");
-			}
-			
-		}
+		String sdm_name = item.getString("sdm_id");
+		String p_role = item.getString("project_role");
+		String p_site = item.getString("project_projectsite");
+		String p_enddate = item.getString("project_enddate");
+		String p_startdate = item.getString("project_startdate");
+		String p_desc = item.getString("project_desc");
 		
-		Validation.required(name, "Nama project harus diisi");
+//		for(Project project : listProjVal) {
+//			MengelolaProject dto = new MengelolaProject();
+//			dto.fromModelMap(project.toMap());
+//			if (name.equalsIgnoreCase(dto.projectName)) {
+//				Validation.required(null, "Nama project sudah ada");
+//			}
+//			
+//		}
+		Validation.required(sdm_name, "SDM name harus diisi");
+		Validation.required(project_name, "Project name harus diisi");
+		
+		Validation.required(p_site, "Project site harus diisi");
+		Validation.required(p_role, "Project role harus diisi");
+		Validation.required(p_startdate, "Project start date harus diisi");
+		Validation.required(p_enddate, "Project end date harus diisi");
+		
 		return super.customInsertValidation(item);
 	}
 
+	//Modified by : Hendra Kurniawan
+    //Date        : 15/08/2018
+	@Override
+	public Map<String, Object> customOnInsert(Project item, Map<String, Object> mapRequest) throws Exception{		
+		Map<String, Object> result = super.customOnInsert(item, mapRequest);
+		
+		String p_apptype = Convert.toString(mapRequest.get("project_apptype"));
+		String p_devtool = Convert.toString(mapRequest.get("project_devtool"));
+		String p_database = Convert.toString(mapRequest.get("project_database"));
+		String p_customer = Convert.toString(mapRequest.get("project_customer"));
+		String p_serveros = Convert.toString(mapRequest.get("project_serveros"));
+		String p_framework = Convert.toString(mapRequest.get("project_framework"));
+		String p_appserver = Convert.toString(mapRequest.get("project_appserver"));
+		String p_otherinfo = Convert.toString(mapRequest.get("project_otherinfo"));
+		String p_devlanguage = Convert.toString(mapRequest.get("project_devlanguage"));
+		String p_technicalinfo = Convert.toString(mapRequest.get("project_technicalinfo"));
+		
+		if(p_apptype == "") {
+			p_apptype = "-";
+		}
+		if(p_devtool == "") {
+			p_devtool = "-";
+		}
+		if(p_database == "") {
+			p_database = "-";
+		}
+		if(p_customer == "") {
+			p_customer = "-";
+		}
+		if(p_serveros == "") {
+			p_serveros = "-";
+		}
+		if(p_framework == "") {
+			p_framework = "-";
+		}	
+		if(p_appserver == "") {
+			p_appserver = "-";
+		}
+		if(p_otherinfo == "") {
+			p_otherinfo = "-";
+		}
+		if(p_devlanguage == "") {
+			p_devlanguage = "-";
+		}
+		if(p_technicalinfo == "") {
+			p_technicalinfo = "-";
+		}
+		
+		item.set("project_apptype", p_apptype);
+		item.set("project_devtool", p_devtool);
+		item.set("project_database", p_database);
+		item.set("project_customer", p_customer);
+		item.set("project_serveros", p_serveros);
+		item.set("project_framework"	, p_framework);
+		item.set("project_appserver", p_appserver);
+		item.set("project_otherinfo", p_otherinfo);
+		item.set("project_devlanguage", p_devlanguage);
+		item.set("project_technicalinfo", p_technicalinfo);
+		item.save();
+		return result;
+	}
 	// public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
 			
 	// 	Map<String, Object> result = super.customOnDelete(item, mapRequest);		

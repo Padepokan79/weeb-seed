@@ -30,12 +30,13 @@ import core.javalite.controllers.CRUDController;
 public class CourseController extends CRUDController<Course>{
 	public class CourseDTO extends DTOModel {
 		public int course_id;
+		public int norut;
 		public String nama;
 		public String course_title;
 		public String course_provider;
 		public String course_place;
 		public String course_duration;
-		public String course_certificate;
+		public String course_certificates;
 		public String course_date;
 	}
 	
@@ -46,14 +47,16 @@ public class CourseController extends CRUDController<Course>{
 		params.setOrderBy("course_id");
 		
 		Long totalItems = this.getTotalItems(params);
-					
+			int number = 1;
 			for (Course course : listCourse) {
 				Sdm sdm = course.parent(Sdm.class);
 				CourseDTO dto = new CourseDTO();
 				dto.fromModelMap(course.toMap());
+				dto.norut = number;
+				number++;
 				dto.nama = Convert.toString(sdm.get("sdm_name"));
 				dto.course_date = Convert.toString(course.get("course_date"));
-				dto.course_certificate = Convert.toString(course.get("course_certificates"));
+				dto.course_certificates = Convert.toString(course.get("course_certificates"));
 				dto.course_provider = Convert.toString(course.get("course_provider"));
 				dto.course_title = Convert.toString(course.get("course_title"));
 				dto.course_duration = Convert.toString(course.get("course_duration"));

@@ -31,6 +31,7 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 	public class HistoryDTO extends DTOModel {
 		public int sdmhistory_id;
 		public int sdm_id;
+		public int norut;
 		public String sdm_name;
 		public String sdm_nik;
 		public String sdm_address;
@@ -46,11 +47,13 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		params.setOrderBy("sdmhistory_id");
 		
 		Long totalItems = this.getTotalItems(params);
-					
+			int number = 1;
 			for (SdmHistory history : listHistory) {
 				Sdm sdm = history.parent(Sdm.class);
 				HistoryDTO dto = new HistoryDTO();
 				dto.fromModelMap(history.toMap());
+				dto.norut = number;
+				number++;
 				dto.sdm_name = Convert.toString(sdm.get("sdm_name"));
 				dto.sdm_nik = Convert.toString(sdm.get("sdm_nik"));
 				dto.sdm_address = Convert.toString(sdm.get("sdm_address"));
