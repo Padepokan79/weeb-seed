@@ -37,7 +37,7 @@ public class MultifilteringSdmController extends CRUDController<SdmSkill>{
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
 		Long totalItems = this.getTotalItems(params);
-		List<Map> listData = SdmSkill.getGroupSdmSkill();
+		List<Map> listData = SdmSkill.getGroupSdmSkill(params.filterQuery());
 		for(Map map: listData) {
 			map.put("SDMSKILL_ID", Convert.toString(map.get("SDMSKILL_ID")));
 			map.put("SDM_NIK", Convert.toString(map.get("SDM_NIK")));
