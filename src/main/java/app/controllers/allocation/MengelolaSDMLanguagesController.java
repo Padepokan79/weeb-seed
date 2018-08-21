@@ -26,7 +26,7 @@ public class MengelolaSDMLanguagesController extends CRUDController<SdmLanguage>
     public CorePage customOnReadAll(PagingParams params) throws Exception {        
         List<Map<String, Object>> listMapSdmLanguage = new ArrayList<Map<String, Object>>();
         params.setOrderBy("sdm_id");
-        LazyList<SdmLanguage> listSdmLanguage = this.getItems(params);
+        LazyList<SdmLanguage> listSdmLanguage = (LazyList<SdmLanguage>) this.getItems(params);
         
 //      LazyList<? extends Model> items = this.getItems(params);
         Long totalItems = this.getTotalItems(params);

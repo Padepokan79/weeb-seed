@@ -44,7 +44,7 @@ public class CourseController extends CRUDController<Course>{
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
 		List<Map<String, Object>> listMapCourse = new ArrayList<Map<String, Object>>();
 		params.setOrderBy("course_id");
-		LazyList<Course> listCourse = this.getItems(params);
+		LazyList<Course> listCourse = (LazyList<Course>) this.getItems(params);
 
 		
 		Long totalItems = this.getTotalItems(params);
