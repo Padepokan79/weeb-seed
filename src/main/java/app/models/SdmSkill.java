@@ -30,7 +30,7 @@ public class SdmSkill extends Model {
 	
 	static int limit = 2;
 	@SuppressWarnings("rawtypes")
-	public static List<Map> getGroupSdmSkill() {
+	public static List<Map> getGroupSdmSkill(String filter) {
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();
@@ -42,6 +42,12 @@ public class SdmSkill extends Model {
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
 				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n");
+		
+		if(Strings.isNullOrEmpty(filter)) {
+			query.append("WHERE " + filter);
+		}
+				
+		query.append("GROUP BY sdmskill.SDM_NIK, sdmskill.SDM_NAME");
 
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -76,7 +82,7 @@ public class SdmSkill extends Model {
 		
 		return lisdata;
 	}
-  
+    
 //	AUTHOR 	: Hendra Kurniawan
 //	UPDATE  : 15-08-2018 16:00  
     public static List<Map> getEndContract(int sdmId) {

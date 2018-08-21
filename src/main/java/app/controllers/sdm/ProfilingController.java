@@ -44,9 +44,9 @@ public class ProfilingController extends CRUDController <Profiling> {
 	
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
-		System.out.println("MASUK SINI !!!");
 		List<Map<String, Object>> listMapProfiling = new ArrayList<Map<String, Object>>();
-		LazyList<Profiling> listProfiling = Profiling.findAll();
+		params.setOrderBy("profiling_id");
+		LazyList<Profiling> listProfiling = this.getItems(params);
 		
 		Long totalitems = this.getTotalItems(params);
 		int number = 1;
