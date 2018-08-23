@@ -32,6 +32,7 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		public String psycoName;
 		public String sdmpsycologicalDesc;
 		public Date psycologicalDate;
+		public int num;
 	}
 	
 	

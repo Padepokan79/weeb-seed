@@ -15,6 +15,7 @@ import org.javalite.common.JsonHelper;
 
 import com.google.common.base.Strings;
 
+import app.controllers.allocation.MengelolaSdmSkillController.MengelolaSdmSkillDTO;
 import app.models.Sdm;
 import app.models.SdmSkill;
 import app.models.Skill;
@@ -27,86 +28,27 @@ import core.javalite.controllers.CRUDController;
 /**
  * @author : Malik Chaudhary
  * @Date   : Aug 10, 2018 07:51 AM
- * 
+ * @update : Khairil Anwar
+ * @Date   : Aug 16, 2018 15:06 PM
  */
-public class MultifilteringSdmController extends CRUDController<SdmSkill>{
-	public class FilteringDTO extends DTOModel{
-		public int sdmskillId;
-		public String sdmNik;
-		public String sdmName;
-		public String skilltypeName;
-		public String skillName;
-		public int sdmskillValue;
-	}
-	
-	
-	
-//	public Map<String, Object> getData() throws Exception {
-//
-//		int skillId = 5;
-//		int sdmskillValue = 7;
-//		List<Map<String, Object>> listMapFilter = new ArrayList<Map<String, Object>>();
-//		List<Map> listData = new ArrayList<>();
-//		
-//		Map<String, Object> tampil = new HashMap<>();
-//		
-//		List<Map> dataFromQuery = SdmSkill.getMultifiltering(skillId,sdmskillValue);
-//		for (Map map : dataFromQuery) { 
-//			listMapFilter.add(map);
-//		}
-//		LazyList<SdmSkill> listFilter = (LazyList<SdmSkill>)this.getItems(params);
-//		
-//		Map<String , Object> listMapFilter  = new HashMap<>();
-//		listMapFilter.put(null, listData);
-//		System.out.println(JsonHelper.toJsonString(listMapFilter));
-//		return listMapFilter;
-//	}
-	
-	@Override
-	public CorePage customOnReadAll(PagingParams params) throws Exception {		
-		int skillId = 5;
-		int sdmskillValue = 7;
-		
-		List<Map<String, Object>> listMapFilter = new ArrayList<Map<String, Object>>();
-		
-		Long totalItems = this.getTotalItems(params);
-		
-		List<Map> dataFromQuery = SdmSkill.getMultifiltering();
-		for (Map map : dataFromQuery) { 
-			//FilteringDTO dto = new FilteringDTO();
-			//dto.fromModelMap( ((DTOModel) map).toMap());
-			listMapFilter.add(map);
-			
-		}
 
-		return new CorePage(listMapFilter, totalItems);			
-	}
+public class MultifilteringSdmController extends CRUDController<SdmSkill>{
 	
-	/* (non-Javadoc)
-	 * @see core.javalite.controllers.CRUDController#customOnReadAll(core.io.model.PagingParams)
-	 */
-//	@Override
-//	public CorePage customOnReadAll(PagingParams params) throws Exception {
-//		List<Map<String, Object>> listMapFilter = new ArrayList<Map<String, Object>>();
-//		LazyList<SdmSkill> listFilter = (LazyList<SdmSkill>)this.getItems(params);
-//		
-//		Long totalItems = this.getTotalItems(params);
-//		
-//		for(SdmSkill filter: listFilter) {
-//			Sdm sdm 			= filter.parent(Sdm.class);
-//			Skill skill 		= filter.parent(Skill.class);
-//			SkillType skilltype = filter.parent(SkillType.class);
-//			
-//			FilteringDTO dto = new FilteringDTO();
-//			dto.fromModelMap(filter.toMap());
-//			dto.sdmNik 			= Convert.toString(sdm.get("sdm_nik"));
-//			dto.sdmName 		= Convert.toString(sdm.get("sdm_name"));
-//			dto.skilltypeName 	= Convert.toString(skilltype.get("skilltype_name"));
-//			dto.skillName 		= Convert.toString(skill.get("skill_name"));
-//			listMapFilter.add(dto.toModelMap());
-//		}
-//		
-//		return new CorePage(listMapFilter, totalItems);
-//	}
+	public CorePage customOnReadAll(PagingParams params) throws Exception {		
+		List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
+		Long totalItems = this.getTotalItems(params);
+		List<Map> listData = SdmSkill.getGroupSdmSkill(params.filterQuery());
+		for(Map map: listData) {
+			map.put("SDMSKILL_ID", Convert.toString(map.get("SDMSKILL_ID")));
+			map.put("SDM_NIK", Convert.toString(map.get("SDM_NIK")));
+			map.put("SDM_NAME", Convert.toString(map.get("SDM_NAME")));
+			map.put("SKILLTYPE_NAME", Convert.toString(map.get("SKILLTYPE_NAME")).replace("-", System.getProperty("line.separator")));
+			map.put("SKILL_NAME", Convert.toString(map.get("SKILL_NAME")).replace("-", System.getProperty("line.separator")));
+			map.put("SDMSKILL_VALUE", Convert.toString(map.get("SDMSKILL_VALUE")).replace(",", System.getProperty("line.separator")));
+			listMapSdmSkill.add(map);
+		}
+		
+		return new CorePage(listMapSdmSkill, totalItems);			
+	}	
 
 }

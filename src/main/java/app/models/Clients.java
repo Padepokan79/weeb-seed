@@ -13,6 +13,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("clients")
 @IdName("client_id")
-public class Clients extends Model{
 
+public class Clients extends Model{
+	
 }

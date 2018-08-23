@@ -1,7 +1,4 @@
-/**
- * 
- */
-package app.controllers.allocation;
+package app.controllers.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,7 @@ import org.javalite.common.Convert;
 
 import app.models.SdmSkill;
 import app.models.Sdm;
+import app.models.SdmHiring;
 import app.models.Skill;
 import app.models.SkillType;
 import core.io.enums.ActionTypes;
@@ -28,17 +26,16 @@ import core.javalite.controllers.CRUDController;
 
 
 /*
- * Created by Vikri Ramdhani
- * 14 Agustus 2018
+ * Created by Khairil Anwar
+ * 21 Agustus 2018
  */
 
-public class MultiInsertSdmController extends CRUDController<SdmSkill>{
+public class MultiHiringController extends CRUDController<SdmHiring>{
 	
-	public class InputSdmSkillDTO extends DTOModel{
-		public int skill_id;
-		public int skilltype_id;
-		public int sdmskill_value;
+	public class InputAssignDTO extends DTOModel{
+		public int client_id;
 		public int sdm_id;
+		public int hirestat_id;
 	}
 
 	@POST
@@ -49,23 +46,23 @@ public class MultiInsertSdmController extends CRUDController<SdmSkill>{
 			response().setActionType(ActionTypes.CREATE);
 		
 			Map<String, Object> mapRequest = getRequestBody();
-			List<Map<String, Object>> listSDM = MapHelper.castToListMap((List<Map>) mapRequest.get("listsdm"));
+			List<Map<String, Object>> listHiring = MapHelper.castToListMap((List<Map>) mapRequest.get("listhiring"));
 			
-			for (Map<String, Object> sdm : listSDM) {
-				System.out.println("SDM : " + JsonHelper.toJson(sdm));
-				InputSdmSkillDTO sdmDto = new InputSdmSkillDTO ();
-				sdmDto.fromMap(sdm);
+			for (Map<String, Object> hiring : listHiring) {
+				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
+				InputAssignDTO sdmhiringDto = new InputAssignDTO ();
+				sdmhiringDto.fromMap(hiring);
 
-				System.out.println("SDM DTO : " + JsonHelper.toJson(sdmDto.toMap()));
+				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmhiringDto.toMap()));
 
-				SdmSkill sdmModel = new SdmSkill();
-				sdmModel.fromMap(sdmDto.toMap());
+				SdmHiring sdmModel = new SdmHiring();
+				sdmModel.fromMap(sdmhiringDto.toModelMap());
 				if (sdmModel.insert()) {
-					System.out.println("Inserted SDM : " + sdmDto.sdm_id);
+					System.out.println("Inserted Hiring : " + sdmhiringDto.sdm_id);
 				}
 			}
 			
-			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listSDM);
+			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
 
 			Base.commitTransaction();
 		} catch (Exception e) {

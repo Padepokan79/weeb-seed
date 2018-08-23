@@ -37,6 +37,7 @@ public class EducationController extends CRUDController<Education>{
 		public String edu_name;
 		public String edu_subject;
 		public String degree_name;
+		public int degree_id;
 		public String edu_startdate;
 		public String edu_enddate;
 	}
@@ -44,7 +45,13 @@ public class EducationController extends CRUDController<Education>{
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapEducation = new ArrayList<Map<String, Object>>();
-		LazyList<Education> listEducation = Education.findAll();	
+
+		/*
+		 * Updated by Alifhar Juliansyah
+		 * 20 August 2018, 16:27
+		 */
+		LazyList<Education> listEducation = (LazyList<Education>)this.getItems(params);
+		
 		params.setOrderBy("edu_id");
 		String temp;
 		
