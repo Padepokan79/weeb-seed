@@ -48,7 +48,6 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public int sdmlvl_id;
 		public int religion_id;
 		public int health_id;
-		public int status_id;
 		public int contracttype_id;
 		public String sdm_level;
 		public String contracttype;
