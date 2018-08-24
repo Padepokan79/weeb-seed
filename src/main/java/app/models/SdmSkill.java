@@ -25,8 +25,8 @@ import core.io.model.PagingParams;
 
 public class SdmSkill extends Model {
 	
-//	AUTHOR 	: Malik Chaudhary
-//	UPDATE  : 09-08-2018 16:00
+//	AUTHOR 	: Khairil Anwar
+//	UPDATE  : 16-08-2018 13:00
 	
 	static int limit = 2;
 	@SuppressWarnings("rawtypes")
@@ -35,25 +35,28 @@ public class SdmSkill extends Model {
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT sdmskill.SDMSKILL_ID as SDMSKILL_ID, sdm.SDM_NIK as SDM_NIK, sdm.SDM_NAME as SDM_NAME, \r\n" + 
-				"GROUP_CONCAT(skilltype.SKILLTYPE_NAME SEPARATOR '-') as SKILLTYPE_NAME,\r\n" + 
-				"GROUP_CONCAT(skills.SKILL_NAME SEPARATOR '-') as SKILL_NAME, \r\n" + 
-				"GROUP_CONCAT(sdmskill.SDMSKILL_VALUE SEPARATOR ',') as SDMSKILL_VALUE\r\n" + 
+				"GROUP_CONCAT(skilltype.SKILLTYPE_NAME SEPARATOR '-'), \r\n" + 
+				"GROUP_CONCAT(skills.SKILL_NAME SEPARATOR '-'), \r\n" + 
+				"GROUP_CONCAT(sdmskill.SDMSKILL_VALUE SEPARATOR ',') \r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
 				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n");
 		
-		if(Strings.isNullOrEmpty(filter)) {
-			query.append("WHERE " + filter);
+		if(!Strings.isNullOrEmpty(filter)) {
+			query.append("WHERE " + filter + "\r\n");
 		}
 				
-		query.append("GROUP BY sdmskill.SDM_NIK, sdmskill.SDM_NAME");
+		query.append("GROUP BY sdm.SDM_NIK, sdm.SDM_NAME");
 
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
 		return lisdata;		
 	}
+
+//	AUTHOR 	: Malik Chaudhary
+//	UPDATE  : 09-08-2018 16:00
 	
     @SuppressWarnings("rawtypes")
 	public static List<Map> getMultifiltering() {	
