@@ -13,6 +13,7 @@ import org.javalite.activeweb.annotations.POST;
 import org.javalite.common.Convert;
 
 import app.models.SdmSkill;
+import app.controllers.project.MultiHiringController.InputHiringDTO;
 import app.models.Sdm;
 import app.models.SdmHiring;
 import app.models.Skill;
@@ -31,6 +32,8 @@ import core.javalite.controllers.CRUDController;
 /*
  * Created by Khairil Anwar
  * 21 Agustus 2018
+ * Updated by Khairil Anwar
+ * 28 Agustus 2018
  */
 
 public class MultiInsertHiringAssignController extends CRUDController<SdmHiring>{
@@ -55,23 +58,41 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmHiring>
 			response().setActionType(ActionTypes.CREATE);
 		
 			Map<String, Object> mapRequest = getRequestBody();
-			List<Map<String, Object>> listAssignment = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
+			List<Map<String, Object>> listHiring = MapHelper.castToListMap((List<Map>) mapRequest.get("listhiring"));
 			
-			for (Map<String, Object> sdm : listAssignment) {
-				System.out.println("SDM Assignment : " + JsonHelper.toJson(sdm));
-				InputAssignDTO sdmassignDto = new InputAssignDTO ();
-				sdmassignDto.fromMap(sdm);
+			for (Map<String, Object> hiring : listHiring) {
+				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
+				InputAssignDTO sdmhiringDto = new InputAssignDTO();
+				sdmhiringDto.fromMap(hiring);
 
-				System.out.println("SDM Assignment DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
+				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmhiringDto.toMap()));
 
-				SdmSkill sdmModel = new SdmSkill();
-				sdmModel.fromMap(sdmassignDto.toModelMap());
-				if (sdmModel.insert()) {
-					System.out.println("Inserted Assigning : " + sdmassignDto.sdm_id);
+				SdmHiring sdmAssignModel = new SdmHiring();
+				sdmAssignModel.fromMap(sdmhiringDto.toModelMap());
+				if (sdmAssignModel.insert()) {
+					System.out.println("Inserted Hiring : " + sdmhiringDto.sdm_id);
+				}
+				sdmAssignModel.getId();
+				
+				List<Map<String, Object>> listAssignment = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
+				
+				for (Map<String, Object> sdm : listAssignment) {
+					System.out.println("SDM Assignment : " + JsonHelper.toJson(sdm));
+					InputAssignDTO sdmassignDto = new InputAssignDTO ();
+					sdmassignDto.fromMap(sdm);
+					sdmassignDto.sdm_id = (int) sdmAssignModel.getId();
+
+					System.out.println("SDM Assignment DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
+
+					SdmSkill sdmSkill = new SdmSkill();
+					sdmSkill.fromMap(sdmassignDto.toModelMap());
+					if (sdmSkill.insert()) {
+						System.out.println("Inserted Assigning : " + sdmassignDto.sdm_id);
+					}
 				}
 			}
 			
-			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listAssignment);
+			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
 
 			Base.commitTransaction();
 		} catch (Exception e) {

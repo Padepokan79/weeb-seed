@@ -32,7 +32,7 @@ import core.javalite.controllers.CRUDController;
 
 public class MultiHiringController extends CRUDController<SdmHiring>{
 	
-	public class InputAssignDTO extends DTOModel{
+	public class InputHiringDTO extends DTOModel{
 		public int client_id;
 		public int sdm_id;
 		public int hirestat_id;
@@ -50,7 +50,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			
 			for (Map<String, Object> hiring : listHiring) {
 				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
-				InputAssignDTO sdmhiringDto = new InputAssignDTO ();
+				InputHiringDTO sdmhiringDto = new InputHiringDTO ();
 				sdmhiringDto.fromMap(hiring);
 
 				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmhiringDto.toMap()));
