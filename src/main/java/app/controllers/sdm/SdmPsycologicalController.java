@@ -32,7 +32,6 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		public String psycoName;
 		public String sdmpsycologicalDesc;
 		public Date psycologicalDate;
-		public int num;
 	}
 	
 	
@@ -44,9 +43,14 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
 		LazyList<SdmPsycological> items = (LazyList<SdmPsycological>)this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
-		
+				
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
-		int number =1;
+
+		/*
+		 * Updated by Alifhar Juliansyah
+		 * 29/08/2018
+		 */
+		int number = params.limit().intValue() * params.offset().intValue() + 1;
 		for(SdmPsycological sdmPsy : items) {
 			Sdm sdm = sdmPsy.parent(Sdm.class);
 			Psychologicals psy = sdmPsy.parent(Psychologicals.class);
