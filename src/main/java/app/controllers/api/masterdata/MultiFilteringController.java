@@ -43,6 +43,10 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 		public String skillName;
 		public String skilltypeName;
 		public String sdmName;
+		public String sdmNik;
+		public String endContract;
+		public String sdmNotification;
+		
 	}
 
 	
@@ -58,49 +62,53 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			List<Map<String, Object>> listParams = MapHelper.castToListMap((List<Map>) mapRequest.get("listsdm"));
 			List<Map> listData = new ArrayList<>();
 //			List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
-			int sdmId = 0;
-			int skilltypeId = 0;
-			int skillId = 0;
-			int value = 0;
-			int operator = 0;
+			String sdmId = "";
+			String skilltypeId = "";
+			String skillId = "";
+			String value = "";
+			String operator = "";
 			
 			for (Map<String, Object> sdm : listParams) {
-				sdmId = Convert.toInteger(sdm.get("sdm_id"));
-				skilltypeId = Convert.toInteger(sdm.get("skilltype_id"));
-				skillId = Convert.toInteger(sdm.get("skill_id"));
-				value = Convert.toInteger(sdm.get("sdmskill_value"));
-				operator = Convert.toInteger(sdm.get("operator"));
+				sdmId = Convert.toString(sdm.get("sdm_id"));
+				skilltypeId = Convert.toString(sdm.get("skilltype_id"));
+				skillId = Convert.toString(sdm.get("skill_id"));
+				value = Convert.toString(sdm.get("sdmskill_value"));
+				operator = Convert.toString(sdm.get("operator"));
 			}
 			//1
-			if(sdmId != 0 && skilltypeId == 0 && skillId == 0 && value == 0) {
-				listData = SdmSkill.getbySdm(sdmId);
+			if(sdmId != null && skilltypeId == null && skillId == null && value == null) {
+				int sdm_id = Convert.toInteger(sdmId);
+				listData = SdmSkill.getbySdm(sdm_id);
 			}//2
-			else if(sdmId == 0 && skilltypeId != 0 && skillId == 0 && value == 0) {
-				if(operator == 1) {
+			else if(sdmId == null && skilltypeId != null && skillId == null && value == null) {
+				if(operator.equals("1")) {
 					listData = SdmSkill.getbyCategoryOR(listParams);
-				} else if(operator == 2) {
+				} else if(operator.equals("2")) {
 					listData = SdmSkill.getbyCategoryAND(listParams);
 				}
 			}//3
-			else if(sdmId == 0 && skilltypeId != 0 && skillId != 0 && value != 0) {
-				if(operator == 1) {
+			else if(sdmId == null && skilltypeId != null && skillId != null && value != null) {
+				if(operator.equals("1")) {
 					listData = SdmSkill.getbySkillValueOR(listParams);
-				} else if(operator == 2) {
+				} else if(operator.equals("2")) {
 					//cari query	
 					listData = SdmSkill.getbySkillValueAND(listParams);
 				}
 			}
 			//4
-			else if(sdmId != 0 && skilltypeId != 0 && skillId == 0 && value == 0) {
-				if(operator == 1) {
+			else if(sdmId != null && skilltypeId != null && skillId == null && value == null) {
+				if(operator.equals("1")) {
 					listData = SdmSkill.getbySdmCategoryOR(listParams);
-				}else if(operator == 2) {
+				}else if(operator.equals("2")) {
 					listData = SdmSkill.getbySdmCategoryAND(listParams);
 				}
 			}
 			//5
-			else if(sdmId != 0 && skilltypeId != 0 && skillId != 0 && value != 0) {
+			else if(sdmId != null && skilltypeId != null && skillId != null && value != null) {
 				
+			}
+			else {
+				System.out.println("ga bisa");
 			}
 			MultiFilteringDTO dto = new MultiFilteringDTO();
 			
@@ -110,7 +118,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					dto.skillName = Convert.toString(map.get("skill_name"));;
 					dto.skilltypeName = Convert.toString(map.get("skilltype_name"));;
 					dto.sdmName = Convert.toString(map.get("sdm_name"));
-					
+					dto.sdmNik = Convert.toString(map.get("sdm_nik"));
 					listMapSdmSkill.add(dto.toModelMap());
 				}
 				
