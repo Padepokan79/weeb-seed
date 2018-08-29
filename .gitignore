@@ -1,0 +1,15 @@
+*.iml
+*.iws
+*.ipr
+target
+.idea/
+.DS_Store
+
+.externalToolBuilders/**
+.settings/**
+target/**
+src/main/resources/lib/**
+
+.classpath
+pom.xml.BC
+/bin/

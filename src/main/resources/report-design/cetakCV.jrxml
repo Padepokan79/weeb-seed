@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cetakCV" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9125c092-27f6-4197-a1bb-f9fe09305935">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="data" uuid="242ea491-21d2-4a29-ac2d-25b2448bfb60">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="HEALTH_STATUS" class="java.lang.String"/>
+		<field name="SDM_NAME" class="java.lang.String"/>
+		<field name="SDM_PLACEBIRTH" class="java.lang.String"/>
+		<field name="SDM_DATEBIRTH" class="java.lang.String"/>
+		<field name="GENDER_NAME" class="java.lang.String"/>
+		<field name="RELIGION_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataEduc" uuid="583a3a88-d4ba-4c6d-a53e-3e2275d2420a">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="EDU_STARTDATE" class="java.lang.String"/>
+		<field name="SDM_NAME" class="java.lang.String"/>
+		<field name="EDU_ENDDATE" class="java.lang.String"/>
+		<field name="EDU_NAME" class="java.lang.String"/>
+		<field name="EDU_SUBJECT" class="java.lang.String"/>
+		<field name="DEGREE_NAME" class="java.lang.String"/>
+		<field name="norut" class="java.lang.String"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="220" height="30" uuid="7806ea0e-7853-431a-b5d8-58a41a8bcfd3"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Curriculum Vitae]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="0" width="336" height="30" uuid="0e1cae6d-38d4-4712-af23-eac3622e8efe"/>
+				<box leftPadding="7" rightPadding="8">
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[| 2018]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="490" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="555" height="210" uuid="eaff3167-62f9-4431-a112-d0b094b655b6"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="data" uuid="a0bf336c-1a0a-4508-a3ba-564947ae9224">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("data")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="210" width="555">
+						<textField>
+							<reportElement x="8" y="10" width="100" height="30" uuid="9a2c5ee0-8046-4b52-b99f-52691ca4383f"/>
+							<textFieldExpression><![CDATA[$F{SDM_NAME}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="100" width="100" height="20" uuid="b258b61c-97e9-40e9-a503-a7c8621f8902">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Right">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[PERSONAL DETAIL]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="120" width="100" height="20" uuid="c4cd88f6-9c49-4042-aff2-ab86c960a527">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box rightPadding="4"/>
+							<textElement textAlignment="Right"/>
+							<text><![CDATA[Place of Birth  :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="140" width="100" height="20" uuid="650c502e-1a0c-46cb-a7bb-081362424bf8">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box rightPadding="4"/>
+							<textElement textAlignment="Right"/>
+							<text><![CDATA[Date of Birth  :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="160" width="100" height="20" uuid="8815df90-a945-4364-8375-e5b24d9ef7e8">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box rightPadding="4"/>
+							<textElement textAlignment="Right"/>
+							<text><![CDATA[Religion :]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="100" y="120" width="200" height="20" uuid="aae01b84-71d1-4043-8d5d-eba0c91ceb4e"/>
+							<textFieldExpression><![CDATA[$F{SDM_PLACEBIRTH}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="100" y="140" width="200" height="20" uuid="a223ce0c-eb0f-49b8-b45d-eb1f0a177366"/>
+							<textFieldExpression><![CDATA[$F{SDM_DATEBIRTH}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="100" y="160" width="200" height="20" uuid="24e47855-c28e-48c5-904d-a1b8a49b9e14"/>
+							<textFieldExpression><![CDATA[$F{RELIGION_NAME}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="300" y="120" width="100" height="20" uuid="2fcb2cf7-47dc-413a-b0ce-ff43740d21b3"/>
+							<box rightPadding="7"/>
+							<textElement textAlignment="Right"/>
+							<text><![CDATA[Gender :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="300" y="140" width="100" height="20" uuid="1d90d1b5-0cdc-405f-bd21-27d4102bf2e7"/>
+							<box rightPadding="7"/>
+							<textElement textAlignment="Right"/>
+							<text><![CDATA[Health :]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="400" y="120" width="155" height="20" uuid="d48c5507-4bff-4df1-a447-327d000ac43c"/>
+							<textFieldExpression><![CDATA[$F{GENDER_NAME}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="400" y="140" width="155" height="20" uuid="499f7752-5998-42ff-bab7-43ae9a2134be"/>
+							<textFieldExpression><![CDATA[$F{HEALTH_STATUS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="280" width="555" height="20" uuid="b3025cd6-89c8-473d-88f4-a7d88c9dfdb4"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataEduc" uuid="34e620b3-bb80-42e0-925e-c4b604e987d5">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataEduc")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="555">
+						<textField>
+							<reportElement x="20" y="0" width="100" height="20" uuid="76029ede-03ea-47fd-8265-3e5487cf3546">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{EDU_NAME}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="120" y="0" width="100" height="20" uuid="048cd53f-df3c-41c1-a414-156a481ff06d">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{DEGREE_NAME}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="220" y="0" width="204" height="20" uuid="c57eb67c-dcdc-4351-8dc5-7b792ebb4090">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{EDU_SUBJECT}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="424" y="0" width="65" height="20" uuid="d0487b10-d552-470d-9a54-a384e68ee46e">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{EDU_STARTDATE}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="490" y="0" width="65" height="20" uuid="852857b7-26fd-4896-8654-f0ce03784913">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{EDU_ENDDATE}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="0" width="20" height="20" uuid="9e5fd011-a68b-45b6-bfc6-3e8a6973addd"/>
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA["F."+$F{norut}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="230" width="100" height="30" uuid="384d2711-1cdf-454d-903f-cb9319f163e0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EDUCATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="260" width="100" height="19" uuid="f9bcbc1f-7f02-42f0-8da0-b833246d4bdf"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[School]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="260" width="100" height="19" uuid="6786350a-d879-4718-ad1d-2500c648378d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Degree]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="260" width="204" height="19" uuid="6513dfc5-9b1c-43dd-b0e8-06bc734db6e0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Subject]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="260" width="65" height="20" uuid="ec52624d-87cc-4ad2-b4ba-6225f6aaab25">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="260" width="65" height="20" uuid="037f8da1-8d27-4d84-a3d2-dac773abc72e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="260" width="20" height="19" uuid="63545295-0884-4b2c-bfb0-d88dc08b12c6"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[No]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
