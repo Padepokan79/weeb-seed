@@ -89,10 +89,13 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		params.setOrderBy("project_id");
 		Long totalitems = this.getTotalItems(params);
 		/*
-		 * Edited : Muhamad Rifan Andrian
+		 * Edited : Muhamad Rifan Andrian & Alifhar
 		 * Date	: 29/08/2018
 		 * */
-		int number = params.limit().intValue() * params.offset().intValue()+1;
+		int number=0;
+		if(params.limit()!=null || params.offset()!=null)
+			number = params.limit().intValue() * params.offset().intValue()+1;
+		
 		for(Project project : listProject) {
 			Sdm sdm = project.parent(Sdm.class);
 			MengelolaProject dto = new MengelolaProject();
