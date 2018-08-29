@@ -43,6 +43,7 @@ import java.text.SimpleDateFormat;
  * 13.51.48 24 Jul 2018
  */
 public class MengelolaSdmController extends CRUDController<Sdm> {
+
 	public class SdmDTO extends DTOModel {
 		public int sdm_id;
 		public int sdmlvl_id;
@@ -88,20 +89,36 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	List<Map<String, Object>> listMapSdm = new ArrayList<Map<String, Object>>();
 	LazyList<Sdm> listSdm = (LazyList<Sdm>)this.getItems(params);	
 	params.setOrderBy("sdm_id");
-	
+
 	Long totalItems = this.getTotalItems(params);
-	int noruts=1;
+
+	/*
+	 * Updated by Alifhar Juliansyah
+	 * 29/08/2018
+	 */
+	int noruts = params.limit().intValue() * params.offset().intValue() + 1;
 		for (Sdm sdm : listSdm) {
 			SdmLvl sdmlvl = sdm.parent(SdmLvl.class);
 			ContractType ct = sdm.parent(ContractType.class);
 			Gender gender = sdm.parent(Gender.class);
 			Religion religion = sdm.parent(Religion.class);
 			Health health = sdm.parent(Health.class);
+			
+			/*
+			 * Updated by Alifhar Juliansyah
+			 * 29/08/2018
+			 */
+			Map<String, Object> temp = sdm.toMap();
+			temp.remove("sdm_status");
+			temp.remove("sdm_startcontract");
+			temp.remove("sdm_endcontract");
+			temp.remove("sdm_datebirth");
+			
 			SdmDTO dto = new SdmDTO();
-			dto.fromModelMap(sdm.toMap());
+			dto.fromModelMap(temp);
 			dto.norut = noruts;
 			noruts++;
-			
+						
 			/*
 			 * Updated by Nurdhiat Chaudhary Malik
 			 * 08 Agustus 2018
@@ -167,6 +184,8 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 //			dto.sdm_datebirth =Convert.toString(d1);
 			listMapSdm.add(dto.toModelMap());
 		}
+		
+//		System.out.println((LazyList<Sdm>)this.getItems(params));
 	
 	return new CorePage(listMapSdm, totalItems);		
 	}
