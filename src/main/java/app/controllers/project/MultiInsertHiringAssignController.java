@@ -12,7 +12,7 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activeweb.annotations.POST;
 import org.javalite.common.Convert;
 
-import app.models.SdmSkill;
+import app.models.SdmAssignment;
 import app.controllers.project.MultiHiringController.InputHiringDTO;
 import app.models.Sdm;
 import app.models.SdmHiring;
@@ -36,7 +36,7 @@ import core.javalite.controllers.CRUDController;
  * 28 Agustus 2018
  */
 
-public class MultiInsertHiringAssignController extends CRUDController<SdmHiring>{
+public class MultiInsertHiringAssignController extends CRUDController<SdmAssignment>{
 	
 	public class InputAssignDTO extends DTOModel{
 		public int client_id;
@@ -84,9 +84,9 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmHiring>
 
 					System.out.println("SDM Assignment DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
 
-					SdmSkill sdmSkill = new SdmSkill();
-					sdmSkill.fromMap(sdmassignDto.toModelMap());
-					if (sdmSkill.insert()) {
+					SdmAssignment SdmAssignment = new SdmAssignment();
+					SdmAssignment.fromMap(sdmassignDto.toModelMap());
+					if (SdmAssignment.insert()) {
 						System.out.println("Inserted Assigning : " + sdmassignDto.sdm_id);
 					}
 				}
