@@ -70,7 +70,15 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 
 		params.setOrderBy("sdmassign_id");
 		Long totalItems = this.getTotalItems(params);
+		
+		/*
+		 * Updated by Alifhar Juliansyah	
+		 * 30/08/2018
+		 */
 		int number = 1;
+		if(params.limit() != null)
+			number = params.limit().intValue()+params.offset().intValue()+1;
+
 		for(SdmAssignment sdmassign : listSdmAssignment) {
 			ProjectMethod method 	= sdmassign.parent(ProjectMethod.class);
 			SdmHiring hiring 		= sdmassign.parent(SdmHiring.class);
@@ -98,25 +106,24 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
             cal1.setTime(currentDate);
             cal2.setTime(endProject);
             String diff = Convert.toString(mothsBetween(cal1, cal2));
-//            System.out.println("-----------------> dif : "+diff);
+            
+//            System.out.println("\nSekarang : "+currentDate);
+//            System.out.println("Habis    : "+endProject);
+//            System.out.println("---------------------------> dif : "+diff);
             
             if (Double.parseDouble(diff) == 0) {
             	dto.sdmassign_notification = "black"; // notif warna hitam
-            	
 			}else if(Double.parseDouble(diff) <= 1) {
 				dto.sdmassign_notification = "red"; // notif warna merah
-				
 			}else if(Double.parseDouble(diff) <= 2) {
 				dto.sdmassign_notification = "yellow"; // notif warna kuning
-				
 			}else if(Double.parseDouble(diff) <= 4) {
 				dto.sdmassign_notification = "green"; // notif warna hijau
-				
 			}else if(Double.parseDouble(diff) > 4) {
 				dto.sdmassign_notification = "grey"; // notif warna grey
 			}
-//			System.out.println("----------------------------> "+dto.sdmassign_notification);
-            
+//			System.out.println("----------------------------> "+dto.sdmassign_notification+"\n");
+
 			listMapSdmAssignment.add(dto.toModelMap());
 
 		}

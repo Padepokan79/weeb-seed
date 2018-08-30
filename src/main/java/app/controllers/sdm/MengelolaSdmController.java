@@ -96,7 +96,10 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	 * Updated by Alifhar Juliansyah
 	 * 29/08/2018
 	 */
-	int noruts = params.limit().intValue() * params.offset().intValue() + 1;
+	int noruts = 1;
+	if(params.limit() != null)
+		noruts = params.limit().intValue() * params.offset().intValue() + 1;
+	
 		for (Sdm sdm : listSdm) {
 			SdmLvl sdmlvl = sdm.parent(SdmLvl.class);
 			ContractType ct = sdm.parent(ContractType.class);
