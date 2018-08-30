@@ -53,7 +53,7 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 		public int sdmskillValue;
 		public String projectEnddate;
 		public String sdm_notification;
-		
+		public int norut;
 		
 	}
 	
@@ -77,6 +77,11 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 		
 		List<Map> listData = new ArrayList<>();			
 		String endDate="";
+		
+		int number = 1;
+		if(params.limit() != null)
+			number = params.limit().intValue() * params.offset().intValue() + 1;
+		
 			for (SdmSkill mengelolaSdmSkill : asd) {
 				SkillType skillType = mengelolaSdmSkill.parent(SkillType.class);
 				Skill kemampuan = mengelolaSdmSkill.parent(Skill.class);
@@ -97,6 +102,8 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
 				dto.sdmNik = Convert.toString(sdm.get("sdm_nik"));
 				dto.projectEnddate = getConvertEndProject(endDate);
+				dto.norut = number;
+				number++;
 				
 				java.util.Date judAwl = dateAwal.parse(getCurrentDate());
 				java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(sdm.get("sdm_endcontract").toString()));
