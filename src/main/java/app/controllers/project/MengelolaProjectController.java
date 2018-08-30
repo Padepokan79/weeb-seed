@@ -88,9 +88,16 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		LazyList<Project> listProject = (LazyList<Project>)this.getItems(params);
 		params.setOrderBy("project_id");
 		Long totalitems = this.getTotalItems(params);
-		int number = 1;
+		/*
+		 * Edited : Muhamad Rifan Andrian & Alifhar
+		 * Date	: 29/08/2018
+		 * */
+		int number=0;
+		if(params.limit()!=null || params.offset()!=null)
+			number = params.limit().intValue() * params.offset().intValue()+1;
+		
 		for(Project project : listProject) {
-			Sdm sdm = project.parent(Sdm.class);		
+			Sdm sdm = project.parent(Sdm.class);
 			MengelolaProject dto = new MengelolaProject();
 			dto.fromModelMap(project.toMap());
 			dto.norut					= number;
