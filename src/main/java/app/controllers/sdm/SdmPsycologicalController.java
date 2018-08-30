@@ -50,7 +50,10 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		 * Updated by Alifhar Juliansyah
 		 * 29/08/2018
 		 */
-		int number = params.limit().intValue() * params.offset().intValue() + 1;
+		int number = 1;
+		if(params.limit() != null)
+			number = params.limit().intValue() * params.offset().intValue() + 1;
+		
 		for(SdmPsycological sdmPsy : items) {
 			Sdm sdm = sdmPsy.parent(Sdm.class);
 			Psychologicals psy = sdmPsy.parent(Psychologicals.class);
