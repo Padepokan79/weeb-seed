@@ -56,7 +56,14 @@ public class EducationController extends CRUDController<Education>{
 		String temp;
 		
 		Long totalItems = this.getTotalItems(params);
-			int number = 1;
+			/*
+			* Created By  : Rizaldi
+			* Date Assign : 30-08-2018 08:57
+			*/
+			int number=0;
+			if(params.limit()!=null || params.offset()!=null){
+				number = params.limit().intValue() * params.offset().intValue()+1;
+			}
 			for (Education edu : listEducation) {
 				Sdm sdm = edu.parent(Sdm.class);
 				Degree degree = edu.parent(Degree.class);
