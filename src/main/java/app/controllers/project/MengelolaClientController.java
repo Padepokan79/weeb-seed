@@ -69,7 +69,7 @@ public class MengelolaClientController extends CRUDController<Clients> {
 			dto.clientName = Convert.toString(client.get("client_name"));
 			dto.clientAddress = Convert.toString(client.get("client_address"));
 			dto.clientPicclient = Convert.toString(client.get("client_picclient"));
-			dto.clientPicclient = Convert.toString(client.get("client_mobileclient"));
+			dto.clientMobileclient = Convert.toString(client.get("client_mobileclient"));
 			listMapClient.add(dto.toModelMap());
 		}
 		return new CorePage(listMapClient, totalItems);
