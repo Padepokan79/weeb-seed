@@ -56,7 +56,7 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		* Created By  : Rizaldi
 		* Date Assign : 30-08-2018 08:57
 		*/
-		int number=0;
+		int number=1;
 		if(params.limit()!=null || params.offset()!=null)
 			number = params.limit().intValue() * params.offset().intValue()+1;
 
