@@ -92,7 +92,7 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		 * Edited : Muhamad Rifan Andrian & Alifhar
 		 * Date	: 29/08/2018
 		 * */
-		int number=0;
+		int number=1;
 		if(params.limit()!=null || params.offset()!=null)
 			number = params.limit().intValue() * params.offset().intValue()+1;
 		
