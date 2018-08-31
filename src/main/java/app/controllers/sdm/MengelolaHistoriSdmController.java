@@ -47,7 +47,10 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		params.setOrderBy("sdmhistory_id");
 		
 		Long totalItems = this.getTotalItems(params);
-			int number = 1;
+		int number=1;
+		if(params.limit()!=null || params.offset()!=null)
+			number = params.limit().intValue() * params.offset().intValue()+1;
+		
 			for (SdmHistory history : listHistory) {
 				Sdm sdm = history.parent(Sdm.class);
 				HistoryDTO dto = new HistoryDTO();

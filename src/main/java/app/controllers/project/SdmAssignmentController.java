@@ -77,7 +77,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		 */
 		int number = 1;
 		if(params.limit() != null)
-			number = params.limit().intValue()+params.offset().intValue()+1;
+			number = params.limit().intValue()*params.offset().intValue()+1;
 
 		for(SdmAssignment sdmassign : listSdmAssignment) {
 			ProjectMethod method 	= sdmassign.parent(ProjectMethod.class);

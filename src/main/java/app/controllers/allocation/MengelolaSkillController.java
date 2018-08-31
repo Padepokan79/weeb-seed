@@ -21,6 +21,7 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		public String skilltypeName;
 		public String skillName;
 		public int skilltypeId;
+		public int norut;
 	}
 	 
 //	Update By 	: Nurdhiat Chaudhary Malik
@@ -33,12 +34,18 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		
 		Long totalitems = this.getTotalItems(params);
 		
+		int number = 1;
+		if(params.limit()!=null)
+			number = params.limit().intValue() * params.offset().intValue() + 1;
+		
 		for(Skill skill : listSkill) {
 			SkillType skilltype = skill.parent(SkillType.class);
 			
 			KelolaSkill dto = new KelolaSkill();
 			dto.fromModelMap(skill.toMap());
 			dto.skilltypeName = Convert.toString(skilltype.get("skilltype_name"));
+			dto.norut = number;
+			number++;
 			listMapSkill.add(dto.toModelMap());
 			
 		}
