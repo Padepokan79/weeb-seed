@@ -44,7 +44,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 		public String skilltypeName;
 		public String sdmName;
 		public String sdmNik;
-		public String endContract;
+		public String endContractproject;
 		public String sdm_notification;
 		
 	}
@@ -114,7 +114,11 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			}
 			//5
 			else if(sdmId != null && skilltypeId != null && skillId != null && value != null) {
-				
+				if(operator.equals("1")) {
+					listData = SdmSkill.getbySdmCategoryValueOR(listParams);
+				}else if(operator.equals("2")) {
+					listData = SdmSkill.getbySdmCategoryValueAND(listParams);
+				}
 			}
 			else {
 				System.out.println("Out of option");
@@ -135,7 +139,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					dto.skilltypeName = Convert.toString(map.get("skilltype_name"));;
 					dto.sdmName = Convert.toString(map.get("sdm_name"));
 					dto.sdmNik = Convert.toString(map.get("sdm_nik"));
-					dto.endContract = getConvertEndProject(endContractProject);
+					dto.endContractproject = getConvertEndProject(endContractProject);
 					
 					java.util.Date judAwl = dateAwal.parse(getCurrentDate());
 					java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(map.get("sdm_endcontract").toString()));

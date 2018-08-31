@@ -399,4 +399,116 @@ public class SdmSkill extends Model {
     	return lisdata;
     }    
     
+    
+    public static List<Map> getbySdmCategoryValueOR(List<Map<String, Object>> listParams){
+    	List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		int sdmId=0;
+		for (Map<String, Object> sdm : listParams) {
+			sdmId = Convert.toInteger(sdm.get("sdm_id"));
+		}
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+				"FROM sdmskill\r\n" + 
+				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
+				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" +
+				" where sdmskill.SDM_ID = " + sdmId + " AND  ");
+		int index=1;
+		int jumlahData=listParams.size();
+		for (Map<String, Object> sdm : listParams) {
+			int skilltypeId = Convert.toInteger(sdm.get("skilltype_id"));
+			int skillId = Convert.toInteger(sdm.get("skill_id"));
+			int sdmskillValue = Convert.toInteger(sdm.get("sdmskill_value"));
+			if(index == 1) {
+				query.append(" (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+			}
+			else if(index <= jumlahData) {
+				query.append(" OR (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+			}
+			index++;
+		}
+		
+		query.append(" ORDER BY sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
+		
+    	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+    	return lisdata;
+    }
+    
+    
+    public static List<Map> getbySdmCategoryValueAND(List<Map<String, Object>> listParams){
+    	List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		int sdmId=0;
+		for (Map<String, Object> sdm : listParams) {
+			sdmId = Convert.toInteger(sdm.get("sdm_id"));
+		}
+		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+				"				FROM sdmskill \r\n" + 
+				"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 
+				"				INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
+				"			  WHERE sdmskill.SDM_ID IN (  SELECT tabel1.sdm_id FROM (SELECT SDM_ID,SDMSKILL_ID, SKILLTYPE_ID, SKILL_ID, SDMSKILL_VALUE \r\n" + 
+				"				FROM sdmskill \r\n" + 
+				"				WHERE sdmskill.SDM_ID =  "+ sdmId +"  AND  ");
+		
+		
+		int jumlahData=listParams.size();
+		int skilltypeId=0;
+		int skillId=0;
+		int sdmskillValue=0;
+		int index=1;
+		for (Map<String, Object> sdm : listParams) {
+			skilltypeId = Convert.toInteger(sdm.get("skilltype_id"));
+			skillId = Convert.toInteger(sdm.get("skill_id"));
+			sdmskillValue = Convert.toInteger(sdm.get("sdmskill_value"));
+			if(index == 1) {
+				query.append(" (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+			}
+			else if(index <= jumlahData) {
+				query.append(" OR (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+			}
+			index++;
+		}
+		
+		query.append(") as tabel1\r\n" + 
+				"	WHERE tabel1.SKILL_ID IN (" );
+			index=1;
+			for (Map<String, Object> sdm : listParams) {
+				skillId = Convert.toInteger(sdm.get("skill_id"));
+				jumlahData = listParams.size();
+				query.append(" " + skillId + " ");
+				if(index < jumlahData)
+				{	query.append(", ");
+				}
+				else if(index == jumlahData)
+				{ 
+					query.append(" ) ");
+				}
+				index++;
+			}
+		query.append(" GROUP BY tabel1.SDM_ID HAVING COUNT(DISTINCT tabel1.SKILL_ID)= " + jumlahData);
+		query.append(" ORDER BY tabel1.SDM_ID) ");
+		query.append(" AND sdmskill.SKILL_ID IN ( ");
+			index=1;
+			for (Map<String, Object> sdm : listParams) {
+				skillId = Convert.toInteger(sdm.get("skill_id"));
+				jumlahData = listParams.size();
+				query.append(" " + skillId + " ");
+				if(index < jumlahData)
+				{	query.append(", ");
+				}
+				else if(index == jumlahData)
+				{ 
+					query.append(" ) ");
+				}
+				index++;
+			}
+//		query.append(" ORDER BY sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		System.out.println(lisdata);
+    	return lisdata;
+    }
 }
