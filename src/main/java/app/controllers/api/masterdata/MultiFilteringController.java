@@ -38,7 +38,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 		public int sdmskillId;
 //		public int skillId;
 //		public int skilltypeId;
-//		public int sdmId;
+		public int sdmId;
 		public int sdmskillValue;
 		public String skillName;
 		public String skilltypeName;
@@ -141,6 +141,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					dto.sdmName = Convert.toString(map.get("sdm_name"));
 					dto.sdmNik = Convert.toString(map.get("sdm_nik"));
 					dto.endContractproject = getConvertEndProject(endContractProject);
+					dto.sdmId = Convert.toInteger(map.get("sdm_id"));
 					
 					java.util.Date judAwl = dateAwal.parse(getCurrentDate());
 					java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(map.get("sdm_endcontract").toString()));
