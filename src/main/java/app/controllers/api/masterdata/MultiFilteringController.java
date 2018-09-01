@@ -74,7 +74,8 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			String skillId = null;
 			String value = null;
 			String operator = null;
-			
+			int jumlahData= listParams.size();
+			System.out.println("Jumlah data :" + jumlahData);
 			for (Map<String, Object> sdm : listParams) {
 				sdmId = Convert.toString(sdm.get("sdm_id"));
 				skilltypeId = Convert.toString(sdm.get("skilltype_id"));
@@ -90,33 +91,33 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 				
 			}//2
 			else if(sdmId == null && skilltypeId != null && skillId == null && value == null) {
-				if(operator.equals("1")) {
+				if(operator.equals("1") || jumlahData == 1) {
 					listData = SdmSkill.getbyCategoryOR(listParams);
-				} else if(operator.equals("2")) {
+				} else if(operator.equals("2") && jumlahData != 1) {
 					listData = SdmSkill.getbyCategoryAND(listParams);
 				}
 			}//3
 			else if(sdmId == null && skilltypeId != null && skillId != null && value != null) {
-				if(operator.equals("1")) {
+				if(operator.equals("1") || jumlahData == 1) {
 					listData = SdmSkill.getbySkillValueOR(listParams);
-				} else if(operator.equals("2")) {
+				} else if(operator.equals("2") && jumlahData != 1) {
 					//cari query	
 					listData = SdmSkill.getbySkillValueAND(listParams);
 				}
 			}
 			//4
 			else if(sdmId != null && skilltypeId != null && skillId == null && value == null) {
-				if(operator.equals("1")) {
+				if(operator.equals("1") || jumlahData == 1) {
 					listData = SdmSkill.getbySdmCategoryOR(listParams);
-				}else if(operator.equals("2")) {
+				}else if(operator.equals("2") && jumlahData != 1) {
 					listData = SdmSkill.getbySdmCategoryAND(listParams);
 				}
 			}
 			//5
 			else if(sdmId != null && skilltypeId != null && skillId != null && value != null) {
-				if(operator.equals("1")) {
+				if(operator.equals("1") || jumlahData == 1) {
 					listData = SdmSkill.getbySdmCategoryValueOR(listParams);
-				}else if(operator.equals("2")) {
+				}else if(operator.equals("2") && jumlahData != 1) {
 					listData = SdmSkill.getbySdmCategoryValueAND(listParams);
 				}
 			}
