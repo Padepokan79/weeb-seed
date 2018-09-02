@@ -7,6 +7,7 @@ import java.util.Map;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.common.Convert;
 
+import app.models.SdmSkill;
 import app.models.Skill;
 import app.models.SkillType;
 import core.io.helper.Validation;
@@ -20,6 +21,23 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		public int skillId;
 		public String skilltypeName;
 		public String skillName;
+	}
+
+//	Update By 	: Malik Chaudhary
+//	Update Date	: 02 September 2018
+	
+	public class MengelolaSdmSkillDTO extends DTOModel{
+		public String skilltypeName;
+		public String skillName;
+		public String sdmNik;
+		public String sdmName;
+		public int sdmskillId;
+		public int skillId;
+		public int skilltypeId;
+		public int sdmId;
+		public int sdmskillValue;
+		public String projectEnddate;
+		public String sdm_notification;
 	}
 	 
 //	Update By 	: Nurdhiat Chaudhary Malik
@@ -55,12 +73,32 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 			dto.fromModelMap(skill.toMap());
 			if (name.equalsIgnoreCase(dto.skillName)) {
 				Validation.required(null, "Nama skill sudah ada");
-			}
-			
+			}	
 		}
-		
 		Validation.required(name, "Nama skill harus diisi");
 		return super.customInsertValidation(item);
+	}
+
+
+//	Update By 	: Malik Chaudhary
+//	Update Date	: 02 September 2018
+	
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customOnDelete(org.javalite.activejdbc.Model, java.util.Map)
+	 */
+	@Override
+	public Map<String, Object> customOnDelete(Skill item, Map<String, Object> mapRequest) throws Exception {
+		LazyList<SdmSkill> list = SdmSkill.findAll();
+		Map<String, Object> result = null;
+		for(SdmSkill type: list) {
+			MengelolaSdmSkillDTO dto = new MengelolaSdmSkillDTO();
+			dto.fromModelMap(type.toMap());
+			if (item.getString("skill_id").equalsIgnoreCase(Convert.toString(dto.skillId))) {
+				Validation.required(null, "Skill tidak bisa dihapus, skill ini masih terdata pada sdm skill");
+			}
+		}
+		result = super.customOnDelete(item, mapRequest);
+		return result;
 	}
 	
 }

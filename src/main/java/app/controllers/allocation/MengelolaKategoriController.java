@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.javalite.activejdbc.LazyList;
+import org.javalite.common.Convert;
+
+import app.models.Skill;
 import app.models.SkillType;
 import core.io.helper.Validation;
 import core.io.model.CorePage;
@@ -16,6 +19,16 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 	public class MengelolaCategoryDTO extends DTOModel {
 		public int skilltypeId;
 		public String skilltypeName;
+	}
+
+//	Update By 	: Malik Chaudhary
+//	Update Date	: 02 September 2018
+	
+	public class KelolaSkill extends DTOModel{
+		public int skillId;
+		public String skilltypeName;
+		public int skilltypeId;
+		public String skillName;
 	}
 	
 //	Update By 	: Nurdhiat Chaudhary Malik
@@ -52,36 +65,24 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 
 		return super.customInsertValidation(item);
 	}
+
+//	Update By 	: Malik Chaudhary
+//	Update Date	: 02 September 2018
 	
-	
-//	@Override
-//	public Map<String, Object> customOnInsert(SkillType item, Map<String, Object> mapRequest) throws Exception {
-//				
-//		Map<String, Object> result = super.customOnInsert(item, mapRequest);
-//		MengelolaCategoryDTO dto = new MengelolaCategoryDTO();
-//		dto.fromMap(result);
-//		
-//		return dto.toModelMap();
-//	}
-	
-//	@Override
-//	public Map<String, Object> customOnUpdate(SkillType item, Map<String, Object> mapRequest) throws Exception {
-//				
-//		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
-//		MengelolaCategoryDTO dto = new MengelolaCategoryDTO();
-//		dto.fromModelMap(result);
-//
-//		return dto.toModelMap();
-//	}
-//	
-//	@Override
-//	public Map<String, Object> customOnDelete(SkillType item, Map<String, Object> mapRequest) throws Exception {
-//		
-//		Map<String, Object> result = super.customOnDelete(item, mapRequest);		
-//		MengelolaCategoryDTO dto = new MengelolaCategoryDTO();
-//		dto.fromModelMap(result);
-//		
-//		return dto.toModelMap();
-//	}
+	@Override
+	public Map<String, Object> customOnDelete(SkillType item, Map<String, Object> mapRequest) throws Exception {
+		LazyList<Skill> list = Skill.findAll();
+		Map<String, Object> result = null;
+		for(Skill type: list) {
+			KelolaSkill dto = new KelolaSkill();
+			dto.fromModelMap(type.toMap());
+			if (item.getString("skilltype_id").equalsIgnoreCase(Convert.toString(dto.skilltypeId))) {
+				Validation.required(null, "Kategori tidak bisa dihapus, Kategori ini masih terdata pada skill");
+			}
+		}
+		result = super.customOnDelete(item, mapRequest);
+		return result;
+		
+	}
 	
 }
