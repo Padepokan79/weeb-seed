@@ -3,15 +3,20 @@
  */
 package app.controllers.project;
 
-import java.sql.Date;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
+
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activeweb.annotations.POST;
 import org.javalite.common.Convert;
+
+import com.ibm.icu.util.Calendar;
 
 import app.models.SdmAssignment;
 import app.controllers.project.MultiHiringController.InputHiringDTO;
@@ -45,8 +50,8 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 		public Integer sdm_id;
 		public Integer method_id;
 		public Long sdmhiring_id;
-        public Date sdmassign_startdate;
-        public Date sdmassign_enddate;
+        public String sdmassign_startdate;
+        public String sdmassign_enddate;
         public String sdmassign_loc;
         public String sdmassign_picclient;
         public String sdmassign_picclientphone;
@@ -61,6 +66,17 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 		
 			Map<String, Object> mapRequest = getRequestBody();
 			List<Map<String, Object>> listHiring = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
+			List<Map> listData = new ArrayList<>();
+			int clientId;
+			String clientPIC="";
+			String clientPhone="";
+			
+			Date startdate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.YEAR, 1);
+			Date enddate = cal.getTime();
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
 			for (Map<String, Object> hiring : listHiring) {
 				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
@@ -70,13 +86,25 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmhiringDto.toMap()));
 
 				SdmHiring sdmAssignModel = new SdmHiring();
+				
 				sdmAssignModel.fromMap(sdmhiringDto.toModelMap());
 				if (sdmAssignModel.insert()) {
 					System.out.println("Inserted Hiring : " + sdmhiringDto);
 				}
 				
 				SdmAssignment sdmAssign = new SdmAssignment();
+				clientId = Convert.toInteger(hiring.get("client_id"));
+				listData = sdmAssign.getClientdata(clientId);
+				for (Map mapClient : listData) {
+					clientPhone = Convert.toString(mapClient.get("client_mobileclient"));
+					clientPIC = Convert.toString(mapClient.get("client_picclient"));
+				}
 				sdmhiringDto.sdmhiring_id = (Long) sdmAssignModel.getId();
+				sdmhiringDto.sdmassign_picclient = clientPIC;
+				sdmhiringDto.sdmassign_picclientphone = clientPhone;
+				sdmhiringDto.sdmassign_startdate = format.format(startdate);
+				sdmhiringDto.sdmassign_enddate = format.format(enddate);
+				
 				sdmAssign.fromMap(sdmhiringDto.toModelMap());
 				if (sdmAssign.insert()) {
 					System.out.println("Inserted Assignment : " + sdmhiringDto);
