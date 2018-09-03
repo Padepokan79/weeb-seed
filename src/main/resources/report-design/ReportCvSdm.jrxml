@@ -79,7 +79,7 @@
 		<field name="COURSE_DATE" class="java.lang.String"/>
 		<field name="COURSE_DURATION" class="java.lang.String"/>
 		<field name="nourut" class="java.lang.String"/>
-		<field name="COURSE_CERIFICATE" class="java.lang.String"/>
+		<field name="COURSE_CERTIFICATES" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="dataEmployment" uuid="2d4faaae-2fdd-4e76-8b9a-9756e05b40c5">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -130,7 +130,7 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="288" splitType="Stretch">
+		<band height="279" splitType="Stretch">
 			<componentElement>
 				<reportElement x="1" y="0" width="555" height="160" uuid="eaff3167-62f9-4431-a112-d0b094b655b6"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
@@ -139,7 +139,7 @@
 					</datasetRun>
 					<jr:listContents height="160" width="555">
 						<textField>
-							<reportElement x="0" y="0" width="555" height="50" uuid="9a2c5ee0-8046-4b52-b99f-52691ca4383f"/>
+							<reportElement x="0" y="0" width="280" height="50" uuid="9a2c5ee0-8046-4b52-b99f-52691ca4383f"/>
 							<textElement>
 								<font fontName="Engravers MT" size="18"/>
 							</textElement>
@@ -347,7 +347,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<box>
+				<box rightPadding="4">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -356,14 +356,14 @@
 				<textElement textAlignment="Right">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
-				<text><![CDATA[Religion :  ]]></text>
+				<text><![CDATA[Religion : ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="271" y="160" width="70" height="20" backcolor="#BCD6D5" uuid="af62e6a7-8f05-47a7-846f-0caf2f239875">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<box>
+				<box rightPadding="6">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -372,7 +372,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
-				<text><![CDATA[Language :   ]]></text>
+				<text><![CDATA[Language : ]]></text>
 			</staticText>
 			<componentElement>
 				<reportElement x="341" y="160" width="215" height="20" uuid="087cee51-b391-487e-a78b-c3d170ecbc53">
@@ -431,15 +431,16 @@
 				</jr:list>
 			</componentElement>
 		</band>
-		<band height="81">
+		<band height="76">
 			<staticText>
-				<reportElement x="0" y="11" width="556" height="20" uuid="262d2f47-dc04-4356-984e-dc84f0e24d3b">
+				<reportElement x="0" y="2" width="556" height="30" uuid="262d2f47-dc04-4356-984e-dc84f0e24d3b">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
+				<box topPadding="5"/>
 				<textElement>
 					<font fontName="Calibri" size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[   SKILLS]]></text>
+				<text><![CDATA[ SKILLS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="232" y="32" width="195" height="19" backcolor="#34B1BF" uuid="cc7749c6-60c6-42a9-a77a-28b4a0d41c3a"/>
@@ -455,16 +456,16 @@
 				<text><![CDATA[Skill]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="2" y="51" width="554" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5e603c92-7c97-4774-b1aa-9e27bfd0f9f0">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="2" y="51" width="554" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5e603c92-7c97-4774-b1aa-9e27bfd0f9f0">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataSdmSkill" uuid="eb129569-4177-46cb-b209-baf725f36c2b">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataSkillSdm")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="20" width="554">
+					<jr:listContents height="25" width="554">
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="24" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="bbec5bb2-836a-4c8e-8155-f87573749ee2">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="24" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="bbec5bb2-836a-4c8e-8155-f87573749ee2">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -480,11 +481,11 @@
 							<textFieldExpression><![CDATA[$F{nourut}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="24" y="0" width="206" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="eee27dec-5552-44f5-b7d5-ad3cdf5c8d20">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="24" y="0" width="206" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="eee27dec-5552-44f5-b7d5-ad3cdf5c8d20">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
-							<box>
+							<box bottomPadding="0">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -496,7 +497,7 @@
 							<textFieldExpression><![CDATA["  " + $F{SKILLTYPE_NAME}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="230" y="0" width="195" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="20476d6e-412e-409f-a91d-95c6ea299391">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="230" y="0" width="195" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="20476d6e-412e-409f-a91d-95c6ea299391">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -512,7 +513,7 @@
 							<textFieldExpression><![CDATA[$F{SKILL_NAME}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="425" y="0" width="129" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5f64b576-8c47-4fea-af70-65ba94fd3ff2">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="425" y="0" width="129" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5f64b576-8c47-4fea-af70-65ba94fd3ff2">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -572,9 +573,10 @@
 				<text><![CDATA[No]]></text>
 			</staticText>
 		</band>
-		<band height="80">
+		<band height="75">
 			<staticText>
 				<reportElement x="0" y="1" width="220" height="30" uuid="40f9e8b0-a22c-4b2c-88b1-4fa5f0d05d72"/>
+				<box topPadding="5"/>
 				<textElement>
 					<font fontName="Calibri" size="16" isBold="true"/>
 				</textElement>
@@ -665,7 +667,7 @@
 				<text><![CDATA[To]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="50" width="554" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="b68775a9-a173-4a9a-9505-a0868ffd238d">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="50" width="554" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="b68775a9-a173-4a9a-9505-a0868ffd238d">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -673,9 +675,9 @@
 					<datasetRun subDataset="dataEduc" uuid="bc79a30e-6fcc-4a63-bca7-022fcdfd2298">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataEduc")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="20" width="554">
+					<jr:listContents height="25" width="554">
 						<frame>
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="554" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="0f3dda01-0cd1-46ec-93e0-eb23ce534d98">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="554" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="0f3dda01-0cd1-46ec-93e0-eb23ce534d98">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -686,12 +688,12 @@
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="20" y="0" width="140" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="ea008cd3-70fa-46eb-a462-8c169c6e28d0">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="20" y="0" width="140" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="ea008cd3-70fa-46eb-a462-8c169c6e28d0">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
-								<box leftPadding="2" bottomPadding="3" rightPadding="2">
+								<box leftPadding="2" bottomPadding="5" rightPadding="2">
 									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -704,7 +706,7 @@
 								<textFieldExpression><![CDATA[$F{EDU_NAME}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="489" y="0" width="65" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="25c2cc5c-1f48-4862-9a86-34a0eaba4a2a">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="489" y="0" width="65" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="25c2cc5c-1f48-4862-9a86-34a0eaba4a2a">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -722,12 +724,12 @@
 								<textFieldExpression><![CDATA[$F{EDU_ENDDATE}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="260" y="0" width="164" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="c0ab439f-c254-4e6a-9c9e-3926a314118e">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="260" y="0" width="164" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="c0ab439f-c254-4e6a-9c9e-3926a314118e">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
-								<box leftPadding="2" bottomPadding="3" rightPadding="2">
+								<box leftPadding="2" bottomPadding="5" rightPadding="2">
 									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -740,7 +742,7 @@
 								<textFieldExpression><![CDATA[$F{EDU_SUBJECT}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="fd44ae08-8e03-4f13-8bc9-81c18507ff40">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="fd44ae08-8e03-4f13-8bc9-81c18507ff40">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
 								<box bottomPadding="0">
@@ -755,11 +757,11 @@
 								<textFieldExpression><![CDATA[$F{nourut}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="160" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="bff1b299-d8b9-4228-a645-e2cf1b636eba">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="160" y="0" width="100" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="bff1b299-d8b9-4228-a645-e2cf1b636eba">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
-								<box leftPadding="2" bottomPadding="3" rightPadding="2">
+								<box leftPadding="2" bottomPadding="5" rightPadding="2">
 									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -772,7 +774,7 @@
 								<textFieldExpression><![CDATA[$F{DEGREE_NAME}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="424" y="0" width="65" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="b8687794-d71f-4968-a87c-2b763a730ad7">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="424" y="0" width="65" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="b8687794-d71f-4968-a87c-2b763a730ad7">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
@@ -792,16 +794,19 @@
 				</jr:list>
 			</componentElement>
 		</band>
-		<band height="89">
+		<band height="74">
 			<staticText>
-				<reportElement x="0" y="10" width="100" height="30" uuid="5695adad-107c-485d-9d82-67c7052bda05"/>
+				<reportElement x="0" y="0" width="100" height="30" uuid="5695adad-107c-485d-9d82-67c7052bda05">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="5"/>
 				<textElement>
 					<font fontName="Calibri" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[D.COURSE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="40" width="20" height="19" backcolor="#34B1BF" uuid="1ea3d9b1-82e8-47bd-bf38-acb6cb95d9b1"/>
+				<reportElement mode="Opaque" x="0" y="30" width="20" height="19" backcolor="#34B1BF" uuid="1ea3d9b1-82e8-47bd-bf38-acb6cb95d9b1"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -814,7 +819,7 @@
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="20" y="40" width="175" height="19" backcolor="#34B1BF" uuid="49f19083-3d4b-4e0e-b990-bdebbb8a1ffb"/>
+				<reportElement mode="Opaque" x="20" y="30" width="175" height="19" backcolor="#34B1BF" uuid="49f19083-3d4b-4e0e-b990-bdebbb8a1ffb"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -827,7 +832,7 @@
 				<text><![CDATA[Title]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="195" y="40" width="110" height="19" backcolor="#34B1BF" uuid="c05e8dd2-5d11-4b0c-aebe-313811e43cca">
+				<reportElement mode="Opaque" x="195" y="30" width="105" height="19" backcolor="#34B1BF" uuid="c05e8dd2-5d11-4b0c-aebe-313811e43cca">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -842,7 +847,7 @@
 				<text><![CDATA[Provider]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="305" y="40" width="70" height="19" backcolor="#34B1BF" uuid="965cf7d3-87f3-4aa4-b248-8196e9383434">
+				<reportElement mode="Opaque" x="300" y="30" width="70" height="19" backcolor="#34B1BF" uuid="965cf7d3-87f3-4aa4-b248-8196e9383434">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -857,7 +862,7 @@
 				<text><![CDATA[Place]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="375" y="40" width="115" height="19" backcolor="#34B1BF" uuid="36e37577-ac6a-4475-b81e-3772beab6179"/>
+				<reportElement mode="Opaque" x="370" y="30" width="120" height="19" backcolor="#34B1BF" uuid="36e37577-ac6a-4475-b81e-3772beab6179"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -870,7 +875,7 @@
 				<text><![CDATA[Date , Duration]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="490" y="40" width="62" height="19" backcolor="#34B1BF" uuid="2ffd623f-5efc-4919-bccc-99ce32c71f5e"/>
+				<reportElement mode="Opaque" x="490" y="30" width="62" height="19" backcolor="#34B1BF" uuid="2ffd623f-5efc-4919-bccc-99ce32c71f5e"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -880,19 +885,19 @@
 				<textElement textAlignment="Center">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
-				<text><![CDATA[Certificate]]></text>
+				<text><![CDATA[Certificates]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="59" width="552" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="c9969732-3a08-4a1a-a6d8-5e1624e02f08">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="49" width="552" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="c9969732-3a08-4a1a-a6d8-5e1624e02f08">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataCourse" uuid="33db49af-9f08-4284-bd11-d99ae9d529ef">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataCourse")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="20" width="552">
+					<jr:listContents height="25" width="552">
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="4f18835e-5956-4d9f-a095-bbd767a6fa4b">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="4f18835e-5956-4d9f-a095-bbd767a6fa4b">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -908,12 +913,12 @@
 							<textFieldExpression><![CDATA[$F{nourut}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="20" y="0" width="175" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="627f2b50-70c6-49a1-96a5-e3c5d0e7bcaf">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="20" y="0" width="175" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="627f2b50-70c6-49a1-96a5-e3c5d0e7bcaf">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
-							<box leftPadding="2" bottomPadding="3" rightPadding="2">
+							<box leftPadding="2" bottomPadding="5" rightPadding="2">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -921,32 +926,32 @@
 							</box>
 							<textElement textAlignment="Left">
 								<font fontName="Calibri" size="11"/>
-								<paragraph leftIndent="5"/>
+								<paragraph leftIndent="0"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{COURSE_TITLE}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="195" y="0" width="110" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5a81b225-1599-4a3f-9bfe-cfd8c138e315">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="195" y="0" width="105" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5a81b225-1599-4a3f-9bfe-cfd8c138e315">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
-							<box leftPadding="2" bottomPadding="3" rightPadding="2">
+							<box leftPadding="2" bottomPadding="5" rightPadding="2">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<textElement textAlignment="Center">
+							<textElement textAlignment="Left">
 								<font fontName="Calibri" size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{COURSE_PROVIDER}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="305" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="9ff5e963-ea36-480c-9815-a60679650c78">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="300" y="0" width="70" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="9ff5e963-ea36-480c-9815-a60679650c78">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
-							<box leftPadding="2" bottomPadding="3" rightPadding="2">
+							<box leftPadding="2" bottomPadding="5" rightPadding="2">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -958,12 +963,12 @@
 							<textFieldExpression><![CDATA[$F{COURSE_PLACE}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="375" y="0" width="115" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="bc64c318-c5c6-4c1a-9636-04c9490486a1">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="370" y="0" width="120" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="bc64c318-c5c6-4c1a-9636-04c9490486a1">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
-							<box leftPadding="2" bottomPadding="3" rightPadding="2">
+							<box leftPadding="2" bottomPadding="5" rightPadding="2">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -973,40 +978,39 @@
 								<font fontName="Calibri" size="11"/>
 								<paragraph leftIndent="5"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{COURSE_DATE}+", "+ $F{COURSE_DURATION}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{COURSE_DATE}+ ", \n" + $F{COURSE_DURATION}]]></textFieldExpression>
 						</textField>
-						<textField isStretchWithOverflow="true">
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="490" y="0" width="62" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="c3ce3299-81ae-416c-841e-0b58d82c31d6">
-								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<textField>
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="490" y="0" width="62" height="25" isPrintWhenDetailOverflows="true" uuid="30676272-652b-4963-a04a-8a4756d7bcd2">
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
-							<box leftPadding="2" bottomPadding="3" rightPadding="2">
-								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<box topPadding="0" leftPadding="2" bottomPadding="5" rightPadding="2">
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
 							</box>
-							<textElement textAlignment="Center">
-								<font fontName="Calibri" size="11"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$F{COURSE_CERIFICATE}]]></textFieldExpression>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{COURSE_CERTIFICATES}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
 		</band>
-		<band height="90">
+		<band height="74">
 			<staticText>
 				<reportElement x="1" y="0" width="129" height="30" uuid="e0c270e2-b379-422d-875a-a471bccb4d5e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
+				<box topPadding="5"/>
 				<textElement>
 					<font fontName="Calibri" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[E.EMPLOYMENT]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement mode="Opaque" x="1" y="48" width="552" height="20" backcolor="#E8F0FA" uuid="a8661aa2-ec5c-4d56-8cca-a4fb61d0b2d3">
+				<reportElement mode="Opaque" x="1" y="49" width="552" height="25" backcolor="#E8F0FA" uuid="a8661aa2-ec5c-4d56-8cca-a4fb61d0b2d3">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -1014,9 +1018,9 @@
 					<datasetRun subDataset="dataEmployment" uuid="12089bb2-5cd8-4dc2-884b-0a411d176c3c">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataEmployment")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="20" width="552">
+					<jr:listContents height="25" width="552">
 						<frame>
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="552" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="29933b9a-9987-4428-8375-4f0143f10470">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="552" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="29933b9a-9987-4428-8375-4f0143f10470">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<box>
@@ -1026,7 +1030,7 @@
 								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="98bc07fb-ec8c-453a-abfa-dba5539e0387">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="98bc07fb-ec8c-453a-abfa-dba5539e0387">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
@@ -1042,7 +1046,7 @@
 								<textFieldExpression><![CDATA[$F{nourut}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="20" y="0" width="202" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="d29580c0-530e-4b66-b186-ce4e7c193de7">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="20" y="0" width="202" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="d29580c0-530e-4b66-b186-ce4e7c193de7">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1060,7 +1064,7 @@
 								<textFieldExpression><![CDATA[$F{EMPLOYMENT_CORPNAME}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="222" y="0" width="108" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5a0ec370-d247-4582-be5c-c976f58fe3d5">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="222" y="0" width="108" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="5a0ec370-d247-4582-be5c-c976f58fe3d5">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
@@ -1076,7 +1080,7 @@
 								<textFieldExpression><![CDATA[$F{EMPLOYMENT_STARTDATE}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="330" y="0" width="108" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="96e8fddd-a804-4972-8400-f8695c2c7ae8">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="330" y="0" width="108" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="96e8fddd-a804-4972-8400-f8695c2c7ae8">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								</reportElement>
@@ -1092,12 +1096,12 @@
 								<textFieldExpression><![CDATA[$F{EMPLOYMENT_ENDDATE}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="438" y="0" width="114" height="20" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="9f469a62-321e-49e1-9bcb-b1aaf2404e43">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="438" y="0" width="114" height="25" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="9f469a62-321e-49e1-9bcb-b1aaf2404e43">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
-								<box topPadding="2" leftPadding="2" bottomPadding="3" rightPadding="2">
+								<box topPadding="2" leftPadding="7" bottomPadding="3" rightPadding="2">
 									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1148,7 +1152,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="12"/>
+					<font fontName="Calibri" size="11.5"/>
 				</textElement>
 				<text><![CDATA[Contract  Start Date]]></text>
 			</staticText>
@@ -1163,7 +1167,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="12"/>
+					<font fontName="Calibri" size="11.5"/>
 				</textElement>
 				<text><![CDATA[Contract  End Date]]></text>
 			</staticText>
@@ -1181,25 +1185,26 @@
 				<text><![CDATA[Role]]></text>
 			</staticText>
 		</band>
-		<band height="323">
+		<band height="390">
 			<staticText>
 				<reportElement x="0" y="0" width="556" height="30" uuid="4d3f4848-180a-4683-911d-799a351d8294"/>
+				<box topPadding="5"/>
 				<textElement>
 					<font fontName="Calibri" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[F.PROJECT]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement x="0" y="33" width="556" height="290" uuid="97161a6a-0f16-4412-b251-c4f83c531936">
+				<reportElement key="" x="0" y="30" width="555" height="350" uuid="97161a6a-0f16-4412-b251-c4f83c531936">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataProject" uuid="b1283dc5-b06f-40bd-be7b-1672f4352691">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataProject")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="290" width="556">
+					<jr:listContents height="350" width="555">
 						<textField>
-							<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#34B1BF" uuid="8ec1d465-651f-4170-af2e-7162db7480b7">
+							<reportElement key="" mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#34B1BF" uuid="8ec1d465-651f-4170-af2e-7162db7480b7">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<box>
@@ -1211,10 +1216,10 @@
 							<textElement>
 								<font fontName="Calibri" size="12"/>
 							</textElement>
-							<textFieldExpression><![CDATA["F."+$F{nourut} +"  Project Name  : " + $F{PROJECT_NAME}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["  F."+$F{nourut} +"  Project Name  : " + $F{PROJECT_NAME}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement mode="Opaque" x="80" y="20" width="475" height="20" backcolor="#E8F0FA" uuid="c076b944-b0cf-4bed-ba7e-0f9af3bfc262">
+							<reportElement key="" mode="Opaque" x="80" y="20" width="475" height="20" backcolor="#E8F0FA" uuid="c076b944-b0cf-4bed-ba7e-0f9af3bfc262">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1231,7 +1236,7 @@
 							<textFieldExpression><![CDATA[$F{PROJECT_ROLE}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="20" width="80" height="20" backcolor="#BCD6D5" uuid="dcf2865f-1398-4c2d-80b1-c5badd8e482b">
+							<reportElement key="" mode="Opaque" x="0" y="20" width="80" height="20" backcolor="#BCD6D5" uuid="dcf2865f-1398-4c2d-80b1-c5badd8e482b">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -1246,7 +1251,7 @@
 							<text><![CDATA[Role : ]]></text>
 						</staticText>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="40" width="80" height="20" backcolor="#BCD6D5" uuid="b99c5d0c-c3de-4fba-a415-bd393cd93a8d">
+							<reportElement key="" mode="Opaque" x="0" y="40" width="80" height="20" backcolor="#BCD6D5" uuid="b99c5d0c-c3de-4fba-a415-bd393cd93a8d">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -1261,7 +1266,7 @@
 							<text><![CDATA[Project Start : ]]></text>
 						</staticText>
 						<textField>
-							<reportElement mode="Opaque" x="80" y="40" width="190" height="20" backcolor="#E8F0FA" uuid="c8eaafe1-b554-4732-b262-11caed8c9268">
+							<reportElement key="" mode="Opaque" x="80" y="40" width="190" height="20" backcolor="#E8F0FA" uuid="c8eaafe1-b554-4732-b262-11caed8c9268">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -1279,7 +1284,7 @@
 							<textFieldExpression><![CDATA[$F{PROJECT_STARTDATE}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement mode="Opaque" x="270" y="40" width="91" height="20" backcolor="#BCD6D5" uuid="eb16b592-8b2b-47ef-ac7b-37e58dc1ad89">
+							<reportElement key="" mode="Opaque" x="270" y="40" width="91" height="20" backcolor="#BCD6D5" uuid="eb16b592-8b2b-47ef-ac7b-37e58dc1ad89">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -1294,7 +1299,7 @@
 							<text><![CDATA[Project End : ]]></text>
 						</staticText>
 						<textField>
-							<reportElement mode="Opaque" x="361" y="40" width="194" height="20" backcolor="#E8F0FA" uuid="6ba2c589-7daf-4151-a0e5-77ad7bc5a762">
+							<reportElement key="" mode="Opaque" x="361" y="40" width="194" height="20" backcolor="#E8F0FA" uuid="6ba2c589-7daf-4151-a0e5-77ad7bc5a762">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -1312,7 +1317,7 @@
 							<textFieldExpression><![CDATA[$F{PROJECT_ENDDATE}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="60" width="80" height="20" backcolor="#BCD6D5" uuid="913ac2a2-cc4b-489f-80c5-e64c6e791283">
+							<reportElement key="" mode="Opaque" x="0" y="60" width="80" height="20" backcolor="#BCD6D5" uuid="913ac2a2-cc4b-489f-80c5-e64c6e791283">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -1327,7 +1332,7 @@
 							<text><![CDATA[Project Site : ]]></text>
 						</staticText>
 						<textField>
-							<reportElement mode="Opaque" x="80" y="60" width="475" height="20" backcolor="#E8F0FA" uuid="5cd4ceb7-8bd5-4e22-8d45-03315fe90d18">
+							<reportElement key="" mode="Opaque" x="80" y="60" width="475" height="20" backcolor="#E8F0FA" uuid="5cd4ceb7-8bd5-4e22-8d45-03315fe90d18">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1344,7 +1349,7 @@
 							<textFieldExpression><![CDATA[$F{PROJECT_PROJECTSITE}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="80" width="80" height="20" backcolor="#BCD6D5" uuid="568b592b-0a8b-423a-a9ec-82551687d868">
+							<reportElement key="" mode="Opaque" x="0" y="80" width="80" height="20" backcolor="#BCD6D5" uuid="568b592b-0a8b-423a-a9ec-82551687d868">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
@@ -1359,7 +1364,7 @@
 							<text><![CDATA[Customer : ]]></text>
 						</staticText>
 						<textField>
-							<reportElement mode="Opaque" x="80" y="80" width="475" height="20" backcolor="#E8F0FA" uuid="c8aa31ce-20e0-4903-9ff3-767afcadc0e4">
+							<reportElement key="" mode="Opaque" x="80" y="80" width="475" height="20" backcolor="#E8F0FA" uuid="c8aa31ce-20e0-4903-9ff3-767afcadc0e4">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1376,12 +1381,12 @@
 							<textFieldExpression><![CDATA[$F{PROJECT_CUSTOMER}]]></textFieldExpression>
 						</textField>
 						<frame>
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="100" width="555" height="40" isPrintWhenDetailOverflows="true" uuid="64571f37-d65a-4790-a12e-415d54d3fefb">
+							<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="100" width="555" height="60" isPrintWhenDetailOverflows="true" uuid="64571f37-d65a-4790-a12e-415d54d3fefb">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
 							<staticText>
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="80" height="40" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="461ab452-f80e-4d7d-a299-553bbb5cddc6">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="80" height="60" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="461ab452-f80e-4d7d-a299-553bbb5cddc6">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1396,7 +1401,7 @@
 								<text><![CDATA[Project Desc : ]]></text>
 							</staticText>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="80" y="0" width="475" height="40" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="62f60a51-4614-4003-ba98-73a105cb4b4f">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="80" y="0" width="475" height="60" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="62f60a51-4614-4003-ba98-73a105cb4b4f">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1407,18 +1412,18 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0" rightIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_DESC}]]></textFieldExpression>
 							</textField>
 						</frame>
 						<frame>
-							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="140" width="555" height="150" isPrintWhenDetailOverflows="true" uuid="74a53ffa-a8d1-49f6-b718-51f784ee0e50">
+							<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="160" width="555" height="190" isPrintWhenDetailOverflows="true" uuid="74a53ffa-a8d1-49f6-b718-51f784ee0e50">
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							</reportElement>
 							<staticText>
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#34B1BF" uuid="b7e8969b-2349-40df-8b16-dde8d5adf7a5">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="80" height="50" isPrintWhenDetailOverflows="true" backcolor="#34B1BF" uuid="b7e8969b-2349-40df-8b16-dde8d5adf7a5">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1428,12 +1433,12 @@
 									<bottomPen lineWidth="1.0"/>
 								</box>
 								<textElement textAlignment="Right">
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 								</textElement>
 								<text><![CDATA[Technical Info : ]]></text>
 							</staticText>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="80" y="0" width="475" height="30" isPrintWhenDetailOverflows="true" backcolor="#34B1BF" uuid="c459d953-fb70-44f7-b232-2261637a8ec6">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="80" y="0" width="475" height="50" isPrintWhenDetailOverflows="true" backcolor="#34B1BF" uuid="c459d953-fb70-44f7-b232-2261637a8ec6">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
@@ -1443,13 +1448,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_TECHNICALINFO}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="0" y="30" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="385be55c-2080-475b-bf4c-0bb1a729cb78">
+								<reportElement key="" positionType="Float" mode="Opaque" x="0" y="50" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="385be55c-2080-475b-bf4c-0bb1a729cb78">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1464,7 +1469,7 @@
 								<text><![CDATA[App Type : ]]></text>
 							</staticText>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="270" y="30" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="07b4d828-3f89-4741-89e5-ee58c6cb1733">
+								<reportElement key="" positionType="Float" mode="Opaque" x="270" y="50" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="07b4d828-3f89-4741-89e5-ee58c6cb1733">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1479,7 +1484,7 @@
 								<text><![CDATA[Dev Language : ]]></text>
 							</staticText>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" mode="Opaque" x="361" y="30" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="39e09020-01a8-4401-aaaf-423d3e35d62c">
+								<reportElement key="" positionType="Float" mode="Opaque" x="361" y="50" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="39e09020-01a8-4401-aaaf-423d3e35d62c">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1490,13 +1495,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_DEVLANGUAGE}]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" mode="Opaque" x="80" y="30" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="e37292f6-aae4-4c0e-b582-1e80c3663250">
+								<reportElement key="" positionType="Float" mode="Opaque" x="80" y="50" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="e37292f6-aae4-4c0e-b582-1e80c3663250">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1507,13 +1512,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_APPTYPE}]]></textFieldExpression>
 							</textField>
 							<textField>
-								<reportElement positionType="Float" mode="Opaque" x="361" y="60" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="7cb1361b-3660-47bd-a2f7-b4a27335daa3">
+								<reportElement key="" positionType="Float" mode="Opaque" x="361" y="80" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="7cb1361b-3660-47bd-a2f7-b4a27335daa3">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1524,13 +1529,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_FRAMEWORK}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="270" y="60" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="0ae16499-4bb3-4d95-815d-7dc2e57938f5">
+								<reportElement key="" positionType="Float" mode="Opaque" x="270" y="80" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="0ae16499-4bb3-4d95-815d-7dc2e57938f5">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1545,7 +1550,7 @@
 								<text><![CDATA[Framework : ]]></text>
 							</staticText>
 							<textField>
-								<reportElement positionType="Float" mode="Opaque" x="80" y="60" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="632f0367-6270-45ec-9a90-0a39a1dce56e">
+								<reportElement key="" positionType="Float" mode="Opaque" x="80" y="80" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="632f0367-6270-45ec-9a90-0a39a1dce56e">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1556,13 +1561,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_SERVEROS}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="0" y="60" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="2b535822-a0dc-42d6-b0fe-868df4627fa9">
+								<reportElement key="" positionType="Float" mode="Opaque" x="0" y="80" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="2b535822-a0dc-42d6-b0fe-868df4627fa9">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1577,7 +1582,7 @@
 								<text><![CDATA[Server OS : ]]></text>
 							</staticText>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" mode="Opaque" x="361" y="90" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="e38618e1-6ed2-45cc-9518-56d317a9e647">
+								<reportElement key="" positionType="Float" mode="Opaque" x="361" y="110" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="e38618e1-6ed2-45cc-9518-56d317a9e647">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1588,13 +1593,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_DEVTOOL}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="270" y="90" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="a8abd5af-dfd4-44d9-a4f3-251f4b2de4cf">
+								<reportElement key="" positionType="Float" mode="Opaque" x="270" y="110" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="a8abd5af-dfd4-44d9-a4f3-251f4b2de4cf">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1609,7 +1614,7 @@
 								<text><![CDATA[Dev Tools : ]]></text>
 							</staticText>
 							<textField isStretchWithOverflow="true">
-								<reportElement positionType="Float" mode="Opaque" x="80" y="90" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="624366fa-9351-4abe-a6ff-a43644ae543c">
+								<reportElement key="" positionType="Float" mode="Opaque" x="80" y="110" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="624366fa-9351-4abe-a6ff-a43644ae543c">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1620,13 +1625,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_DATABASE}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="0" y="90" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="c160168f-cba5-435e-a131-1c2e181151ff">
+								<reportElement key="" positionType="Float" mode="Opaque" x="0" y="110" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="c160168f-cba5-435e-a131-1c2e181151ff">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1640,8 +1645,8 @@
 								</textElement>
 								<text><![CDATA[Database : ]]></text>
 							</staticText>
-							<textField>
-								<reportElement positionType="Float" mode="Opaque" x="361" y="120" width="194" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="ed8ef10f-c947-47b1-a063-72cedfe47498">
+							<textField isStretchWithOverflow="true">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="361" y="140" width="194" height="50" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="ed8ef10f-c947-47b1-a063-72cedfe47498">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1652,13 +1657,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_OTHERINFO}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="270" y="120" width="91" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="9d5e6310-1248-432a-af08-f7416bb9907e">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="270" y="140" width="91" height="50" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="9d5e6310-1248-432a-af08-f7416bb9907e">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1672,8 +1677,8 @@
 								</textElement>
 								<text><![CDATA[Other Info : ]]></text>
 							</staticText>
-							<textField>
-								<reportElement positionType="Float" mode="Opaque" x="80" y="120" width="190" height="30" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="12ebaf9d-5ce6-4585-aaa8-1c30d0eba60d">
+							<textField isStretchWithOverflow="true">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="80" y="140" width="190" height="50" isPrintWhenDetailOverflows="true" backcolor="#E8F0FA" uuid="12ebaf9d-5ce6-4585-aaa8-1c30d0eba60d">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -1684,13 +1689,13 @@
 									<rightPen lineWidth="1.0"/>
 								</box>
 								<textElement>
-									<font fontName="Calibri" size="12"/>
+									<font fontName="Calibri" size="11"/>
 									<paragraph lineSpacing="Single" leftIndent="0"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{PROJECT_APPSERVER}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement positionType="Float" mode="Opaque" x="0" y="120" width="80" height="30" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="62fcb25f-3383-4a98-ac9d-c781cde52a29">
+								<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="140" width="80" height="50" isPrintWhenDetailOverflows="true" backcolor="#BCD6D5" uuid="62fcb25f-3383-4a98-ac9d-c781cde52a29">
 									<property name="com.jaspersoft.studio.unit.height" value="px"/>
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -1713,14 +1718,14 @@
 	<pageFooter>
 		<band height="49">
 			<textField>
-				<reportElement x="2" y="19" width="60" height="30" uuid="03f1fb26-cfee-4e00-bfd3-2ea04bbd0abf"/>
+				<reportElement x="2" y="15" width="60" height="30" uuid="03f1fb26-cfee-4e00-bfd3-2ea04bbd0abf"/>
 				<textElement textAlignment="Right">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="62" y="19" width="60" height="30" uuid="1e1ee5df-c01e-426c-8fed-5e6b03c536c2">
+				<reportElement x="62" y="15" width="60" height="30" uuid="1e1ee5df-c01e-426c-8fed-5e6b03c536c2">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -1729,7 +1734,9 @@
 				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="2" y="15" width="553" height="4" uuid="48bfdfba-d4d6-4cee-a829-af998c900603"/>
+				<reportElement x="2" y="15" width="553" height="0" uuid="48bfdfba-d4d6-4cee-a829-af998c900603">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>

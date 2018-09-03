@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.javalite.common.Convert;
 import org.javalite.common.JsonHelper;
+import org.jaxen.function.SubstringFunction;
 
 import app.models.Sdm;
 import app.util.ConvertToLowerCase;
@@ -67,7 +68,11 @@ public class ReportCvSdmController extends ReportController{
 		List<Map> dataFromQueryEduc = Sdm.getDataEducation(sdmId);
 		nourut = 1;
 		for (Map map : dataFromQueryEduc) { 
+			String startdate = Convert.toString(map.get("EDU_STARTDATE"));
+			String enddate = Convert.toString(map.get("EDU_ENDDATE"));
 			map.put("nourut", nourut);
+			map.put("EDU_STARTDATE", startdate.substring(0, 4));
+			map.put("EDU_ENDDATE", enddate.substring(0, 4));
 			listDataEduc.add(map);
 			nourut++;
 		}
