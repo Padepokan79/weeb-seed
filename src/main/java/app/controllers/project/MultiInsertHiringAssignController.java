@@ -48,6 +48,7 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 		public Integer client_id;
 		public Integer hirestat_id;
 		public Integer method_id;
+		public Integer sdm_id;
 		public Long sdmhiring_id;
         public String sdmassign_startdate;
         public String sdmassign_enddate;
