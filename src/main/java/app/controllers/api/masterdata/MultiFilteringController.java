@@ -122,7 +122,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 				}
 			}
 			else {
-				System.out.println("Out of option");
+				listData = SdmSkill.getAllSdmSkill();
 			}
 			String endContractProject="";
 			MultiFilteringDTO dto = new MultiFilteringDTO();
