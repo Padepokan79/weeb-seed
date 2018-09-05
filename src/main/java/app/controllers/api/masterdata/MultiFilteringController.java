@@ -121,7 +121,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					listData = SdmSkill.getbySdmCategoryValueAND(listParams);
 				}
 			}
-			else {
+			else if(sdmId == null && skilltypeId == null && skillId == null && value == null){
 				listData = SdmSkill.getAllSdmSkill();
 			}
 			String endContractProject="";
