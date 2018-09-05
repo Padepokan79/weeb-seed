@@ -42,13 +42,13 @@ import core.javalite.controllers.CRUDController;
  * 29 Agustus 2018 09:30:00
  */
 
-public class MultiInsertHiringAssignController extends CRUDController<SdmAssignment>{
+public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 	
 	public class InputAssignDTO extends DTOModel{
 		public Integer client_id;
 		public Integer hirestat_id;
 		public Integer method_id;
-		public Long sdmhiring_id;
+		public Integer sdmhiring_id;
         public String sdmassign_startdate;
         public String sdmassign_enddate;
         public String sdmassign_loc;
@@ -64,7 +64,7 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 			response().setActionType(ActionTypes.CREATE);
 		
 			Map<String, Object> mapRequest = getRequestBody();
-			List<Map<String, Object>> listHiring = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
+			List<Map<String, Object>> listAssign = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
 			List<Map> listData = new ArrayList<>();
 			int clientId;
 			String clientPIC="";
@@ -78,47 +78,42 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
-			for (Map<String, Object> hiring : listHiring) {
+			for (Map<String, Object> assign : listAssign) {
 				
-				InputAssignDTO sdmhiringDto = new InputAssignDTO();
-				sdmhiringDto.fromMap(hiring);
-
-				
+				InputAssignDTO sdmassignDto = new InputAssignDTO();
+				sdmassignDto.fromMap(assign);
 
 				SdmHiring sdmAssignModel = new SdmHiring();
 				
-				sdmAssignModel.fromMap(sdmhiringDto.toModelMap());
-				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
-				if (sdmAssignModel.insert()) {
-					System.out.println("Inserted Hiring : " + sdmhiringDto);
-				}
+				sdmAssignModel.fromMap(sdmassignDto.toModelMap());
+				
 				
 				SdmAssignment sdmAssign = new SdmAssignment();
-				clientId = Convert.toInteger(hiring.get("client_id"));
+				clientId = Convert.toInteger(assign.get("client_id"));
 				listData = sdmAssign.getClientdata(clientId);
 				for (Map mapClient : listData) {
 					clientPhone = Convert.toString(mapClient.get("client_mobileclient"));
 					clientPIC = Convert.toString(mapClient.get("client_picclient"));
 				}
-				sdmhiringDto.sdmhiring_id = (Long) sdmAssignModel.getId();
-				sdmhiringDto.sdmassign_picclient = clientPIC;
-				sdmhiringDto.sdmassign_picclientphone = clientPhone;
-				sdmhiringDto.sdmassign_startdate = format.format(startdate);
-				sdmhiringDto.sdmassign_enddate = format.format(enddate);
+				sdmassignDto.sdmhiring_id = Convert.toInteger(assign.get("sdmhiring_id"));
+				sdmassignDto.sdmassign_picclient = clientPIC;
+				sdmassignDto.sdmassign_picclientphone = clientPhone;
+				sdmassignDto.sdmassign_startdate = format.format(startdate);
+				sdmassignDto.sdmassign_enddate = format.format(enddate);
+				workPlace = Convert.toInteger(assign.get("method_id"));
 				if(workPlace == 1) {
-					sdmhiringDto.sdmassign_loc = "Bandung";
+					sdmassignDto.sdmassign_loc = "Bandung";
 				} else {
-					sdmhiringDto.sdmassign_loc = "Luar Bandung";
+					sdmassignDto.sdmassign_loc = "Luar Bandung";
 				}
-				
-				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmhiringDto.toMap()));
-				sdmAssign.fromMap(sdmhiringDto.toModelMap());
+				sdmAssign.fromMap(sdmassignDto.toModelMap());
+				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
 				if (sdmAssign.insert()) {
-					System.out.println("Inserted Assignment : " + sdmhiringDto);
+					System.out.println("Inserted Assignment : " + sdmassignDto);
 				}
 			}
 			
-			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
+			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listAssign);
 
 			Base.commitTransaction();
 		} catch (Exception e) {

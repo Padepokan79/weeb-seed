@@ -511,4 +511,22 @@ public class SdmSkill extends Model {
 		System.out.println(lisdata);
     	return lisdata;
     }
+    
+    public static List<Map> getAllSdmSkill(){
+    	List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+				"FROM sdmskill\r\n" + 
+				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
+				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n");
+		System.out.println("query : "+query.toString());
+		
+		
+		query.append(" ORDER BY sdm.SDM_NAME");
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+    	return lisdata;
+		
+    }
 }
