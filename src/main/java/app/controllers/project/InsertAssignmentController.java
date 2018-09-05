@@ -36,10 +36,8 @@ import core.javalite.controllers.CRUDController;
 
 
 /*
- * Created by Khairil Anwar
- * 21 Agustus 2018
- * Updated by Khairil Anwar
- * 29 Agustus 2018 09:30:00
+ * Hendra Kuniawan
+ * 5 September 2018
  */
 
 public class InsertAssignmentController extends CRUDController<SdmAssignment>{
