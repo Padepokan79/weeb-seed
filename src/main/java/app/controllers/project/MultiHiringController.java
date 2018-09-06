@@ -1,8 +1,10 @@
 package app.controllers.project;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
@@ -46,8 +48,10 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			response().setActionType(ActionTypes.CREATE);
 		
 			Map<String, Object> mapRequest = getRequestBody();
-			List<Map<String, Object>> listHiring = MapHelper.castToListMap((List<Map>) mapRequest.get("listhiring"));
+			List<Map<String, Object>> params = MapHelper.castToListMap((List<Map>) mapRequest.get("listhiring"));
+			List<Map<String, Object>> listHiring = new ArrayList<>();
 			
+			listHiring = validateRedudantInput(params);
 			for (Map<String, Object> hiring : listHiring) {
 				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
 				InputHiringDTO sdmhiringDto = new InputHiringDTO ();
@@ -74,4 +78,48 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 		sendResponse();
 	}
 
+	public static List<Map<String, Object>> validateRedudantInput(List<Map<String, Object>> listHiring){
+		List<Map<String, Object>> newListHiring = new ArrayList<>();
+		
+		int banyakData = listHiring.size();
+		int [] sdmIdRedudant = new int[banyakData];
+		int [] sdmId = new int[banyakData];
+		int index=0;
+		int methodId = 0;
+		int clientId = 0;
+	    int sdmIds = 0;
+	    int hirestatId = 0;
+	    
+		for (Map<String, Object> list : listHiring) {
+			sdmIdRedudant[index] = Convert.toInteger(list.get("sdm_id"));
+		index++;	
+		}
+		
+		index=0;
+		Set<Integer> store = new HashSet<>(); 
+		
+		for(Integer sdm : sdmIdRedudant) {
+			if(store.add(sdm) == true) {
+				sdmId[index] = sdm;
+				index++;
+			}
+		}
+		
+		int [] sdmIdFilter = new int[index];
+		for(index=0; index < sdmIdFilter.length; index++) {
+			sdmIdFilter[index] = sdmId[index];
+			System.out.println("sdm filter :" + sdmIdFilter[index]);
+		}
+		index=0;
+		for(Map<String, Object> list : listHiring) {
+			int sdm = Convert.toInteger(list.get("sdm_id"));
+			if(sdmId[index] == sdm) {
+				newListHiring.add(list); 
+						index++;
+			}
+			
+		}
+		
+		return newListHiring;
+	}
 }
