@@ -8,6 +8,7 @@ import java.util.Map;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.common.Convert;
 
+import app.controllers.sdm.PsychologicalController.PsychologicalDTO;
 import app.models.Psychologicals;
 import app.models.Religion;
 import app.models.Sdm;
@@ -72,10 +73,18 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 	
 	@Override
 	public SdmPsycological customInsertValidation(SdmPsycological item) throws Exception {
-		String desc = item.getString("sdmpsycological_desc");
+		Integer sdm = item.getInteger("sdm_id");
+		List<Map> listData = new ArrayList<>();
+		listData = SdmPsycological.getStatus(sdm);
 		
-		Validation.required(desc, "Valued of Description can't be empty");
-		
+		for(Map sd: listData) {
+			int status = Convert.toInteger(sd.get("sdm_status"));
+			if(status == 0) {
+			Validation.required(null, "Status SDM harus Active!!");
+			Validation.required(null, "woi");
+			}
+			
+  		}
 		return super.customInsertValidation(item);
 	}
 	

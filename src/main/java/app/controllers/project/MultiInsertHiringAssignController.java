@@ -8,8 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Date;
-
+import java.util.HashSet;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
@@ -17,6 +18,7 @@ import org.javalite.activeweb.annotations.POST;
 import org.javalite.common.Convert;
 
 import com.ibm.icu.util.Calendar;
+import com.mysql.fabric.xmlrpc.base.Params;
 
 import app.models.SdmAssignment;
 import app.controllers.project.MultiHiringController.InputHiringDTO;
@@ -65,8 +67,11 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 			response().setActionType(ActionTypes.CREATE);
 		
 			Map<String, Object> mapRequest = getRequestBody();
-			List<Map<String, Object>> listHiring = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
+			List<Map<String, Object>> params = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
+			List<Map<String, Object>> listHiring = new ArrayList<>();
 			List<Map> listData = new ArrayList<>();
+			listHiring = validateRedudantInput(params);
+			
 			int clientId;
 			String clientPIC="";
 			String clientPhone="";
@@ -84,7 +89,6 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 				InputAssignDTO sdmhiringDto = new InputAssignDTO();
 				sdmhiringDto.fromMap(hiring);
 
-				
 
 				SdmHiring sdmAssignModel = new SdmHiring();
 				
@@ -93,7 +97,7 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 				if (sdmAssignModel.insert()) {
 					System.out.println("Inserted Hiring : " + sdmhiringDto);
 				}
-				
+				workPlace = Convert.toInteger(hiring.get("method_id"));
 				SdmAssignment sdmAssign = new SdmAssignment();
 				clientId = Convert.toInteger(hiring.get("client_id"));
 				listData = sdmAssign.getClientdata(clientId);
@@ -130,5 +134,49 @@ public class MultiInsertHiringAssignController extends CRUDController<SdmAssignm
 
 		sendResponse();
 	}
-
+	
+	public static List<Map<String, Object>> validateRedudantInput(List<Map<String, Object>> listHiring){
+		List<Map<String, Object>> newListHiring = new ArrayList<>();
+		
+		int banyakData = listHiring.size();
+		int [] sdmIdRedudant = new int[banyakData];
+		int [] sdmId = new int[banyakData];
+		int index=0;
+		int methodId = 0;
+		int clientId = 0;
+	    int sdmIds = 0;
+	    int hirestatId = 0;
+	    
+		for (Map<String, Object> list : listHiring) {
+			sdmIdRedudant[index] = Convert.toInteger(list.get("sdm_id"));
+		index++;	
+		}
+		
+		index=0;
+		Set<Integer> store = new HashSet<>(); 
+		
+		for(Integer sdm : sdmIdRedudant) {
+			if(store.add(sdm) == true) {
+				sdmId[index] = sdm;
+				index++;
+			}
+		}
+		
+		int [] sdmIdFilter = new int[index];
+		for(index=0; index < sdmIdFilter.length; index++) {
+			sdmIdFilter[index] = sdmId[index];
+			System.out.println("sdm filter :" + sdmIdFilter[index]);
+		}
+		index=0;
+		for(Map<String, Object> list : listHiring) {
+			int sdm = Convert.toInteger(list.get("sdm_id"));
+			if(sdmId[index] == sdm) {
+				newListHiring.add(list); 
+						index++;
+			}
+			
+		}
+		
+		return newListHiring;
+	}
 }
