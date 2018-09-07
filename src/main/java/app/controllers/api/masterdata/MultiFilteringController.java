@@ -58,6 +58,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 //		Long totalItems = this.getTotalItems(params);
 		DateFormat dateAwal = new SimpleDateFormat("dd/MM/yyyy");
 		DateFormat dateAkhir = new SimpleDateFormat("dd/MM/yyyy");
+		
 		try {
 			response().setActionType(ActionTypes.READ_ALL);
 			
@@ -67,6 +68,8 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			
 			List<Map> listData = new ArrayList<>();
 			
+			
+			
 //			List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
 			
 			String sdmId = null;
@@ -74,6 +77,10 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			String skillId = null;
 			String value = null;
 			String operator = null;
+			int banyakSkilltype = 0;
+			int banyakSkillValue = 0;
+			
+			
 			int jumlahData= listParams.size();
 			System.out.println("Jumlah data :" + jumlahData);
 			for (Map<String, Object> sdm : listParams) {
@@ -82,6 +89,14 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 				skillId = Convert.toString(sdm.get("skill_id"));
 				value = Convert.toString(sdm.get("sdmskill_value"));
 				operator = Convert.toString(sdm.get("operator"));
+				
+				//Handling filter mantis 
+				if(sdmId==null && skilltypeId != null && skillId == null && value == null ) {
+					banyakSkilltype++;
+				}
+				if(sdmId==null && skilltypeId != null && skillId != null && value != null ) {
+					banyakSkillValue++;
+				}
 			}
 			
 			//1
@@ -124,6 +139,15 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			else if(sdmId == null && skilltypeId == null && skillId == null && value == null){
 				listData = SdmSkill.getAllSdmSkill();
 			}
+			else if(banyakSkilltype > 1 && banyakSkillValue > 1) {
+				if(operator.equals("1")) {
+					
+				}else if(operator.equals("2")) {
+					
+				}
+			}
+			
+			
 			String endContractProject="";
 			MultiFilteringDTO dto = new MultiFilteringDTO();
 			
