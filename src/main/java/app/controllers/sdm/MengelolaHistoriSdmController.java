@@ -4,6 +4,7 @@
 package app.controllers.sdm;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import app.controllers.sdm.CourseController.CourseDTO;
 import app.models.Course;
 import app.models.Sdm;
 import app.models.SdmHistory;
+import core.io.helper.Validation;
 import core.io.model.CorePage;
 import core.io.model.DTOModel;
 import core.io.model.PagingParams;
@@ -45,6 +47,8 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		List<Map<String, Object>> listMapCourse = new ArrayList<Map<String, Object>>();
 		LazyList<SdmHistory> listHistory = (LazyList<SdmHistory>)this.getItems(params);	
 		params.setOrderBy("sdmhistory_id");
+		System.out.println(" \" Ganteng \" ");
+		cekStatusSdm();
 		
 		Long totalItems = this.getTotalItems(params);
 		int number=1;
@@ -75,4 +79,25 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		
 		return new CorePage(listMapCourse, totalItems);				
 	}
+	
+	
+	public void cekStatusSdm() {
+		List<Map> listData = new ArrayList<>();
+		listData = SdmHistory.getSdmActive();
+		int sdmId;
+		boolean sukses = false;
+		String startContract;
+		String endContract;
+		
+		for(Map sdm : listData) {
+			sdmId = Convert.toInteger(sdm.get("sdm_id"));
+			
+			startContract =Convert.toString(sdm.get("SDM_STARTCONTRACT"));
+			endContract = Convert.toString(sdm.get("SDM_ENDCONTRACT"));
+			SdmHistory.insertSdmHistory(sdmId, startContract, endContract);
+			SdmHistory.updateSdmStatus(sdmId);
+			sukses = true;
+		}
+		System.out.println("Cek status SDM berhasil");
+	}	
 }
