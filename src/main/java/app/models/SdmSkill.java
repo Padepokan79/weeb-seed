@@ -101,7 +101,7 @@ public class SdmSkill extends Model {
     public static List<Map> getbySdm(int sdmId){
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS \r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -121,7 +121,7 @@ public class SdmSkill extends Model {
     {
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME, sdm.SDM_NIK,  sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME, sdm.SDM_NIK,  sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -154,7 +154,7 @@ public class SdmSkill extends Model {
     {
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME, sdm.SDM_NIK,  sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME, sdm.SDM_NIK,  sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -206,7 +206,7 @@ public class SdmSkill extends Model {
     {
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -240,7 +240,7 @@ public class SdmSkill extends Model {
     {
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"				FROM sdmskill \r\n" + 
 				"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 
@@ -315,7 +315,7 @@ public class SdmSkill extends Model {
 		for (Map<String, Object> sdm : listParams) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 		}
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -350,7 +350,7 @@ public class SdmSkill extends Model {
 		for (Map<String, Object> sdm : listParams) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 		}
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME, sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME, sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -407,7 +407,7 @@ public class SdmSkill extends Model {
 		for (Map<String, Object> sdm : listParams) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 		}
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -444,7 +444,7 @@ public class SdmSkill extends Model {
 		for (Map<String, Object> sdm : listParams) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 		}
-		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdmskill.SKILLTYPE_ID, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdmskill.SKILLTYPE_ID, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"				FROM sdmskill \r\n" + 
 				"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 
@@ -515,7 +515,7 @@ public class SdmSkill extends Model {
     public static List<Map> getAllSdmSkill(){
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -535,7 +535,7 @@ public class SdmSkill extends Model {
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
 		System.out.println("masuk qurey");
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
@@ -579,9 +579,9 @@ public class SdmSkill extends Model {
     public static List<Map> getbyCategoryCategorySkillValueAND(List<Map<String, Object>> listParams){
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append(" SELECT sdms.SDM_ID,  sdms.SDM_NIK, sdms.SDM_ENDCONTRACT,sdms.SDMSKILL_iD, sdms.SDM_NAME, sdms.SKILLTYPE_NAME, sdms.SKILL_NAME, sdms.SDMSKILL_VALUE, sdms.SKILLTYPE_ID, sdms.SKILL_ID \r\n" + 
+		query.append(" SELECT sdms.SDM_ID,  sdms.SDM_NIK, sdms.SDM_ENDCONTRACT,sdms.SDMSKILL_iD, sdms.SDM_NAME, sdms.SKILLTYPE_NAME, sdms.SKILL_NAME, sdms.SDMSKILL_VALUE, sdms.SKILLTYPE_ID, sdms.SKILL_ID, sdms.SDM_STATUS \r\n" + 
 				     "FROM ( ");
-		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdmskill.SKILLTYPE_ID, sdmskill.SKILL_ID\r\n" + 
+		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdmskill.SKILLTYPE_ID, sdmskill.SKILL_ID, sdm.SDM_STATUS\r\n" + 
 				"				FROM sdmskill \r\n" + 
 				"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 

@@ -51,9 +51,10 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 		public int skilltypeId;
 		public int sdmId;
 		public int sdmskillValue;
-		public String projectEnddate;
+		public String endContractproject;
 		public String sdm_notification;
 		public int norut;
+		public int sdmStatus;
 		
 	}
 	
@@ -64,7 +65,9 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
+//		params.setFilter("sdm_status = 1");
 		params.setOrderBy("sdm_id");
+		
 		
 		LazyList<SdmSkill> asd = (LazyList<SdmSkill>)this.getItems(params);	
 		Long totalItems = this.getTotalItems(params);
@@ -102,8 +105,9 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 				dto.skilltypeName = Convert.toString(skillType.get("skilltype_name"));
 				dto.skillName = Convert.toString(kemampuan.get("skill_name"));
 				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+				dto.sdmStatus = Convert.toInteger(sdm.get("sdm_status"));
 				dto.sdmNik = Convert.toString(sdm.get("sdm_nik"));
-				dto.projectEnddate = getConvertEndProject(endDate);
+				dto.endContractproject = getConvertEndProject(endDate);
 				dto.norut = number;
 				number++;
 				
@@ -135,8 +139,10 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 					dto.sdm_notification = "grey"; // notif warna grey
 				}
 
+				if(Convert.toInteger(sdm.get("sdm_status")) != 0) {
+					listMapSdmSkill.add(dto.toModelMap());
+				}
 				
-				listMapSdmSkill.add(dto.toModelMap());
 			}
 		
 		return new CorePage(listMapSdmSkill, totalItems);			

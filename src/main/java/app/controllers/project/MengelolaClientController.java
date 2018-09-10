@@ -107,7 +107,7 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		String nama_client = Convert.toString(mapRequest.get("client_name"));
 		String client_address = Convert.toString(mapRequest.get("client_address"));
 		String client_pic = Convert.toString(mapRequest.get("client_picclient"));
-		String client_mobile = Convert.toString(mapRequest.get("client_mobileclient"));
+		String client_mobile = "0" + Convert.toString(mapRequest.get("client_mobileclient"));
 		
 		if(nama_client == "")
 		{  
@@ -133,17 +133,35 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		item.save();
 		return result;
 	}
+    
+	@Override
+	public Map<String, Object> customOnUpdate(Clients item, Map<String, Object> mapRequest) throws Exception {
+		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+		
+		String nama_client = Convert.toString(mapRequest.get("client_name"));
+		String client_address = Convert.toString(mapRequest.get("client_address"));
+		String client_pic = Convert.toString(mapRequest.get("client_picclient"));
+		String client_mobile = Convert.toString(mapRequest.get("client_mobileclient"));
+		//penambahan 0 di depan nomor telp
+		if(client_mobile.substring(0,1).equals(0)) {
+			
+		} else {
+			client_mobile = "0"+ client_mobile;
+		}
+		item.set("client_name", nama_client);
+		item.set("client_address", client_address);
+		item.set("client_picclient", client_pic);
+		item.set("client_mobileclient", client_mobile);
+		item.save();
+		return result;
+	}
 //	@Override
 //	public Map<String, Object> customOnInsert(Clients item, Map<String, Object> mapRequest) throws Exception {
 //		Map<String, Object> result = super.customOnInsert(item, mapRequest);
 //		return result;
 //	}
 //	
-//	@Override
-//	public Map<String, Object> customOnUpdate(Clients item, Map<String, Object> mapRequest) throws Exception {
-//		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
-//		return result;
-//	}
+
 //	
 //	public Map<String, Object> customOnDelete(Clients item, Map<String, Object> mapRequest) throws Exception {
 //		Map<String, Object> result = super.customOnDelete(item, mapRequest);
