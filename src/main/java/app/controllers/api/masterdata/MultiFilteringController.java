@@ -46,6 +46,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 		public String sdmNik;
 		public String endContractproject;
 		public String sdm_notification;
+		public int sdmStatus;
 		
 	}
 
@@ -155,6 +156,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			MultiFilteringDTO dto = new MultiFilteringDTO();
 			
 				for (Map map : listData) {
+					
 					int sdm_id = Convert.toInteger(map.get("sdm_id"));	
 					List<Map> dataFromQuery = SdmSkill.getEndContract(sdm_id);
 						for(Map mapproject : dataFromQuery) {
@@ -197,8 +199,10 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					}else if(Integer.parseInt(diff) > 4) {
 						dto.sdm_notification = "grey"; // notif warna grey
 					}
+					if(Convert.toInteger(map.get("sdm_status")) == 1) {
+						listMapSdmSkill.add(dto.toModelMap());	
+					}
 					
-					listMapSdmSkill.add(dto.toModelMap());
 				}
 				
 			response().setResponseBody(HttpResponses.ON_SUCCESS_READ_ALL, listMapSdmSkill);

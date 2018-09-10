@@ -71,28 +71,30 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 				Integer hirestatId = Convert.toInteger(hiring.get("hirestat_id"));
 				boolean cekData = false;
 				
+				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
 				List<Map> listdata = new ArrayList<>();
 				listdata = SdmHiring.getDataSdmbyClient(clientId);
 				
-				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
 				for(Map dataHire : listdata) {
-					
-					if(sdmId == dataHire.get("sdm_id") && hirestatId != 5) {
-						messages().notify();
+					if(sdmId == dataHire.get("sdm_id")) {
 						cekData = true;
+						response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
 					}
 				}
 				
 				if (cekData == false) {
 					sdmModel.insert();
 					System.out.println("Inserted Hiring : " + sdmhiringDto.sdm_id);
+					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
 				}
 			}
 			
-			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
+		
+//			response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
 
 			Base.commitTransaction();
 		} catch (Exception e) {
+			response().setMessage("Woi");
 			e.printStackTrace();
 			response().setResponseBody(e);
 			Base.rollbackTransaction();
@@ -142,27 +144,27 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 		return newListHiring;
 	}
 	
-	/* (non-Javadoc)
-	 * @see core.javalite.controllers.CRUDController#customInsertValidation(org.javalite.activejdbc.Model)
-	 */
-	@Override
-	public SdmHiring customInsertValidation(SdmHiring item) throws Exception {
-		// TODO Auto-generated method stub
-		Integer sdmId = item.getInteger("sdm_id");
-		Integer hireStatId = item.getInteger("hirestat_id");
-		Integer clientId = item.getInteger("client_id");
-		
-		List<Map> listdata = new ArrayList<>();
-		listdata = SdmHiring.getDataSdmbyClient(clientId);
-		
-		for(Map dataHire : listdata) {
-			if(sdmId == dataHire.get("sdm_id")) {
-				Validation.required(null, "Woi");
-			}
-		}
-		
-		
-		return super.customInsertValidation(item);
-	}
+//	@Override
+//	public SdmHiring customInsertValidation(SdmHiring item) throws Exception {
+//		// TODO Auto-generated method stub
+//		Integer sdmId = item.getInteger("sdm_id");
+//		Integer hireStatId = item.getInteger("hirestat_id");
+//		Integer clientId = item.getInteger("client_id");
+//		
+//		List<Map> listdata = new ArrayList<>();
+//		listdata = SdmHiring.getDataSdmbyClient(clientId);
+//		
+//		for(Map dataHire : listdata) {
+//			if(sdmId == dataHire.get("sdm_id")) {
+//				Validation.required(null, "Woi");
+//				System.out.println("was Here 2");
+//				
+//			}
+//		}
+//		
+//		System.out.println("was Here");
+//		
+//		return super.customInsertValidation(item);
+//	}
 	
 }

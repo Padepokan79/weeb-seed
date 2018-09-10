@@ -195,6 +195,9 @@ public class MengelolaProjectController extends CRUDController<Project> {
 		System.out.println("cek : " + hasil);
 		return hasil;
 	}
+/* (non-Javadoc)
+ * @see core.javalite.controllers.CRUDController#customOnDelete(org.javalite.activejdbc.Model, java.util.Map)
+ */
 
 	@Override
 	public Project customInsertValidation(Project item) throws Exception {
