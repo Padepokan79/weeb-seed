@@ -47,7 +47,7 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		List<Map<String, Object>> listMapCourse = new ArrayList<Map<String, Object>>();
 		LazyList<SdmHistory> listHistory = (LazyList<SdmHistory>)this.getItems(params);	
 		params.setOrderBy("sdmhistory_id");
-		System.out.println(" \" Ganteng \" ");
+
 		cekStatusSdm();
 		
 		Long totalItems = this.getTotalItems(params);

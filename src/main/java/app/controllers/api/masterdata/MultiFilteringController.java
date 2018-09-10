@@ -98,54 +98,57 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					banyakSkillValue++;
 				}
 			}
-			
-			//1
-			if(sdmId != null && skilltypeId == null && skillId == null && value == null) {
-				int sdm_id = Convert.toInteger(sdmId);
-				listData = SdmSkill.getbySdm(sdm_id);
-				
-			}//2
-			else if(sdmId == null && skilltypeId != null && skillId == null && value == null) {
-				if(operator.equals("1") || jumlahData == 1) {
-					listData = SdmSkill.getbyCategoryOR(listParams);
-				} else if(operator.equals("2") && jumlahData != 1) {
-					listData = SdmSkill.getbyCategoryAND(listParams);
-				}
-			}//3
-			else if(sdmId == null && skilltypeId != null && skillId != null && value != null) {
-				if(operator.equals("1") || jumlahData == 1) {
-					listData = SdmSkill.getbySkillValueOR(listParams);
-				} else if(operator.equals("2") && jumlahData != 1) {
-					//cari query	
-					listData = SdmSkill.getbySkillValueAND(listParams);
-				}
-			}
-			//4
-			else if(sdmId != null && skilltypeId != null && skillId == null && value == null) {
-				if(operator.equals("1") || jumlahData == 1) {
-					listData = SdmSkill.getbySdmCategoryOR(listParams);
-				}else if(operator.equals("2") && jumlahData != 1) {
-					listData = SdmSkill.getbySdmCategoryAND(listParams);
-				}
-			}
-			//5
-			else if(sdmId != null && skilltypeId != null && skillId != null && value != null) {
-				if(operator.equals("1") || jumlahData == 1) {
-					listData = SdmSkill.getbySdmCategoryValueOR(listParams);
-				}else if(operator.equals("2") && jumlahData != 1) {
-					listData = SdmSkill.getbySdmCategoryValueAND(listParams);
-				}
-			}
-			else if(sdmId == null && skilltypeId == null && skillId == null && value == null){
-				listData = SdmSkill.getAllSdmSkill();
-			}
-			else if(banyakSkilltype > 1 && banyakSkillValue > 1) {
+			if(banyakSkilltype >= 1 && banyakSkillValue >= 1) {
 				if(operator.equals("1")) {
-					
+					System.out.println("handling operator OR");
+					listData = SdmSkill.getbyCategoryCategorySkillValueOR(listParams);
 				}else if(operator.equals("2")) {
+					System.out.println("handling operator AND");
+					listData = SdmSkill.getbyCategoryCategorySkillValueAND(listParams);
+				}
+			}else {
+				//1
+				if(sdmId != null && skilltypeId == null && skillId == null && value == null) {
+					int sdm_id = Convert.toInteger(sdmId);
+					listData = SdmSkill.getbySdm(sdm_id);
 					
+				}//2
+				else if(sdmId == null && skilltypeId != null && skillId == null && value == null) {
+					if(operator.equals("1") || jumlahData == 1) {
+						listData = SdmSkill.getbyCategoryOR(listParams);
+					} else if(operator.equals("2") && jumlahData != 1) {
+						listData = SdmSkill.getbyCategoryAND(listParams);
+					}
+				}//3
+				else if(sdmId == null && skilltypeId != null && skillId != null && value != null) {
+					if(operator.equals("1") || jumlahData == 1) {
+						listData = SdmSkill.getbySkillValueOR(listParams);
+					} else if(operator.equals("2") && jumlahData != 1) {
+						//cari query	
+						listData = SdmSkill.getbySkillValueAND(listParams);
+					}
+				}
+				//4
+				else if(sdmId != null && skilltypeId != null && skillId == null && value == null) {
+					if(operator.equals("1") || jumlahData == 1) {
+						listData = SdmSkill.getbySdmCategoryOR(listParams);
+					}else if(operator.equals("2") && jumlahData != 1) {
+						listData = SdmSkill.getbySdmCategoryAND(listParams);
+					}
+				}
+				//5
+				else if(sdmId != null && skilltypeId != null && skillId != null && value != null) {
+					if(operator.equals("1") || jumlahData == 1) {
+						listData = SdmSkill.getbySdmCategoryValueOR(listParams);
+					}else if(operator.equals("2") && jumlahData != 1) {
+						listData = SdmSkill.getbySdmCategoryValueAND(listParams);
+					}
+				}
+				else if(sdmId == null && skilltypeId == null && skillId == null && value == null){
+					listData = SdmSkill.getAllSdmSkill();
 				}
 			}
+			
 			
 			
 			String endContractProject="";

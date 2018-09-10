@@ -97,9 +97,15 @@ public class MengelolaProjectController extends CRUDController<Project> {
 			number = params.limit().intValue() * params.offset().intValue()+1;
 		
 		for(Project project : listProject) {
+			
+			Map<String, Object> temp = project.toMap();
+			temp.remove("project_startdate");
+			temp.remove("project_enddate");
+
 			Sdm sdm = project.parent(Sdm.class);
 			MengelolaProject dto = new MengelolaProject();
-			dto.fromModelMap(project.toMap());
+			dto.fromModelMap(temp);
+			
 			dto.norut					= number;
 			number++;
 			dto.sdmName 				= Convert.toString(sdm.get("sdm_name"));
