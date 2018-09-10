@@ -444,7 +444,7 @@ public class SdmSkill extends Model {
 		for (Map<String, Object> sdm : listParams) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 		}
-		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdmskill.SKILLTYPE_ID, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
 				"				FROM sdmskill \r\n" + 
 				"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 
@@ -528,5 +528,165 @@ public class SdmSkill extends Model {
 		
     	return lisdata;
 		
+    }
+    
+    //filter dengan kriteria category saja + categoryskillvalue dengan operator OR 
+    public static List<Map> getbyCategoryCategorySkillValueOR(List<Map<String, Object>> listParams){
+    	List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		System.out.println("masuk qurey");
+		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE\r\n" + 
+				"FROM sdmskill\r\n" + 
+				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
+				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" +
+				" where ");
+		int index=1;
+		int jumlahData=listParams.size();
+		for (Map<String, Object> sdm : listParams) {
+			String  skilltypeId = Convert.toString(sdm.get("skilltype_id"));
+			String skillId = Convert.toString(sdm.get("skill_id"));
+			String sdmskillValue = Convert.toString(sdm.get("sdmskill_value"));
+			System.out.println(" data " + skilltypeId + " " + skillId + " " +  sdmskillValue);
+			
+			if(skilltypeId != null && skillId != null && sdmskillValue != null) {
+				if(index == 1) {
+					query.append(" (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+				}
+				else if(index <= jumlahData) {
+					query.append(" OR (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+				}	
+			}
+			else {
+				if(index == 1) {
+					query.append(" (sdmskill.SKILLTYPE_ID = " + skilltypeId + " ) ");
+				}
+				else if(index <= jumlahData) {
+					query.append(" OR (sdmskill.SKILLTYPE_ID = " + skilltypeId + " ) ");
+				}
+			}
+			index++;
+		}
+		query.append(" ORDER BY sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
+		
+    	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+    	return lisdata;
+    }
+    
+  //filter dengan kriteria category saja + categoryskillvalue dengan operator AND
+    public static List<Map> getbyCategoryCategorySkillValueAND(List<Map<String, Object>> listParams){
+    	List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		query.append(" SELECT sdms.SDM_ID,  sdms.SDM_NIK, sdms.SDM_ENDCONTRACT,sdms.SDMSKILL_iD, sdms.SDM_NAME, sdms.SKILLTYPE_NAME, sdms.SKILL_NAME, sdms.SDMSKILL_VALUE, sdms.SKILLTYPE_ID, sdms.SKILL_ID \r\n" + 
+				     "FROM ( ");
+		query.append(" SELECT sdmskill.SDM_ID, sdm.SDM_NIK, sdm.SDM_ENDCONTRACT,sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdmskill.SKILLTYPE_ID, sdmskill.SKILL_ID\r\n" + 
+				"				FROM sdmskill \r\n" + 
+				"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 
+				"				INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
+				"			  WHERE sdmskill.SDM_ID IN (  SELECT tabel1.sdm_id FROM (SELECT SDM_ID,SDMSKILL_ID, SKILLTYPE_ID, SKILL_ID, SDMSKILL_VALUE \r\n" + 
+				"				FROM sdmskill \r\n" + 
+				"				WHERE ");
+		
+		
+		int jumlahData=listParams.size();
+		String skilltypeId="";
+		String skillId="";
+		String sdmskillValue="";
+		int jmlhDataskill = 0;
+		int jmlhDataCategory = 0;
+		int index=1;
+		for (Map<String, Object> sdm : listParams) {
+			skilltypeId = Convert.toString(sdm.get("skilltype_id"));
+			skillId = Convert.toString(sdm.get("skill_id"));
+			sdmskillValue = Convert.toString(sdm.get("sdmskill_value"));
+			if(skilltypeId != null && skillId != null && sdmskillValue != null) {
+				if(index == 1) {
+					query.append(" (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+				}
+				else if(index <= jumlahData) {
+					query.append(" OR (sdmskill.SKILLTYPE_ID = " + skilltypeId + " AND sdmskill.SKILL_ID = " + skillId + " AND sdmskill.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+				}
+				jmlhDataskill++;
+			}
+			else {
+				if(index == 1) {
+					query.append(" (sdmskill.SKILLTYPE_ID = " + skilltypeId + " )");
+				}
+				else if(index <= jumlahData) {
+					query.append(" OR (sdmskill.SKILLTYPE_ID = " + skilltypeId + "  )");
+				}
+				jmlhDataCategory++;
+			}
+			index++;
+		}
+		
+		query.append(") as tabel1\r\n" + 
+				"	WHERE tabel1.SKILLTYPE_ID IN (" );
+			index=1;
+			for (Map<String, Object> sdm : listParams) {
+				skilltypeId = Convert.toString(sdm.get("skilltype_id"));
+				jumlahData = listParams.size();
+				query.append(" " + skilltypeId + " ");
+				if(index < jumlahData)
+				{	query.append(", ");
+				}
+				else if(index == jumlahData)
+				{ 
+					query.append(" ) ");
+				}
+				index++;
+			}
+		query.append(" GROUP BY tabel1.SDM_ID HAVING COUNT(DISTINCT tabel1.SKILLTYPE_ID)= " + jumlahData);
+		query.append(" ORDER BY tabel1.SDM_ID) ");
+		query.append(" AND sdmskill.SKILLTYPE_ID IN ( ");
+			index=1;
+			for (Map<String, Object> sdm : listParams) {
+				skilltypeId = Convert.toString(sdm.get("skilltype_id"));
+				jumlahData = listParams.size();
+				query.append(" " + skilltypeId + " ");
+				if(index < jumlahData)
+				{	query.append(", ");
+				}
+				else if(index == jumlahData)
+				{ 
+					query.append(" ) ");
+				}
+				index++;
+			}
+			
+		query.append(" ) as sdms WHERE ");
+		index=1;
+		for (Map<String, Object> sdm : listParams) {
+			skilltypeId = Convert.toString(sdm.get("skilltype_id"));
+			skillId = Convert.toString(sdm.get("skill_id"));
+			sdmskillValue = Convert.toString(sdm.get("sdmskill_value"));
+			if(skilltypeId != null && skillId != null && sdmskillValue != null) {
+				if(index == 1) {
+					query.append(" (sdms.SKILLTYPE_ID = " + skilltypeId + " AND sdms.SKILL_ID = " + skillId + " AND sdms.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+				}
+				else if(index <= jumlahData) {
+					query.append(" OR (sdms.SKILLTYPE_ID = " + skilltypeId + " AND sdms.SKILL_ID = " + skillId + " AND sdms.SDMSKILL_VALUE >= " + sdmskillValue + " )");
+				}
+				jmlhDataskill++;
+			}
+			else {
+				if(index == 1) {
+					query.append(" (sdms.SKILLTYPE_ID = " + skilltypeId + " )");
+				}
+				else if(index <= jumlahData) {
+					query.append(" OR (sdms.SKILLTYPE_ID = " + skilltypeId + "  )");
+				}
+				jmlhDataCategory++;
+			}
+			index++;
+		}
+//		query.append(" ORDER BY sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		System.out.println(lisdata);
+    	return lisdata;
     }
 }

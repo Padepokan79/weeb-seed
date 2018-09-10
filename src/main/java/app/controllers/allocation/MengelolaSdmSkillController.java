@@ -64,9 +64,11 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {		
 		List<Map<String, Object>> listMapSdmSkill = new ArrayList<Map<String, Object>>();
+		params.setOrderBy("sdm_id");
+		
 		LazyList<SdmSkill> asd = (LazyList<SdmSkill>)this.getItems(params);	
 		Long totalItems = this.getTotalItems(params);
-		
+			
 		DateFormat dateAwal = new SimpleDateFormat("dd/MM/yyyy");
 		DateFormat dateAkhir = new SimpleDateFormat("dd/MM/yyyy");
 //		LazyList<? extends Model> items = this.getItems(params);

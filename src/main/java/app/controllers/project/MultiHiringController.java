@@ -30,6 +30,9 @@ import core.javalite.controllers.CRUDController;
 /*
  * Created by Khairil Anwar
  * 21 Agustus 2018
+ *
+ * Updated by Hendra Kurniawan
+ * 7 September 2018
  */
 
 public class MultiHiringController extends CRUDController<SdmHiring>{
@@ -38,6 +41,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 		public int client_id;
 		public int sdm_id;
 		public int hirestat_id;
+		
 	}
 
 	@POST
@@ -61,7 +65,26 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 
 				SdmHiring sdmModel = new SdmHiring();
 				sdmModel.fromMap(sdmhiringDto.toModelMap());
-				if (sdmModel.insert()) {
+				
+				Integer sdmId = Convert.toInteger(hiring.get("sdm_id"));
+				Integer clientId = Convert.toInteger(hiring.get("client_id"));
+				Integer hirestatId = Convert.toInteger(hiring.get("hirestat_id"));
+				boolean cekData = false;
+				
+				List<Map> listdata = new ArrayList<>();
+				listdata = SdmHiring.getDataSdmbyClient(clientId);
+				
+				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
+				for(Map dataHire : listdata) {
+					
+					if(sdmId == dataHire.get("sdm_id") && hirestatId != 5) {
+						messages().notify();
+						cekData = true;
+					}
+				}
+				
+				if (cekData == false) {
+					sdmModel.insert();
 					System.out.println("Inserted Hiring : " + sdmhiringDto.sdm_id);
 				}
 			}
@@ -85,10 +108,6 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 		int [] sdmIdRedudant = new int[banyakData];
 		int [] sdmId = new int[banyakData];
 		int index=0;
-		int methodId = 0;
-		int clientId = 0;
-	    int sdmIds = 0;
-	    int hirestatId = 0;
 	    
 		for (Map<String, Object> list : listHiring) {
 			sdmIdRedudant[index] = Convert.toInteger(list.get("sdm_id"));
@@ -122,4 +141,28 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 		
 		return newListHiring;
 	}
+	
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customInsertValidation(org.javalite.activejdbc.Model)
+	 */
+	@Override
+	public SdmHiring customInsertValidation(SdmHiring item) throws Exception {
+		// TODO Auto-generated method stub
+		Integer sdmId = item.getInteger("sdm_id");
+		Integer hireStatId = item.getInteger("hirestat_id");
+		Integer clientId = item.getInteger("client_id");
+		
+		List<Map> listdata = new ArrayList<>();
+		listdata = SdmHiring.getDataSdmbyClient(clientId);
+		
+		for(Map dataHire : listdata) {
+			if(sdmId == dataHire.get("sdm_id")) {
+				Validation.required(null, "Woi");
+			}
+		}
+		
+		
+		return super.customInsertValidation(item);
+	}
+	
 }
