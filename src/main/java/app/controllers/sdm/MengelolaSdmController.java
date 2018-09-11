@@ -29,6 +29,7 @@ import app.models.Religion;
 import app.models.Sdm;
 import app.models.SdmLanguage;
 import app.models.SdmLvl;
+import core.io.helper.Validation;
 import core.io.model.CorePage;
 import core.io.model.DTOModel;
 import core.io.model.PagingParams;
@@ -314,5 +315,9 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 //			
 //			return result;
 //		}
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customInsertValidation(org.javalite.activejdbc.Model)
+	 */
+	
 
 }
