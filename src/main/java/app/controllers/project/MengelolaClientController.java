@@ -11,6 +11,7 @@ import app.models.Education;
 import app.models.Employment;
 import app.models.Profiling;
 import app.models.Sdm;
+import app.models.SdmHiring;
 import app.models.SdmLanguage;
 import core.io.helper.Validation;
 import core.io.model.CorePage;
@@ -167,4 +168,23 @@ public class MengelolaClientController extends CRUDController<Clients> {
 //		Map<String, Object> result = super.customOnDelete(item, mapRequest);
 //		return result;
 //	}
+
+	//Modified by : Dewi Roaza
+    //Date        : 10/09/2018 
+    @Override
+	public Map<String, Object> customOnDelete(Clients item, Map<String, Object> mapRequest) throws Exception {
+			LazyList<SdmHiring> list = SdmHiring.findAll();
+			Map<String, Object> result = null;
+			for(SdmHiring type: list) {
+					ClientDTO dto = new ClientDTO();
+					dto.fromModelMap(type.toMap());
+					if (item.getString("client_id").equalsIgnoreCase(Convert.toString(dto.clientId))) {
+							Validation.required(null, "Client tidak bisa dihapus, masih terdata pada hiring");
+					}
+			}
+			result = super.customOnDelete(item, mapRequest);
+			return result;
+			
+	}
+
 }
