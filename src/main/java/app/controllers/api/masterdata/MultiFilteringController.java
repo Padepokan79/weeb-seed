@@ -144,10 +144,19 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					}else if(operator.equals("2") && jumlahData != 1) {
 						listData = SdmSkill.getbySdmCategoryValueAND(listParams);
 					}
-				}
+				} //6 filterbySkill
+				else if(sdmId == null && skilltypeId != null && skillId != null && value == null) {
+					if(operator.equals("1") || jumlahData == 1) {
+						listData = SdmSkill.getbySkillsOR(listParams);
+					}else if(operator.equals("2") && jumlahData != 1) {
+						listData = SdmSkill.getbySkillsAND(listParams);
+					}
+				}//7 get all data
 				else if(sdmId == null && skilltypeId == null && skillId == null && value == null){
 					listData = SdmSkill.getAllSdmSkill();
 				}
+				
+				
 			}
 			
 			

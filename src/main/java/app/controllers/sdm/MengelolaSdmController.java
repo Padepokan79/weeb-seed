@@ -194,6 +194,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	return new CorePage(listMapSdm, totalItems);		
 	}
 	
+	
 	/*
 	 * Updated by Nurdhiat Chaudhary Malik
 	 * 09 Agustus 2018
@@ -315,9 +316,37 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 //			
 //			return result;
 //		}
-	/* (non-Javadoc)
-	 * @see core.javalite.controllers.CRUDController#customInsertValidation(org.javalite.activejdbc.Model)
-	 */
-	
+
+	 // Updated by Hendra Kuniawan
+	 // 11/9/2018
+	//update status sdm otomatis berdsarkan tanggal kontrak
+	@Override
+	public Map<String, Object> customOnUpdate(Sdm item, Map<String, Object> mapRequest) throws Exception {
+		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+		
+		String startContract = Convert.toString(mapRequest.get("sdm_startcontract"));
+		String endContract = Convert.toString(mapRequest.get("sdm_endcontract"));
+		int sdmStatus;
+		 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	       
+			Date currentDate = new Date();
+		 
+			System.out.println(sdf.format(currentDate));
+		 
+		    Date startContractDate = sdf.parse(startContract);
+	        Date endContractDate = sdf.parse(endContract);
+
+	        if (currentDate.compareTo(startContractDate) >= 0 && currentDate.compareTo(endContractDate) <= 0) {
+	           sdmStatus = 1;
+	        } else {
+	        	sdmStatus = 0;
+	        }
+	        item.set("sdm_status", sdmStatus);
+	        item.save();
+	        
+		return result;
+	}
+
 
 }
