@@ -20,6 +20,7 @@ import org.javalite.common.Convert;
 import app.controllers.api.masterdata.SkillController.SkillDTO;
 import app.models.Clients;
 import app.models.Sdm;
+import app.models.SdmAssignment;
 import app.models.SdmHiring;
 import app.models.Skill;
 import app.models.SkillType;
@@ -154,5 +155,23 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 //		
 //		return dto.toModelMap();
 //	}
+
+	//Modified by : Dewi Roaza
+    //Date        : 10/09/2018 
+    @Override
+	public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
+			LazyList<SdmAssignment> list = SdmAssignment.findAll();
+			Map<String, Object> result = null;
+			for(SdmAssignment type: list) {
+					HiringDTO dto = new HiringDTO();
+					dto.fromModelMap(type.toMap());
+					if (item.getString("client_id").equalsIgnoreCase(Convert.toString(dto.clientId))) {
+							Validation.required(null, "Hiring SDM tidak bisa dihapus, masih terdata pada SDM Assignment");
+					}
+			}
+			result = super.customOnDelete(item, mapRequest);
+			return result;
+			
+	}
 	
 }
