@@ -55,6 +55,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			List<Map<String, Object>> params = MapHelper.castToListMap((List<Map>) mapRequest.get("listhiring"));
 			List<Map<String, Object>> listHiring = new ArrayList<>();
 			
+			System.out.println(params.size());
 			listHiring = validateRedudantInput(params);
 			for (Map<String, Object> hiring : listHiring) {
 				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
@@ -69,6 +70,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 				Integer sdmId = Convert.toInteger(hiring.get("sdm_id"));
 				Integer clientId = Convert.toInteger(hiring.get("client_id"));
 				Integer hirestatId = Convert.toInteger(hiring.get("hirestat_id"));
+				String sd = Convert.toString(hiring.get("sdm_id"));
 				boolean cekData = false;
 				
 				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
@@ -80,7 +82,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 						response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
 					}
 				}
-				
+				//validasi 
 				listdata = SdmHiring.getDataSdmbyHirestat();
 				System.out.println(listdata);
 				for(Map sdmHirestat : listdata) {
