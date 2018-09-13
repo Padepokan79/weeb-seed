@@ -125,6 +125,23 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 //			System.out.println("----------------------------> "+dto.sdmassign_notification+"\n");
 
 			listMapSdmAssignment.add(dto.toModelMap());
+			// Modified : Hendra Kurniawan
+			// Date 	: 12-09-2018
+			List<Map> listdata = new ArrayList<>();
+			
+			listdata = SdmHiring.getDataSdmbyEndProject();
+			
+			int sdmId, clientId;
+			
+			for(Map dataSdm : listdata)
+			{
+				sdmId = Convert.toInteger(dataSdm.get("sdm_id"));
+				clientId = Convert.toInteger(dataSdm.get("client_id"));
+				SdmHiring.updateHireStatIdbyClient(sdmId, clientId);
+//				SdmHiring.updateHireStatIdbyClient79(sdmId, clientId);
+				System.out.println("SDM" + sdmId);
+				System.out.println("Client" + clientId);
+			}
 
 		}
 		
