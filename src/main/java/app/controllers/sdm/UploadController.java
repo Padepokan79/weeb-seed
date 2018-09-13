@@ -26,9 +26,8 @@ public class UploadController extends CommonController{
 	@POST
 	public void upload() {
 		String sdmId = Convert.toString(param("$sdm_id"));
-		String folderPath = "assets\\";
 		
-		File file = new File(folderPath);
+		File file = new File("assets\\");
 		if (!file.exists()) {
 			if (file.mkdir()) {
 				System.out.println("Create new folder ...");
@@ -41,21 +40,14 @@ public class UploadController extends CommonController{
 			System.out.println("2");
 			if (item.isFile()) {
 				String fileName = item.getFileName();
+				String folderPath = "assets\\";
 				String filePath = folderPath + fileName;
 				System.out.println("3");
 				try {
-					Sdm.delete("sdm_id = ?", sdmId);
 					System.out.println("4");
-//					Sdm photo = new Sdm();
-//					photo.set("sdm_id", sdmId);
-//					photo.set("sdm_name");
-//					photo.set("sdm_placebirth");
-//					photo.set("sdm_datebirth");
-//					photo.set("sdm_startcontract");
-//					photo.set("sdm_endcontract");
-//					photo.set("sdm_status");
-//					photo.set("sdm_image", fileName);
-//					photo.insert();
+					Sdm photo = Sdm.findFirst("sdm_id = ?", sdmId);
+					photo.set("sdm_image", fileName);
+					photo.save();
 					System.out.println("5");
 					item.saveTo(filePath);
 					response().setResponseBody(HttpResponses.ON_SUCCESS);
