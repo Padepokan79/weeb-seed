@@ -59,6 +59,25 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		
 //		LazyList<? extends Model> items = this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
+		
+		// Modified : Hendra Kurniawan
+		// Date 	: 12-09-2018
+		List<Map> listdata = new ArrayList<>();
+		
+		listdata = SdmHiring.getDataSdmbyEndProject();
+		
+		int sdmId, clientId;
+		
+		for(Map dataSdm : listdata)
+		{
+			sdmId = Convert.toInteger(dataSdm.get("sdm_id"));
+			clientId = Convert.toInteger(dataSdm.get("client_id"));
+			SdmHiring.updateHireStatIdbyClient(sdmId, clientId);
+//			SdmHiring.updateHireStatIdbyClient79(sdmId, clientId);
+			System.out.println("SDM" + sdmId);
+			System.out.println("Client" + clientId);
+		}
+		
 		/*
 		* Created By  : Rizaldi
 		* Date Assign : 30-08-2018 08:57
@@ -92,35 +111,35 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 	}
 	
 	
-	public Map<String, Object> customOnInsert(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
-		Map<String, Object> result = super.customOnInsert(item, mapRequest);
-		HiringDTO dto = new HiringDTO();
-		dto.fromModelMap(result);
-		
-		Sdm sdm = item.parent(Sdm.class);
-		StatusHiring hirestat = item.parent(StatusHiring.class);
-		Clients client = item.parent(Clients.class);
-		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
-		dto.clientName = Convert.toString(client.get("client_name"));
-
-		return dto.toModelMap();
-	}
-	
-	public SdmHiring customInsertValidation(SdmHiring item) throws Exception {
-		Integer sdmId = item.getInteger("sdm_id");
-		Integer hirestatId = item.getInteger("hirestat_id");
-		Integer clientId = item.getInteger("client_id");
-		Integer sdmhiringId = item.getInteger("sdmhiring_id");
-		
-		// Contoh Validasi untuk variable yang harus memiliki nilai / tidak boleh null
-		Validation.required(sdmId, "Id Sdm Tidak Boleh Kosong");
-		Validation.required(hirestatId, "Id Status Hire tidak boleh kosong");
-		Validation.required(clientId, "Id Client tidak boleh kosong");
-		Validation.required(sdmhiringId, "Id hiring tidak boleh kosong");
-
-		return super.customInsertValidation(item);
-	}
+//	public Map<String, Object> customOnInsert(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
+//		Map<String, Object> result = super.customOnInsert(item, mapRequest);
+//		HiringDTO dto = new HiringDTO();
+//		dto.fromModelMap(result);
+//		
+//		Sdm sdm = item.parent(Sdm.class);
+//		StatusHiring hirestat = item.parent(StatusHiring.class);
+//		Clients client = item.parent(Clients.class);
+//		dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+//		dto.hirestatName = Convert.toString(hirestat.get("hirestat_name"));
+//		dto.clientName = Convert.toString(client.get("client_name"));
+//
+//		return dto.toModelMap();
+//	}
+//	
+//	public SdmHiring customInsertValidation(SdmHiring item) throws Exception {
+//		Integer sdmId = item.getInteger("sdm_id");
+//		Integer hirestatId = item.getInteger("hirestat_id");
+//		Integer clientId = item.getInteger("client_id");
+//		Integer sdmhiringId = item.getInteger("sdmhiring_id");
+//		
+//		// Contoh Validasi untuk variable yang harus memiliki nilai / tidak boleh null
+//		Validation.required(sdmId, "Id Sdm Tidak Boleh Kosong");
+//		Validation.required(hirestatId, "Id Status Hire tidak boleh kosong");
+//		Validation.required(clientId, "Id Client tidak boleh kosong");
+//		Validation.required(sdmhiringId, "Id hiring tidak boleh kosong");
+//
+//		return super.customInsertValidation(item);
+//	}
 	
 //	public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
 //			

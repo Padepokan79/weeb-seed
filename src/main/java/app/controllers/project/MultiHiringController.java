@@ -74,12 +74,21 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
 				List<Map> listdata = new ArrayList<>();
 				listdata = SdmHiring.getDataSdmbyClient(clientId);
-				
 				for(Map dataHire : listdata) {
 					if(sdmId == dataHire.get("sdm_id")) {
 						cekData = true;
 						response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
 					}
+				}
+				
+				listdata = SdmHiring.getDataSdmbyHirestat();
+				System.out.println(listdata);
+				for(Map sdmHirestat : listdata) {
+					if(sdmId == sdmHirestat.get("sdm_id")) {
+						cekData = true;
+						response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
+					}
+					System.out.println(listdata);
 				}
 				
 				if (cekData == false) {
@@ -94,7 +103,6 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 
 			Base.commitTransaction();
 		} catch (Exception e) {
-			response().setMessage("Woi");
 			e.printStackTrace();
 			response().setResponseBody(e);
 			Base.rollbackTransaction();
