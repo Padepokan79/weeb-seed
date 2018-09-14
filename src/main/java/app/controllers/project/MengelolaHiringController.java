@@ -184,7 +184,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 			for(SdmAssignment type: list) {
 					HiringDTO dto = new HiringDTO();
 					dto.fromModelMap(type.toMap());
-					if (item.getString("client_id").equalsIgnoreCase(Convert.toString(dto.clientId))) {
+					if (item.getString("sdmhiring_id").equalsIgnoreCase(Convert.toString(dto.sdmhiringId))) {
 							Validation.required(null, "Hiring SDM tidak bisa dihapus, masih terdata pada SDM Assignment");
 					}
 			}
