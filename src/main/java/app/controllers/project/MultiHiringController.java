@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.functors.IfClosure;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activeweb.annotations.POST;
@@ -56,47 +57,82 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			List<Map<String, Object>> listHiring = new ArrayList<>();
 			
 			System.out.println(params.size());
+			//filter datasdm dengan id yang sama
 			listHiring = validateRedudantInput(params);
+			Integer cv79 = 1;
+			
 			for (Map<String, Object> hiring : listHiring) {
-				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
+//				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
 				InputHiringDTO sdmhiringDto = new InputHiringDTO ();
-				sdmhiringDto.fromMap(hiring);
-
+				
 				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmhiringDto.toMap()));
 
-				SdmHiring sdmModel = new SdmHiring();
-				sdmModel.fromMap(sdmhiringDto.toModelMap());
+				System.out.println("ini data hiring " + hiring);
 				
 				Integer sdmId = Convert.toInteger(hiring.get("sdm_id"));
 				Integer clientId = Convert.toInteger(hiring.get("client_id"));
 				Integer hirestatId = Convert.toInteger(hiring.get("hirestat_id"));
-				String sd = Convert.toString(hiring.get("sdm_id"));
-				boolean cekData = false;
-				
+				boolean cekData = true, validatebyClient = true, validatebyHireStat = true;
+				SdmHiring sdmModel = new SdmHiring();
 				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
 				List<Map> listdata = new ArrayList<>();
 				listdata = SdmHiring.getDataSdmbyClient(clientId);
-				for(Map dataHire : listdata) {
-					if(sdmId == dataHire.get("sdm_id")) {
-						cekData = true;
-						response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
+				List<Map> listdataStatSdm = new ArrayList<>();
+				listdataStatSdm = SdmHiring.getDataSdmbyHirestat();
+				
+				System.out.println("datahire" + listdata);
+				if(listdata.size() == 0 ) {
+					if(listdataStatSdm.size() == 0) {
+						cekData = false;
+						sdmhiringDto.fromMap(hiring);
+						sdmModel.fromMap(sdmhiringDto.toModelMap());
+					} else {
+						for(Map sdmHirestat : listdataStatSdm) {
+							System.out.println(sdmHirestat);
+							if(sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79) {
+								validatebyHireStat = false;
+								System.out.println("tidak input (hirestat)" + sdmId);
+							} else if ( validatebyHireStat == true ){
+								cekData = false;
+								System.out.println("input data Hire" + sdmId);
+								sdmhiringDto.fromMap(hiring);
+								sdmModel.fromMap(sdmhiringDto.toModelMap());
+							}
+						}
 					}
-				}
-				//validasi 
-				listdata = SdmHiring.getDataSdmbyHirestat();
-				System.out.println(listdata);
-				for(Map sdmHirestat : listdata) {
-					if(sdmId == sdmHirestat.get("sdm_id")) {
+					
+				} else {
+					for(Map dataHire : listdata) {
 						cekData = true;
-						response().setResponseBody(HttpResponses.ON_CREATE_REDUNDANT_DATA);
+						if(sdmId == dataHire.get("sdm_id")) {
+							validatebyClient = false;
+							System.out.println("tidak input (by client)" + sdmId);
+						} else if ( validatebyClient == true ){
+							
+							for(Map sdmHirestat : listdataStatSdm) {
+								System.out.println(sdmHirestat);
+								if(sdmId == sdmHirestat.get("sdm_id")) {
+									validatebyHireStat = false;
+									System.out.println("tidak input (hirestat)" + sdmId);
+								} else if ( validatebyHireStat == true ){
+									cekData = false;
+									System.out.println("input data Hire" + sdmId);
+									sdmhiringDto.fromMap(hiring);
+									sdmModel.fromMap(sdmhiringDto.toModelMap());
+								}
+							}	
+						}
 					}
-					System.out.println(listdata);
 				}
 				
+
 				if (cekData == false) {
 					sdmModel.insert();
 					System.out.println("Inserted Hiring : " + sdmhiringDto.sdm_id);
 					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
+				}
+				else {
+					response().setResponseBody(HttpResponses.ERROR);
 				}
 			}
 			
@@ -153,28 +189,5 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 		
 		return newListHiring;
 	}
-	
-//	@Override
-//	public SdmHiring customInsertValidation(SdmHiring item) throws Exception {
-//		// TODO Auto-generated method stub
-//		Integer sdmId = item.getInteger("sdm_id");
-//		Integer hireStatId = item.getInteger("hirestat_id");
-//		Integer clientId = item.getInteger("client_id");
-//		
-//		List<Map> listdata = new ArrayList<>();
-//		listdata = SdmHiring.getDataSdmbyClient(clientId);
-//		
-//		for(Map dataHire : listdata) {
-//			if(sdmId == dataHire.get("sdm_id")) {
-//				Validation.required(null, "Woi");
-//				System.out.println("was Here 2");
-//				
-//			}
-//		}
-//		
-//		System.out.println("was Here");
-//		
-//		return super.customInsertValidation(item);
-//	}
 	
 }

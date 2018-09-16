@@ -66,14 +66,15 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 		
 		listdata = SdmHiring.getDataSdmbyEndProject();
 		
-		int sdmId, clientId;
+		int sdmId, clientId, sdmhiringId;
 		
 		for(Map dataSdm : listdata)
 		{
 			sdmId = Convert.toInteger(dataSdm.get("sdm_id"));
 			clientId = Convert.toInteger(dataSdm.get("client_id"));
-			SdmHiring.updateHireStatIdbyClient(sdmId, clientId);
-//			SdmHiring.updateHireStatIdbyClient79(sdmId, clientId);
+			sdmhiringId = Convert.toInteger(dataSdm.get("sdmhiring_id"));
+//			SdmHiring.updateHireStatIdbyClient(sdmhiringId);
+//			SdmHiring.updateHireStatIdbyClient79(sdmId, 1);
 			System.out.println("SDM" + sdmId);
 			System.out.println("Client" + clientId);
 		}

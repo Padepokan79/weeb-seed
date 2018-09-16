@@ -35,4 +35,46 @@ public class SdmAssignment extends Model{
 		
 		return lisdata;		
 	}
+	
+    public static int updateHireStatIdWhenOutsource(int sdmId, int clientId) {
+		
+		List<Object> params = new ArrayList<>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE sdm_hiring "
+				+ "SET HIRESTAT_ID = 10 "
+				+ "WHERE SDM_ID = ? && CLIENT_ID = ?");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId);
+		params.add(clientId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
+
+    public static List<Map> getSdmHiringId(int clientId) {
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT SDMASSIGN_ID, SDMHIRING_ID FROM sdm_assignment WHERE CLIENT_ID = ?");
+		System.out.println("query : "+query.toString());
+		params.add(clientId);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+		return lisdata;		
+	}
+    
+    public static int updateDataAssign(int sdmassignId, String startDateProject, String endDateProject) {
+		
+		List<Object> params = new ArrayList<>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE sdm_assignment SET \r\n" + 
+				"SDMASSIGN_STARTDATE = ? , \r\n" + 
+				"SDMASSIGN_ENDDATE = ? \r\n" + 
+				"WHERE SDMASSIGN_ID = ? ");
+		System.out.println("query : "+query.toString());
+		params.add(startDateProject);
+		params.add(endDateProject);
+		params.add(sdmassignId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
 }

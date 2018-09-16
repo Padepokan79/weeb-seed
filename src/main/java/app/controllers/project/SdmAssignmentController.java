@@ -127,22 +127,37 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			listMapSdmAssignment.add(dto.toModelMap());
 			// Modified : Hendra Kurniawan
 			// Date 	: 12-09-2018
+			// update otomatis hirestat di hiring ketika endproject habis 
 			List<Map> listdata = new ArrayList<>();
+			List<Map> listdatahirestat = new ArrayList<>();
 			
 			listdata = SdmHiring.getDataSdmbyEndProject();
 			
-			int sdmId, clientId;
-			
+			int sdmId, clientId, sdmhiringId, countstatusOff=0, statusoff=9, cv79=1;
+			System.out.println(listdata);
 			for(Map dataSdm : listdata)
 			{
 				sdmId = Convert.toInteger(dataSdm.get("sdm_id"));
 				clientId = Convert.toInteger(dataSdm.get("client_id"));
-				SdmHiring.updateHireStatIdbyClient(sdmId, clientId);
-//				SdmHiring.updateHireStatIdbyClient79(sdmId, clientId);
-				System.out.println("SDM" + sdmId);
-				System.out.println("Client" + clientId);
-			}
+				sdmhiringId = Convert.toInteger(dataSdm.get("sdmhiring_id"));
+				if(clientId != cv79) {
+					SdmHiring.updateHireStatIdbyClient(sdmhiringId);	
+				}
+				
+				listdatahirestat = SdmHiring.getStatusHireSDM(sdmId);
+				for(Map hirestatSdm : listdatahirestat) {
+					if(listdatahirestat.size()>=1) {
+						if(Convert.toInteger(hirestatSdm.get("hirestat_id")) == statusoff) {
+							countstatusOff++;
+						}
 
+						if((listdatahirestat.size()-1) == countstatusOff) {
+							SdmHiring.updateHireStatIdbyClient79(sdmId, 1);
+						}	
+					}
+					
+				}
+			}
 		}
 		
 		return new CorePage(listMapSdmAssignment, totalItems);
