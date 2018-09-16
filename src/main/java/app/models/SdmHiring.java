@@ -39,9 +39,9 @@ public class SdmHiring extends Model {
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
-		query.append("SELECT hiring.SDM_ID, hiring.CLIENT_ID,  assign.SDMASSIGN_STARTDATE, assign.SDMASSIGN_ENDDATE \r\n" +
+		query.append("SELECT assign.SDMHIRING_ID, hiring.SDM_ID, hiring.CLIENT_ID,  assign.SDMASSIGN_STARTDATE, assign.SDMASSIGN_ENDDATE \r\n" +
 				"FROM sdm_hiring as hiring inner JOIN sdm_assignment as assign on hiring.SDMHIRING_ID = assign.SDMHIRING_ID \r\n" + 
-				"WHERE CURRENT_DATE > SDMASSIGN_ENDDATE");
+				"WHERE CURRENT_DATE > SDMASSIGN_ENDDATE ORDER BY assign.SDMASSIGN_ENDDATE DESC LIMIT 1");
 		
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 	
@@ -59,16 +59,15 @@ public class SdmHiring extends Model {
 		return lisdata;
 	}
 	
-	public static int updateHireStatIdbyClient(int sdmId, int clientId){
+	public static int updateHireStatIdbyClient(int sdmhiringId){
 		List<Object> params = new ArrayList<>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE sdm_hiring \r\n" + 
 				"SET HIRESTAT_ID = 9 \r\n" + 
-				"WHERE SDM_ID = ? && ClIENT_ID = ?");
+				"WHERE SDMHIRING_ID = ? ");
 		System.out.println("query : "+query.toString());
-		params.add(sdmId);
-		params.add(clientId);
+		params.add(sdmhiringId);
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
 	
@@ -84,7 +83,15 @@ public class SdmHiring extends Model {
 		params.add(clientId);
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
+
+	public static List<Map> getStatusHireSDM(int sdmId){
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT HIRESTAT_ID from sdm_hiring WHERE SDM_ID = ?");
+		params.add(sdmId);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 	
-	
-	
+		return lisdata;
+	}
 }

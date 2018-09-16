@@ -68,7 +68,8 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			String clientPIC="";
 			String clientPhone="";
 			Integer workPlace= 0;
-			
+			boolean cekHiring = false;
+			int sdmassignId=0;
 			Date startdate = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.YEAR, 1);
@@ -82,11 +83,10 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				sdmassignDto.fromMap(assign);
 
 				SdmHiring sdmAssignModel = new SdmHiring();
-				
 				sdmAssignModel.fromMap(sdmassignDto.toModelMap());
 				
-				
 				SdmAssignment sdmAssign = new SdmAssignment();
+				
 				clientId = Convert.toInteger(assign.get("client_id"));
 				listData = sdmAssign.getClientdata(clientId);
 				for (Map mapClient : listData) {
@@ -104,14 +104,44 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				} else {
 					sdmassignDto.sdmassign_loc = "Luar Bandung";
 				}
+				int client = 1;
+				int sdmId = Convert.toInteger(assign.get("sdm_id"));
+				System.out.println("ini cleint : " + clientId);
+				if(clientId!=1) {
+					sdmAssign.updateHireStatIdWhenOutsource(sdmId, client);
+				}
 				sdmAssign.fromMap(sdmassignDto.toModelMap());
 				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
-				if (sdmAssign.insert()) {
+				
+				//cek data sdm hiring 
+				listData = sdmAssign.getSdmHiringId(clientId);
+				for(Map dataHiring : listData) {
+					int cekSdmHiringId = Convert.toInteger(dataHiring.get("sdmhiring_id"));
+					int inputSdmHiringId = Convert.toInteger(assign.get("sdmhiring_id"));
+					sdmassignId = Convert.toInteger(dataHiring.get("sdmassign_id"));
+//					System.out.println(cekSdmHiringId == inputSdmHiringId);
+//					System.out.println(cekSdmHiringId);
+//					System.out.println(inputSdmHiringId);
+					if(cekSdmHiringId == inputSdmHiringId) {
+						cekHiring = true;
+					}
+				}
+				
+				if (cekHiring == false) {	
+					//apabila data belum ada yang berelasi dengan sdmhiring_id, maka insert data baru
+					sdmAssign.insert();
 					System.out.println("Inserted Assignment : " + sdmassignDto);
+					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listAssign);
+				}
+				else {
+					//apabila data assign ada yang berelasi dengan sdmhiring_id, maka update data
+					sdmAssign.updateDataAssign(sdmassignId, sdmassignDto.sdmassign_startdate, 	sdmassignDto.sdmassign_enddate);
+					System.out.println("Update disini");
+					response().setResponseBody(HttpResponses.ON_SUCCESS_UPDATE, listAssign);
 				}
 			}
 			
-			response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listAssign);
+			
 
 			Base.commitTransaction();
 		} catch (Exception e) {
