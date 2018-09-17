@@ -44,6 +44,15 @@ public class ReportCvSdmController extends ReportController{
 		for (Map map : dataFromQuery) {
 //			tampil.put("HEALTH_STATUS", map.get("HEALTH_STATUS"));
 			map.put("SDM_DATEBIRTH", getConvertBulan(map.get("SDM_DATEBIRTH").toString()));
+			
+			//report foto pada cv
+			File folder = new File ("assets/" + dataFromQuery.get(0).get("SDM_IMAGE"));
+			if (!folder.exists()) {
+				map.put("SDM_IMAGE","assets/default.png");
+			}else {
+				map.put("SDM_IMAGE", "assets/" + dataFromQuery.get(0).get("SDM_IMAGE"));
+			}
+			
 			listData.add(map);
 		}
 		
