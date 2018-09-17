@@ -174,7 +174,15 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
-			dto.sdm_contractloc = Convert.toString(sdm.get("sdm_contractloc"));
+			//dto.sdm_contractloc = Convert.toString(sdm.get("sdm_contractloc"));
+			String contraklok = Convert.toString(sdm.get("sdm_contractloc"));
+			if(contraklok.equals("1")) {
+				dto.sdm_contractloc = "Bandung";
+			}
+			else {
+				dto.sdm_contractloc = "Luar Bandung";
+			}
+			
 			
 //			if(dto.sdm_contractloc == "1" ) {
 //				dto.sdm_contractloc = "Bandung";
