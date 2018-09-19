@@ -24,6 +24,7 @@ import app.models.ProjectMethod;
 import app.models.Sdm;
 import app.models.SdmAssignment;
 import app.models.SdmHiring;
+import core.io.helper.Validation;
 import core.io.model.CorePage;
 import core.io.model.DTOModel;
 import core.io.model.PagingParams;
@@ -205,6 +206,59 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 //		System.out.println("--------------------------> lama  : "+lama);
         return (res)/30;
     }
+	
+	/*
+	 * Updated by Hendra Kurniawan dan Dewi Roaza 
+	 * 2018-09-19
+	 * 
+	 */
+	@Override
+	public Map<String, Object> customOnUpdate(SdmAssignment item, Map<String, Object> mapRequest) throws Exception {
+//		LazyList<Sdm> listenddate=Sdm.findAll();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		String endAssign = Convert.toString(mapRequest.get("sdmassign_enddate"));
+//		java.util.Date endass = sdf.parse(endAssign);
+//		System.out.println(endAssign);
+//		System.out.println("end assign" + endass);
+//		for(Sdm data : listenddate) {
+//			String endsdm = data.getString("sdm_endcontract");
+//			java.util.Date endcontract = sdf.parse(endsdm);
+//			System.out.println("end contract" + endsdm);
+//			if (!(endass.compareTo(endcontract) <= 0)) {
+//				Validation.required(null, "Update tanggal akhir outsouce melebihi tanggal kontrak");
+//			}
+//		}
+//		
+//		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+//
+//		return result;
+		
+		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
+		LazyList<Sdm> listenddate=Sdm.findAll();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String endAssign = Convert.toString(mapRequest.get("sdmassign_enddate"));
+		Integer sdmId = Convert.toInteger(mapRequest.get("sdm_id"));
+		
+		java.util.Date endass = sdf.parse(endAssign);
+		for(Sdm data : listenddate) {
+			if(sdmId == Convert.toInteger(data.get("sdm_id"))) {
+				String endsdm = data.getString("sdm_endcontract");
+				
+				java.util.Date endcontract = sdf.parse(endsdm);		
+				if (endass.compareTo(endcontract) <= 0) {
+					System.out.println("OK");
+					Validation.required(null, "Tanggal tidak boleh melebihi kontrak");
+				} else {
+					System.out.println("Gagal");
+					item.save();
+				}
+			}
+		}
+		
+		return result;
+	}
 
 
 }

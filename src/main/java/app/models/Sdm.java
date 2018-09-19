@@ -316,4 +316,19 @@ public class Sdm extends Model{
 		params.add(sdmId);
 		return Base.exec(query, sdmId);
 	}
+	
+//	@AUHTOR 	: Dewi Roaza
+//	@DATE	 	: 2018-09-19
+	@SuppressWarnings("rawtypes")
+	public static List<Map> getDataEndContract(int sdmId1) {	
+		List<Object> params = new ArrayList<Object>();		
+		StringBuilder query = new StringBuilder();	
+		query.append("SELECT SDM_ENDCONTRACT \r\n" + 
+				"FROM SDM\r\n" + 
+				"WHERE SDM_ID = ? ");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId1);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
 }
