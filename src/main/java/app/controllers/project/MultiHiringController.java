@@ -111,7 +111,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 							
 							for(Map sdmHirestat : listdataStatSdm) {
 								System.out.println(sdmHirestat);
-								if(sdmId == sdmHirestat.get("sdm_id")) {
+								if(sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79 ) {
 									validatebyHireStat = false;
 									System.out.println("tidak input (hirestat)" + sdmId);
 								} else if ( validatebyHireStat == true ){
