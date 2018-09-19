@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cetakCV" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9125c092-27f6-4197-a1bb-f9fe09305935">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
@@ -122,6 +122,7 @@
 		<field name="GENDER_NAME" class="java.lang.String"/>
 		<field name="RELIGION_NAME" class="java.lang.String"/>
 		<field name="SDM_OBJECTIVE" class="java.lang.String"/>
+		<field name="SDM_IMAGE" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="dataEduc" uuid="583a3a88-d4ba-4c6d-a53e-3e2275d2420a">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -238,14 +239,14 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="295" splitType="Stretch">
+		<band height="333" splitType="Stretch">
 			<componentElement>
-				<reportElement x="0" y="-4" width="555" height="180" uuid="eaff3167-62f9-4431-a112-d0b094b655b6"/>
+				<reportElement x="0" y="-4" width="555" height="204" uuid="eaff3167-62f9-4431-a112-d0b094b655b6"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="data" uuid="a0bf336c-1a0a-4508-a3ba-564947ae9224">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("data")]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="180" width="555">
+					<jr:listContents height="204" width="555">
 						<textField>
 							<reportElement x="0" y="0" width="555" height="30" uuid="9a2c5ee0-8046-4b52-b99f-52691ca4383f"/>
 							<textElement>
@@ -254,7 +255,7 @@
 							<textFieldExpression><![CDATA[$F{SDM_NAME}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="109" width="555" height="30" backcolor="#32C2DB" uuid="b258b61c-97e9-40e9-a503-a7c8621f8902">
+							<reportElement mode="Opaque" x="0" y="133" width="555" height="30" backcolor="#32C2DB" uuid="b258b61c-97e9-40e9-a503-a7c8621f8902">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<box>
@@ -269,7 +270,7 @@
 							<text><![CDATA[   PERSONAL DETAIL]]></text>
 						</staticText>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="140" width="100" height="20" backcolor="#BCD6D5" uuid="c4cd88f6-9c49-4042-aff2-ab86c960a527">
+							<reportElement mode="Opaque" x="0" y="164" width="100" height="20" backcolor="#BCD6D5" uuid="c4cd88f6-9c49-4042-aff2-ab86c960a527">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<box rightPadding="4">
@@ -284,7 +285,7 @@
 							<text><![CDATA[Place of Birth  :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement mode="Opaque" x="0" y="160" width="100" height="20" backcolor="#BCD6D5" uuid="650c502e-1a0c-46cb-a7bb-081362424bf8">
+							<reportElement mode="Opaque" x="0" y="184" width="100" height="20" backcolor="#BCD6D5" uuid="650c502e-1a0c-46cb-a7bb-081362424bf8">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
 							<box rightPadding="4">
@@ -299,7 +300,7 @@
 							<text><![CDATA[Date of Birth  :]]></text>
 						</staticText>
 						<textField>
-							<reportElement x="100" y="140" width="170" height="20" uuid="aae01b84-71d1-4043-8d5d-eba0c91ceb4e">
+							<reportElement x="100" y="164" width="170" height="20" uuid="aae01b84-71d1-4043-8d5d-eba0c91ceb4e">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<box>
@@ -315,7 +316,7 @@
 							<textFieldExpression><![CDATA[$F{SDM_PLACEBIRTH}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="100" y="160" width="170" height="20" uuid="a223ce0c-eb0f-49b8-b45d-eb1f0a177366">
+							<reportElement x="100" y="184" width="170" height="20" uuid="a223ce0c-eb0f-49b8-b45d-eb1f0a177366">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<box>
@@ -331,7 +332,7 @@
 							<textFieldExpression><![CDATA[$F{SDM_DATEBIRTH}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement mode="Opaque" x="270" y="140" width="70" height="20" backcolor="#BCD6D5" uuid="2fcb2cf7-47dc-413a-b0ce-ff43740d21b3"/>
+							<reportElement mode="Opaque" x="270" y="164" width="70" height="20" backcolor="#BCD6D5" uuid="2fcb2cf7-47dc-413a-b0ce-ff43740d21b3"/>
 							<box rightPadding="7">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -344,7 +345,7 @@
 							<text><![CDATA[Gender :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement mode="Opaque" x="270" y="160" width="70" height="20" backcolor="#BCD6D5" uuid="1d90d1b5-0cdc-405f-bd21-27d4102bf2e7"/>
+							<reportElement mode="Opaque" x="270" y="184" width="70" height="20" backcolor="#BCD6D5" uuid="1d90d1b5-0cdc-405f-bd21-27d4102bf2e7"/>
 							<box rightPadding="7">
 								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -357,7 +358,7 @@
 							<text><![CDATA[Health :]]></text>
 						</staticText>
 						<textField>
-							<reportElement x="340" y="140" width="215" height="20" uuid="d48c5507-4bff-4df1-a447-327d000ac43c">
+							<reportElement x="340" y="164" width="215" height="20" uuid="d48c5507-4bff-4df1-a447-327d000ac43c">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<box>
@@ -373,7 +374,7 @@
 							<textFieldExpression><![CDATA[$F{GENDER_NAME}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="340" y="160" width="215" height="20" uuid="499f7752-5998-42ff-bab7-43ae9a2134be">
+							<reportElement x="340" y="184" width="215" height="20" uuid="499f7752-5998-42ff-bab7-43ae9a2134be">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
 							<box>
@@ -388,11 +389,18 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{HEALTH_STATUS}]]></textFieldExpression>
 						</textField>
+						<image scaleImage="FillFrame">
+							<reportElement x="430" y="4" width="94" height="126" uuid="ea136b0f-c544-4600-aaa4-8ac0eee1af60">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<imageExpression><![CDATA[$F{SDM_IMAGE}]]></imageExpression>
+						</image>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
 			<staticText>
-				<reportElement x="-1" y="250" width="556" height="20" uuid="acc9dd13-89f1-4000-b737-448abbd3f83a">
+				<reportElement x="-1" y="274" width="556" height="20" uuid="acc9dd13-89f1-4000-b737-448abbd3f83a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -401,7 +409,7 @@
 				<text><![CDATA[B.PROFILE]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement x="-1" y="270" width="555" height="19" uuid="2655ebfe-f51c-4b29-8cff-abf1d7450daa"/>
+				<reportElement x="-1" y="294" width="555" height="19" uuid="2655ebfe-f51c-4b29-8cff-abf1d7450daa"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataProfile" uuid="a61d8631-1425-4eb8-a02a-adc2dc3414c7">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataProfiling")]]></dataSourceExpression>
@@ -420,7 +428,7 @@
 				</jr:list>
 			</componentElement>
 			<componentElement>
-				<reportElement x="100" y="177" width="170" height="20" uuid="5880a58c-4fc2-45a1-a0f5-33438d38cd30">
+				<reportElement x="100" y="200" width="170" height="20" uuid="5880a58c-4fc2-45a1-a0f5-33438d38cd30">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -451,7 +459,7 @@
 				</jr:list>
 			</componentElement>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="177" width="100" height="20" backcolor="#BCD6D5" uuid="2cde5a21-4051-4cad-bccf-508283802a25">
+				<reportElement mode="Opaque" x="0" y="200" width="100" height="20" backcolor="#BCD6D5" uuid="2cde5a21-4051-4cad-bccf-508283802a25">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -467,7 +475,7 @@
 				<text><![CDATA[Religion : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="270" y="177" width="70" height="20" backcolor="#BCD6D5" uuid="af62e6a7-8f05-47a7-846f-0caf2f239875">
+				<reportElement mode="Opaque" x="270" y="200" width="70" height="20" backcolor="#BCD6D5" uuid="af62e6a7-8f05-47a7-846f-0caf2f239875">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -483,7 +491,7 @@
 				<text><![CDATA[Language : ]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement x="340" y="177" width="215" height="20" uuid="087cee51-b391-487e-a78b-c3d170ecbc53">
+				<reportElement x="340" y="200" width="215" height="20" uuid="087cee51-b391-487e-a78b-c3d170ecbc53">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
@@ -511,7 +519,7 @@
 				</jr:list>
 			</componentElement>
 			<componentElement>
-				<reportElement x="-1" y="200" width="552" height="50" uuid="c5a78bd8-6b67-47a7-aa82-96f2d3578329"/>
+				<reportElement x="-1" y="224" width="552" height="50" uuid="c5a78bd8-6b67-47a7-aa82-96f2d3578329"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="data" uuid="b4f4b490-15ee-4902-a5c0-f36e897d862c">
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("data")]]></dataSourceExpression>
@@ -623,7 +631,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{SKILLTYPE_NAME}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{SKILLTYPE_NAME}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -656,7 +664,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{SKILL_NAME}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{SKILL_NAME}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -689,7 +697,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{SDMSKILL_VALUE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{SDMSKILL_VALUE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -818,7 +826,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{DEGREE_NAME}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{DEGREE_NAME}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -851,7 +859,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EDU_SUBJECT}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EDU_SUBJECT}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -884,7 +892,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EDU_STARTDATE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EDU_STARTDATE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -917,7 +925,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EDU_ENDDATE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EDU_ENDDATE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1012,7 +1020,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{COURSE_TITLE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{COURSE_TITLE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1048,7 +1056,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{COURSE_PROVIDER}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{COURSE_PROVIDER}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1081,7 +1089,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{COURSE_PLACE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{COURSE_PLACE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1117,7 +1125,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{COURSE_DATE} + ", \n" + $F{COURSE_DURATION}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{COURSE_DATE} + ", \n" + $F{COURSE_DURATION}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1150,7 +1158,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{COURSE_CERTIFICATES}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{COURSE_CERTIFICATES}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1231,7 +1239,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EMPLOYMENT_CORPNAME}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EMPLOYMENT_CORPNAME}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1267,7 +1275,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EMPLOYMENT_STARTDATE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EMPLOYMENT_STARTDATE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1303,7 +1311,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EMPLOYMENT_ENDDATE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EMPLOYMENT_ENDDATE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -1336,7 +1344,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ $F{EMPLOYMENT_ROLEJOB}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{EMPLOYMENT_ROLEJOB}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

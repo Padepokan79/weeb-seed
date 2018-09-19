@@ -29,6 +29,7 @@ public class ReportCvSdmController extends ReportController{
 
 		int sdmId = Convert.toInteger(param("$sdmId"));
 		int nourut;
+		String imgPhoto = ""; 
 		
 		List<Map> listData = new ArrayList<>();
 		List<Map> listDataLanguage = new ArrayList<>();
@@ -47,11 +48,12 @@ public class ReportCvSdmController extends ReportController{
 			map.put("SDM_DATEBIRTH", getConvertBulan(map.get("SDM_DATEBIRTH").toString()));
 			
 			//report foto pada cv
-			File folder = new File ("assets/" + dataFromQuery.get(0).get("SDM_IMAGE"));
+			imgPhoto = map.get("SDM_IMAGE") == "" ? null : Convert.toString(map.get("SDM_IMAGE"));
+			File folder = new File ("assets/" + imgPhoto );
 			if (!folder.exists()) {
-				map.put("SDM_IMAGE","assets/default.png");
+				map.put("SDM_IMAGE","assets/no-photo.png");
 			}else {
-				map.put("SDM_IMAGE", "assets/" + dataFromQuery.get(0).get("SDM_IMAGE"));
+				map.put("SDM_IMAGE", "assets/" + imgPhoto );
 			}
 			
 			listData.add(map);
