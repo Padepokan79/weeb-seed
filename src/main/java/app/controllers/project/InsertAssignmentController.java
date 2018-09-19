@@ -65,6 +65,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			List<Map<String, Object>> listAssign = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
 			List<Map> listData = new ArrayList<>();
 			int clientId;
+			int sdmId1;
 			String clientPIC="";
 			String clientPhone="";
 			Integer workPlace= 0;
@@ -93,6 +94,17 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 					clientPhone = Convert.toString(mapClient.get("client_mobileclient"));
 					clientPIC = Convert.toString(mapClient.get("client_picclient"));
 				}
+				
+				//update	: Dewi Roaza
+				//Date 		: 2018-09-19
+				//mengambil enddate dari contract
+				Sdm sdm = new Sdm();
+				sdmId1 = Convert.toInteger(assign.get("sdm_id"));
+				listData = sdm.getDataEndContract(sdmId1);
+				for (Map mapSdm : listData) {
+					enddate = Convert.toSqlDate(mapSdm.get("sdm_endcontract"));
+				}
+				
 				sdmassignDto.sdmhiring_id = Convert.toInteger(assign.get("sdmhiring_id"));
 				sdmassignDto.sdmassign_picclient = clientPIC;
 				sdmassignDto.sdmassign_picclientphone = clientPhone;

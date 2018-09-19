@@ -41,7 +41,7 @@ public class Sdm extends Model{
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
 		query.append("SELECT sdm.SDM_NAME, gender.GENDER_NAME, \r\n" + 
-				"religion.RELIGION_NAME, sdm.SDM_PLACEBIRTH,\r\n" + 
+				"religion.RELIGION_NAME, sdm.SDM_PLACEBIRTH, sdm.SDM_IMAGE, \r\n" + 
 				"sdm.SDM_DATEBIRTH, health.HEALTH_STATUS, sdm.SDM_OBJECTIVE\r\n" + 
 				"FROM sdm, religion, health, gender\r\n" + 
 				"WHERE sdm.RELIGION_ID = religion.RELIGION_ID \r\n" + 
@@ -305,5 +305,30 @@ public class Sdm extends Model{
 		System.out.println("query : "+query.toString());
 		params.add(sdmId);
 		return Base.exec(query, params.toArray(new Object[params.size()]));
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static int ubahPhotoSdm(String sdmId) {
+		List<Object> params = new ArrayList<Object>();
+		String query =("UPDATE sdm SET SDM_IMAGE = ? \r\n" +
+				"WHERE SDM_ID=?;");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId);
+		return Base.exec(query, sdmId);
+	}
+	
+//	@AUHTOR 	: Dewi Roaza
+//	@DATE	 	: 2018-09-19
+	@SuppressWarnings("rawtypes")
+	public static List<Map> getDataEndContract(int sdmId1) {	
+		List<Object> params = new ArrayList<Object>();		
+		StringBuilder query = new StringBuilder();	
+		query.append("SELECT SDM_ENDCONTRACT \r\n" + 
+				"FROM SDM\r\n" + 
+				"WHERE SDM_ID = ? ");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId1);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
 	}
 }
