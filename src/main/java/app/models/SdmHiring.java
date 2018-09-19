@@ -41,7 +41,7 @@ public class SdmHiring extends Model {
 		StringBuilder query = new StringBuilder();		
 		query.append("SELECT assign.SDMHIRING_ID, hiring.SDM_ID, hiring.CLIENT_ID,  assign.SDMASSIGN_STARTDATE, assign.SDMASSIGN_ENDDATE \r\n" +
 				"FROM sdm_hiring as hiring inner JOIN sdm_assignment as assign on hiring.SDMHIRING_ID = assign.SDMHIRING_ID \r\n" + 
-				"WHERE CURRENT_DATE > SDMASSIGN_ENDDATE ORDER BY assign.SDMASSIGN_ENDDATE DESC LIMIT 1");
+				"WHERE CURRENT_DATE > SDMASSIGN_ENDDATE ORDER BY assign.SDMASSIGN_ENDDATE DESC");
 		
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 	
