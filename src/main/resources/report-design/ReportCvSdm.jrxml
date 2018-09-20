@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cetakCV" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9125c092-27f6-4197-a1bb-f9fe09305935">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
@@ -299,7 +299,7 @@
 							</textElement>
 							<text><![CDATA[Date of Birth  :]]></text>
 						</staticText>
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="100" y="164" width="170" height="20" uuid="aae01b84-71d1-4043-8d5d-eba0c91ceb4e">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
@@ -315,7 +315,7 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{SDM_PLACEBIRTH}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="100" y="184" width="170" height="20" uuid="a223ce0c-eb0f-49b8-b45d-eb1f0a177366">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
@@ -357,7 +357,7 @@
 							</textElement>
 							<text><![CDATA[Health :]]></text>
 						</staticText>
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="340" y="164" width="215" height="20" uuid="d48c5507-4bff-4df1-a447-327d000ac43c">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
@@ -373,7 +373,7 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{GENDER_NAME}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="340" y="184" width="215" height="20" uuid="499f7752-5998-42ff-bab7-43ae9a2134be">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
@@ -390,7 +390,7 @@
 							<textFieldExpression><![CDATA[$F{HEALTH_STATUS}]]></textFieldExpression>
 						</textField>
 						<image scaleImage="FillFrame">
-							<reportElement x="430" y="4" width="94" height="126" uuid="ea136b0f-c544-4600-aaa4-8ac0eee1af60">
+							<reportElement x="449" y="4" width="102" height="126" uuid="ea136b0f-c544-4600-aaa4-8ac0eee1af60">
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
@@ -415,7 +415,7 @@
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataProfiling")]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="19" width="555">
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="555" height="19" uuid="22fed273-8e3b-4eb0-a5bd-3f6c8ef97271">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
@@ -437,7 +437,7 @@
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("data")]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="20" width="170">
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="170" height="20" uuid="4cef1f32-f27a-412f-a575-00bb16bef35c">
 								<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -499,7 +499,7 @@
 						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("dataLanguage")]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="20" width="215">
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="0" y="0" width="214" height="20" uuid="06b10291-7a70-4317-abe5-ac5907d61598">
 								<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 							</reportElement>
@@ -534,7 +534,7 @@
 							</textElement>
 							<text><![CDATA[A.OBJECTIVE]]></text>
 						</staticText>
-						<textField>
+						<textField isBlankWhenNull="true">
 							<reportElement x="0" y="20" width="552" height="20" uuid="995e3188-d843-48ca-b662-051d25bd1a2e">
 								<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							</reportElement>
