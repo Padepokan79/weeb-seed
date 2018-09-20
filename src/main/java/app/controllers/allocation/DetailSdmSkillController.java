@@ -56,80 +56,84 @@ public class DetailSdmSkillController extends CRUDController<SdmSkill>{
 		String dataGabungan="";
 		String dataGabungan2="";
 		
-		int index1=0, index2=0, jumlahDataSkill=0, jumlahDataValue=0, jumlahdata=0;
+		int index1=0, index2=0, jumlahDataSkill=0, jumlahDataValue=0, jumlahdata=1;
 		List<Map> listData = new ArrayList<>();
-		listData = SdmSkill.getDataSdmSkillConcat(41);
-		
+		listData = SdmSkill.getDataSdmSkillConcat();
 		for(Map list: listData) {
-			System.out.println("DATA KE I ");
+			dataGabungan2="";
 			skillType = Convert.toString(list.get("skilltype_name"));
 			tampungSkill = Convert.toString(list.get("sdmskill"));
 			tampungValue = Convert.toString(list.get("sdmskillvalue"));
-			jumlahdata = 0;
-			
-			
-			
+			jumlahdata = 1;
+
 			jumlahDataSkill = tampungSkill.length();
 			jumlahDataValue = tampungValue.length();
+			System.out.println("data 1 " + jumlahDataValue);
 			
 			for(index1=0; index1 < jumlahDataValue; index1 ++ ) {
 				huruf = tampungValue.substring(index1, index1 + 1);
 				if(huruf.equals(",")) {
 					jumlahdata++;
-				} else {
-	
 				} 
 			}
-			System.out.println("jumlah data "  + jumlahdata);
 			String [] tampungKataSkill = new String [jumlahdata];
 			String [] tampungKataValue = new String [jumlahdata];
 			
-			System.out.println("type name : " + skillType);
-			System.out.println("skill : " + tampungSkill);
-			System.out.println("value : " + tampungValue);
-			System.out.println("panjang String skill : " + tampungSkill.length());
-			System.out.println("panjang String value : " + tampungValue.length());
-			
 			index2=0;
+			tampungSkillValue="";
 			for(index1=0; index1 < jumlahDataSkill; index1 ++ ) {
 				huruf = tampungSkill.substring(index1, index1 + 1);
+				if(jumlahdata == 1) {
+					tampungKataSkill[index2] =  Convert.toString(list.get("sdmskill"));
+				}
 				if(huruf.equals(",")) {
 					tampungKataSkill[index2] = tampungSkillValue;
 					tampungSkillValue="";
 					index2++;
 				} else {
 					tampungSkillValue = tampungSkillValue + huruf ;	
-				}
-				 
+					if(index2 == (jumlahdata-1)) {
+						tampungKataSkill[index2] = tampungSkillValue;
+					}
+				} 
 			}
 			
 			index2=0;
 			tampungSkillValue="";
 			for(index1=0; index1 < jumlahDataValue; index1 ++ ) {
 				huruf = tampungValue.substring(index1, index1 + 1);
+				if(jumlahdata == 1) {
+					tampungKataValue[index2] =  Convert.toString(list.get("sdmskillvalue"));
+				}
 				if(huruf.equals(",")) {
 					tampungKataValue[index2] = tampungSkillValue;
 					tampungSkillValue="";
 					index2++;
 				} else {
 					tampungSkillValue = tampungSkillValue + huruf ;	
-				}
-				 
+					if(index2 == (jumlahdata-1)) {
+						tampungKataValue[index2] = tampungSkillValue;
+					}
+				} 
 			}
-			
-			for(String data: tampungKataSkill) {
-				System.out.println("skill :" + data);
-			}
-			for(String data: tampungKataValue) {
-				System.out.println("skill value :" + data);
-			}
+	
 			int index=0;
-			for(index=0; index < index2; index++) {
-				dataGabungan = tampungKataSkill[index] + " (" + tampungKataValue[index] + "), ";
+			for(index=0; index < jumlahdata; index++) {
+				String separator = ", ";
+				if((jumlahdata-1)==index) {
+					separator = ".";
+				}
+				dataGabungan = tampungKataSkill[index] + " (" + tampungKataValue[index] + ")" + separator ;
 				dataGabungan2 = dataGabungan2 + dataGabungan;
 			}
 			
-			System.out.println("data sudah di gabung " + dataGabungan2 );
+			DetailSdmSkillDTO dto = new DetailSdmSkillDTO();
+			dto.sdmId = Convert.toInteger(list.get("sdm_id"));
+			dto.skilltypeName = Convert.toString(list.get("skilltype_name"));
+			dto.sdmSkillValue = dataGabungan2;
+			dto.sdmNik = Convert.toString(list.get("sdm_nik"));
+			dto.sdmName = Convert.toString(list.get("sdm_name"));
+			listMapSdmSkill.add(dto.toModelMap());
 		}
 		
 		return new CorePage(listMapSdmSkill, totalItems);
