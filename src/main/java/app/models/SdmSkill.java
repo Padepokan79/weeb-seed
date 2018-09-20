@@ -86,6 +86,26 @@ public class SdmSkill extends Model {
     
 //	AUTHOR 	: Hendra Kurniawan
 //	UPDATE  : 15-08-2018 16:00  
+    
+    public static List<Map> getDataSdmSkillConcat(int sdmId) {
+    	List<Object> params = new ArrayList<Object>();
+    	StringBuilder query = new StringBuilder();
+    	query.append("SELECT SDMSKILL.SDM_ID, SDMSKILL.SDMSKILL_ID, SDMSKILL.SDM_NIK,  SDMSKILL.SDM_NAME, SDMSKILL.SKILLTYPE_NAME, SDMSKILL.SDMSKILL, SDMSKILL.SDMSKILLVALUE FROM (\r\n" + 
+    			"				SELECT sdm.SDM_ID as SDM_ID, sdmskill.SDMSKILL_ID as SDMSKILL_ID, sdm.SDM_NIK as SDM_NIK, sdm.SDM_NAME as SDM_NAME,\r\n" + 
+    			"				skilltype.SKILLTYPE_NAME, \r\n" + 
+    			"				GROUP_CONCAT(skills.SKILL_NAME SEPARATOR ',') AS SDMSKILL,\r\n" + 
+    			"				GROUP_CONCAT(sdmskill.SDMSKILL_VALUE SEPARATOR ',') AS SDMSKILLVALUE \r\n" + 
+    			"				FROM sdmskill \r\n" + 
+    			"				INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID\r\n" + 
+    			"				INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
+    			"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
+    			"				GROUP BY sdm.SDM_NAME, skilltype.SKILLTYPE_NAME \r\n" + 
+    			"				) as SDMSKILL WHERE SDMSKILL.SDM_ID = ? ");
+    	params.add(sdmId);
+    	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+    	return listdata;
+    }
+    
     public static List<Map> getEndContract(int sdmId) {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
@@ -774,4 +794,7 @@ public class SdmSkill extends Model {
     	return lisdata;
 		
     }
+    
+    
+    
 }
