@@ -27,6 +27,7 @@ import app.models.Health;
 import app.models.Profiling;
 import app.models.Religion;
 import app.models.Sdm;
+import app.models.SdmHiring;
 import app.models.SdmLanguage;
 import app.models.SdmLvl;
 import core.io.helper.Validation;
@@ -76,6 +77,12 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		
 	}
 
+	public class InputHiringDTO extends DTOModel{
+		public int client_id;
+		public int sdm_id;
+		public int hirestat_id;
+		
+	}
 	
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
@@ -325,6 +332,27 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 //			return result;
 //		}
 
+	
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customOnInsert(org.javalite.activejdbc.Model, java.util.Map)
+	 */
+//	@Override
+//	public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception {
+//		// TODO Auto-generated method stub
+//		int cv79 = 1, accepted = 4;
+//		InputHiringDTO hiringDto = new InputHiringDTO();
+//		SdmHiring sdmModel = new SdmHiring();
+//		System.out.println("Hello" + Convert.toInteger(item.get("sdm_id")));
+//		hiringDto.sdm_id = Convert.toInteger(mapRequest.get("sdm_id"));
+//		hiringDto.client_id = cv79;
+//		hiringDto.hirestat_id = accepted;
+//		sdmModel.fromMap(hiringDto.toModelMap());
+//		sdmModel.insert();
+//		System.out.println(hiringDto);
+//		System.out.println(sdmModel);
+//		
+//		return super.customOnInsert(item, mapRequest);
+//	}
 	 // Updated by Hendra Kuniawan
 	 // 11/9/2018
 	//update status sdm otomatis berdsarkan tanggal kontrak
