@@ -77,4 +77,36 @@ public class SdmAssignment extends Model{
 		params.add(sdmassignId);
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
+    
+    /*
+     * dewi
+     * */
+    public static int updateEndDateWhenOutsource(String startdate, int sdmassign, int clientId) {
+		
+		List<Object> params = new ArrayList<>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE sdm_assignment "
+				+ "SET SDMASSIGN_ENDDATE = ? "
+				+ "WHERE SDMASSIGN_ID = ? && CLIENT_ID = ?");
+		System.out.println("query : "+query.toString());
+		params.add(startdate);
+		params.add(sdmassign);
+		params.add(clientId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
+    
+    public static List<Map> getSdmassignCv79(int clientId, int sdmId) {
+  		List<Object> params = new ArrayList<Object>();
+  		System.out.println("masuk query");
+  		StringBuilder query = new StringBuilder();
+  		query.append("SELECT assign.SDMASSIGN_ID FROM sdm_assignment as assign, sdm_hiring as hi WHERE assign.sdmhiring_id = hi.sdmhiring_id AND hi.sdm_id = ? AND assign.client_id = ?");
+  		System.out.println("query : "+query.toString());
+  		params.add(sdmId);
+  		params.add(clientId);
+  		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+  		
+  		return lisdata;		
+  	}
+      
 }

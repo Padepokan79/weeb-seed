@@ -64,7 +64,9 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			Map<String, Object> mapRequest = getRequestBody();
 			List<Map<String, Object>> listAssign = MapHelper.castToListMap((List<Map>) mapRequest.get("listassignment"));
 			List<Map> listData = new ArrayList<>();
+			System.out.println("datalistassign " + listAssign);
 			int clientId;
+			int sdmassignnId=0;
 			int sdmId1;
 			String clientPIC="";
 			String clientPhone="";
@@ -98,11 +100,16 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				//update	: Dewi Roaza
 				//Date 		: 2018-09-19
 				//mengambil enddate dari contract
+				int client = 1;
 				Sdm sdm = new Sdm();
 				sdmId1 = Convert.toInteger(assign.get("sdm_id"));
 				listData = sdm.getDataEndContract(sdmId1);
 				for (Map mapSdm : listData) {
 					enddate = Convert.toSqlDate(mapSdm.get("sdm_endcontract"));
+				}
+				listData = SdmAssignment.getSdmassignCv79(client, sdmId1);
+				for (Map mapSdmass : listData) {
+					sdmassignnId = Convert.toInteger(mapSdmass.get("SDMASSIGN_ID"));
 				}
 				
 				sdmassignDto.sdmhiring_id = Convert.toInteger(assign.get("sdmhiring_id"));
@@ -116,11 +123,19 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				} else {
 					sdmassignDto.sdmassign_loc = "Luar Bandung";
 				}
-				int client = 1;
+				
+				System.out.println();
 				int sdmId = Convert.toInteger(assign.get("sdm_id"));
+				
+//				int sdmassign = Convert.toInteger(assign.get("sdmassign_id"));
 				System.out.println("ini cleint : " + clientId);
 				if(clientId!=1) {
 					sdmAssign.updateHireStatIdWhenOutsource(sdmId, client);
+					System.out.println(sdmassignDto.sdmassign_startdate);
+					System.out.println(Convert.toInteger(assign.get("sdmassign_id")));
+					
+					System.out.println(client);
+					sdmAssign.updateEndDateWhenOutsource(sdmassignDto.sdmassign_startdate, sdmassignnId, client);
 				}
 				sdmAssign.fromMap(sdmassignDto.toModelMap());
 				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
