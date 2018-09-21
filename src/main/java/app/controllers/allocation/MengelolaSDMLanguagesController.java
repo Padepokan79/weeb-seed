@@ -21,13 +21,14 @@ public class MengelolaSDMLanguagesController extends CRUDController<SdmLanguage>
         public int sdmlanguageId;
         public String sdmName;
         public String languageName;
+        public String norut;
     }
 
     public CorePage customOnReadAll(PagingParams params) throws Exception {        
         List<Map<String, Object>> listMapSdmLanguage = new ArrayList<Map<String, Object>>();
         params.setOrderBy("sdm_id");
         LazyList<SdmLanguage> listSdmLanguage = (LazyList<SdmLanguage>) this.getItems(params);
-        
+        int norut=1;
 //      LazyList<? extends Model> items = this.getItems(params);
         Long totalItems = this.getTotalItems(params);
             for (SdmLanguage lang : listSdmLanguage) {
@@ -38,7 +39,9 @@ public class MengelolaSDMLanguagesController extends CRUDController<SdmLanguage>
                 dto.fromModelMap(lang.toMap());
                 dto.languageName = Convert.toString(languages.get("language_name"));
                 dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+                dto.norut = Convert.toString(norut);
                 listMapSdmLanguage.add(dto.toModelMap());
+                norut++;
             }
         return new CorePage(listMapSdmLanguage, totalItems);
     }
