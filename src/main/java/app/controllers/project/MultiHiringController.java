@@ -124,12 +124,23 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 						}
 					}
 				}
-				
-
+				 //menambah respon field sdmhiring_id untuk FE
+				int sdmhiringId=0;
 				if (cekData == false) {
 					sdmModel.insert();
+					listdata = sdmModel.getDataHiringDesc();
+					List<Map<String, Object>> newListHiring = new ArrayList<>();
+					
+					for(Map list: listdata) {
+						sdmhiringId = Convert.toInteger(list.get("sdmhiring_id"));
+					}
+					for(Map<String, Object> list : listHiring) {
+						list.put("sdmhiring_id", sdmhiringId);
+						newListHiring.add(list);
+					}
+					
 					System.out.println("Inserted Hiring : " + sdmhiringDto.sdm_id);
-					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listHiring);
+					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, newListHiring);
 				}
 				else {
 					response().setResponseBody(HttpResponses.ERROR);
@@ -183,6 +194,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			if(sdmId[index] == sdm) {
 				newListHiring.add(list); 
 						index++;
+						
 			}
 			
 		}

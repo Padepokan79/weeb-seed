@@ -94,4 +94,15 @@ public class SdmHiring extends Model {
 	
 		return lisdata;
 	}
+	
+	public static List<Map> getDataHiringDesc(){
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT SDMHIRING_ID , HIRESTAT_ID, SDM_ID, CLIENT_ID from sdm_hiring ORDER BY SDMHIRING_ID DESC LIMIT 1");
+	
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+		return lisdata;
+	}
 }

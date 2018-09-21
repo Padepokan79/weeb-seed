@@ -74,9 +74,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			boolean cekHiring = false;
 			int sdmassignId=0;
 			Date startdate = new Date();
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.YEAR, 1);
-			Date enddate = cal.getTime();
+			Date enddate = new Date();
 			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
