@@ -323,11 +323,27 @@ public class Sdm extends Model{
 	public static List<Map> getDataEndContract(int sdmId1) {	
 		List<Object> params = new ArrayList<Object>();		
 		StringBuilder query = new StringBuilder();	
-		query.append("SELECT SDM_ENDCONTRACT \r\n" + 
+		query.append("SELECT SDM_STARTCONTRACT, SDM_ENDCONTRACT \r\n" + 
 				"FROM SDM\r\n" + 
 				"WHERE SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
 		params.add(sdmId1);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
+	
+//	@AUHTOR 	: Dewi Roaza
+//	@DATE	 	: 2018-09-20
+	@SuppressWarnings("rawtypes")
+	public static List<Map> getDataSdmId(int sdmAssId) {	
+		List<Object> params = new ArrayList<Object>();		
+		StringBuilder query = new StringBuilder();	
+		query.append("select sdm.SDM_ID from sdm sdm  \r\n" + 
+				"LEFT JOIN sdm_hiring sh on sh.SDM_ID = sdm.SDM_ID\r\n" + 
+				"left join sdm_assignment sa on sa.SDMHIRING_ID = sh.SDMHIRING_ID\r\n" + 
+				"where sa.SDMASSIGN_ID = ?");
+		System.out.println("query : "+query.toString());
+		params.add(sdmAssId);
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		return lisdata;
 	}
