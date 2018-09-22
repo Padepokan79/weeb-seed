@@ -108,5 +108,19 @@ public class SdmAssignment extends Model{
   		
   		return lisdata;		
   	}
+    
+    public static List<Map> getEndcontractSdm(int sdmhiringId) {
+  		List<Object> params = new ArrayList<Object>();
+  		System.out.println("masuk query");
+  		StringBuilder query = new StringBuilder();
+  		query.append("SELECT sdm.SDM_ENDCONTRACT, sdm.SDM_ID from sdm INNER JOIN sdm_hiring ON  sdm.SDM_ID = sdm_hiring.SDM_ID WHERE SDMHIRING_ID = ? ");
+  		params.add(sdmhiringId);
+  		System.out.println("query : "+query.toString());
+  		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+  		
+  		return lisdata;		
+  	}
+    
+    
       
 }

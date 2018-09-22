@@ -43,6 +43,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		public String methodName;
 		public String sdmName;
 		public String sdmPhone;
+		public String sdmEndcontract;
 		
 		/*
 		 * Updated by Alifhar Juliansyah
@@ -67,7 +68,8 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
 		LazyList<SdmAssignment> listSdmAssignment 		= (LazyList<SdmAssignment>)this.getItems(params);	
 		List<Map<String, Object>> listMapSdmHiring 		= new ArrayList<Map<String, Object>>();
-		LazyList<SdmHiring> listSdmHiring				= SdmHiring.findAll();	
+		LazyList<SdmHiring> listSdmHiring				= SdmHiring.findAll();
+		List<Map> listdata = new ArrayList<>();
 
 		params.setOrderBy("sdmassign_id");
 		Long totalItems = this.getTotalItems(params);
@@ -91,7 +93,20 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			dto.methodName 	= Convert.toString(method.get("method_name"));
 			dto.sdmName 	= Convert.toString(sdm.get("sdm_name"));
 			dto.sdmPhone 	= Convert.toString(sdm.get("sdm_phone"));
+			int hiringId = Convert.toInteger(sdmassign.get("sdmhiring_id"));
+			listdata = SdmAssignment.getEndcontractSdm(hiringId);
+			for(Map datasdm : listdata) {
+				dto.sdmEndcontract = Convert.toString(datasdm.get("sdm_endcontract"));
+				dto.sdmId = Convert.toInteger(datasdm.get("sdm_id"));
+			}
 			
+//			int asmAssId = Convert.toInteger(sdmassign.get("sdmassign_id"));
+//			
+//			listData = Sdm.getDataSdmId(sdmAssId);
+//			for (Map mapSdmass : listData) {
+//				sdmassignnId = Convert.toInteger(mapSdmass.get("SDMASSIGN_ID"));
+//			}
+//			
 			/*
 			 * Updated by Alifhar Juliansyah
 			 * 10 August 2018
@@ -129,7 +144,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			// Modified : Hendra Kurniawan
 			// Date 	: 12-09-2018
 			// update otomatis hirestat di hiring ketika endproject habis 
-			List<Map> listdata = new ArrayList<>();
+			
 			List<Map> listdatahirestat = new ArrayList<>();
 			
 			listdata = SdmHiring.getDataSdmbyEndProject();
