@@ -103,6 +103,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				sdmId1 = Convert.toInteger(assign.get("sdm_id"));
 				listData = sdm.getDataEndContract(sdmId1);
 				for (Map mapSdm : listData) {
+					startdate = Convert.toSqlDate(mapSdm.get("sdm_startcontract"));
 					enddate = Convert.toSqlDate(mapSdm.get("sdm_endcontract"));
 				}
 				listData = SdmAssignment.getSdmassignCv79(client, sdmId1);

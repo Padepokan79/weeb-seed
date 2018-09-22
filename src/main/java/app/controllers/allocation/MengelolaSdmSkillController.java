@@ -76,41 +76,40 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 		
 //		  Updated by Hendra Kurniawan
 //		  16 Agustus 2018 9:02 AM
-		 
-		
-		List<Map> listData = new ArrayList<>();			
+		 		
+		List<Map> listDataSdmSkill = new ArrayList<>();	
+		listDataSdmSkill = SdmSkill.getAllDataSdmSkillGroupBy();
+		System.out.println(listDataSdmSkill);
+
 		String endDate="";
-		
 		int number = 1;
 		if(params.limit() != null)
 			number = params.limit().intValue() * params.offset().intValue() + 1;
 		
-			for (SdmSkill mengelolaSdmSkill : asd) {
-				SkillType skillType = mengelolaSdmSkill.parent(SkillType.class);
-				Skill kemampuan = mengelolaSdmSkill.parent(Skill.class);
-				Sdm sdm = mengelolaSdmSkill.parent(Sdm.class);
+			for (Map listData : listDataSdmSkill) {
 				endDate = "-";
 				
-				int sdmId = Convert.toInteger(mengelolaSdmSkill.get("sdm_id"));	
+				int sdmId = Convert.toInteger(listData.get("sdm_id"));	
+				System.out.println(sdmId);
 				List<Map> dataFromQuery = SdmSkill.getEndContract(sdmId);
 					for(Map map : dataFromQuery) {
 						endDate = Convert.toString(map.get("project_enddate"));
 					}
-				
-					
+							
 				MengelolaSdmSkillDTO dto = new MengelolaSdmSkillDTO();
-				dto.fromModelMap(mengelolaSdmSkill.toMap());
-				dto.skilltypeName = Convert.toString(skillType.get("skilltype_name"));
-				dto.skillName = Convert.toString(kemampuan.get("skill_name"));
-				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-				dto.sdmStatus = Convert.toInteger(sdm.get("sdm_status"));
-				dto.sdmNik = Convert.toString(sdm.get("sdm_nik"));
+				int  sdmStatus = Convert.toInteger(listData.get("sdm_status"));
+				String sdmName = Convert.toString(listData.get("sdm_name"));
+				String sdmNik =  Convert.toString(listData.get("sdm_nik"));
+				dto.sdmId = sdmId;
+				dto.sdmName = sdmName;
+				dto.sdmStatus = sdmStatus;
+				dto.sdmNik = sdmNik;
 				dto.endContractproject = getConvertEndProject(endDate);
 				dto.norut = number;
 				number++;
-				
+
 				java.util.Date judAwl = dateAwal.parse(getCurrentDate());
-				java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(sdm.get("sdm_endcontract").toString()));
+				java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(listData.get("sdm_endcontract").toString()));
 				java.sql.Date tglAwal = new java.sql.Date(judAwl.getTime());
 				java.sql.Date tglAkhir = new java.sql.Date(judAkhir.getTime());
 				Date TGLAwal = tglAwal;
@@ -137,12 +136,13 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
 					dto.sdm_notification = "grey"; // notif warna grey
 				}
 
-				if(Convert.toInteger(sdm.get("sdm_status")) != 0) {
+				if(Convert.toInteger(listData.get("sdm_status")) != 0) {
 					listMapSdmSkill.add(dto.toModelMap());
 				}
 				
 			}
 		
+			
 		return new CorePage(listMapSdmSkill, totalItems);			
 	}
 	

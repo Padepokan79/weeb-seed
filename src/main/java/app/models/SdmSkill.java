@@ -87,7 +87,7 @@ public class SdmSkill extends Model {
 //	AUTHOR 	: Hendra Kurniawan
 //	UPDATE  : 15-08-2018 16:00  
     
-    public static List<Map> getDataSdmSkillConcat() {
+    public static List<Map> getDataSdmSkillConcat(int sdmId) {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
     	query.append("SELECT SDMSKILL.SDM_ID, SDMSKILL.SDMSKILL_ID, SDMSKILL.SDM_NIK,  SDMSKILL.SDM_NAME, SDMSKILL.SKILLTYPE_NAME, SDMSKILL.SDMSKILL, SDMSKILL.SDMSKILLVALUE, SDMSKILL.SDM_NAME FROM (\r\n" + 
@@ -101,12 +101,22 @@ public class SdmSkill extends Model {
     			"				INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
     			"				GROUP BY sdm.SDM_NAME, skilltype.SKILLTYPE_NAME \r\n" + 
     			"				) as SDMSKILL  ");
+    	query.append("WHERE SDMSKILL.SDM_ID = ?");
+    	params.add(sdmId);
+    	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+    	return listdata;
+    }
+    
+    public static List<Map> getAllDataSdmSkillGroupBy() {
+    	List<Object> params = new ArrayList<Object>();
+    	StringBuilder query = new StringBuilder();
+    	query.append("SELECT sdm.SDM_ID, sdm.SDM_NIK, sdm.SDM_STATUS, sdm.SDM_NAME, sdm.SDM_STARTCONTRACT , sdm.SDM_ENDCONTRACT FROM sdmskill, sdm WHERE sdmskill.sdm_id = sdm.sdm_id\r\n" + 
+    			"GROUP BY sdm.SDM_ID ORDER BY sdm.SDM_ID ASC");
 //    	query.append("WHERE SDMSKILL.SDM_ID = ?");
 //    	params.add(sdmId);
     	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
     	return listdata;
     }
-    
     public static List<Map> getEndContract(int sdmId) {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
