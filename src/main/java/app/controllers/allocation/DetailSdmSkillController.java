@@ -58,7 +58,7 @@ public class DetailSdmSkillController extends CRUDController<SdmSkill>{
 		
 		int index1=0, index2=0, jumlahDataSkill=0, jumlahDataValue=0, jumlahdata=1;
 		List<Map> listData = new ArrayList<>();
-		listData = SdmSkill.getDataSdmSkillConcat();
+//		listData = SdmSkill.getDataSdmSkillConcat();
 		for(Map list: listData) {
 			dataGabungan2="";
 			skillType = Convert.toString(list.get("skilltype_name"));
