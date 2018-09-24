@@ -16,8 +16,10 @@ import org.javalite.activejdbc.Model;
 import org.javalite.common.Convert;
 
 import com.ibm.icu.util.Calendar;
+import com.mysql.fabric.xmlrpc.Client;
 
 import app.controllers.sdm.CourseController.CourseDTO;
+import app.models.Clients;
 import app.models.ContractType;
 import app.models.Course;
 import app.models.Education;
@@ -27,6 +29,7 @@ import app.models.Health;
 import app.models.Profiling;
 import app.models.Religion;
 import app.models.Sdm;
+import app.models.SdmAssignment;
 import app.models.SdmHiring;
 import app.models.SdmLanguage;
 import app.models.SdmLvl;
@@ -354,27 +357,116 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		
 		String startContract = Convert.toString(mapRequest.get("sdm_startcontract"));
 		String endContract = Convert.toString(mapRequest.get("sdm_endcontract"));
+		int sdmId = Convert.toInteger(mapRequest.get("sdm_id"));
+		int contractType = Convert.toInteger(mapRequest.get("contracttype_id"));
 		int sdmStatus;
-		 
+		int sdmhiringId=0; 
+		String sdmassignPicclient="-";
+    	String sdmassignPicclientphone="-";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		boolean update = false, insert = false, updateAssign=false, insertAssign=false;
 	       
-			Date currentDate = new Date();
+		Date currentDate = new Date();
 		 
-			System.out.println(sdf.format(currentDate));
+		System.out.println(sdf.format(currentDate));
 		 
-		    Date startContractDate = sdf.parse(startContract);
-	        Date endContractDate = sdf.parse(endContract);
-
-	        if (currentDate.compareTo(startContractDate) >= 0 && currentDate.compareTo(endContractDate) <= 0) {
+		Date startContractDate = sdf.parse(startContract);
+	    Date endContractDate = sdf.parse(endContract);
+	      
+	       if (currentDate.compareTo(startContractDate) >= 0 && currentDate.compareTo(endContractDate) <= 0 ) {
 	           sdmStatus = 1;
+	           //cek data hiring sdm
+	          LazyList<SdmHiring> listDatahiring = SdmHiring.findAll();
+	          LazyList<Clients> listDataclient = Clients.findAll();
+	          LazyList<SdmAssignment> listDataAssigment = SdmAssignment.findAll();
+	        
+        	  for (Clients client : listDataclient) {
+        		  if(client.getInteger("client_id") == 1) {
+        			  sdmassignPicclient = client.getString("client_picclient");
+        			  sdmassignPicclientphone = client.getString("client_mobileclient");
+        		  }  
+        	  }
+	          
+	          for(SdmHiring data : listDatahiring) {
+	        	  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+	        	  if(sdmId == data.getInteger("sdm_id") && data.getInteger("client_id") == 1 ) {
+	        		update = true;
+	        		for(SdmAssignment dataAssign : listDataAssigment) {
+	        			int sdmhiringIdAssign =  Convert.toInteger(dataAssign.get("sdmhiring_id"));
+	        			if(sdmhiringId == sdmhiringIdAssign){
+	        				updateAssign = true;
+	        				System.out.println("masuk pak eko");
+	        			}
+	        			else {System.out.println("hai cuy");
+	        				insertAssign = true;
+	        			}
+	        		}
+	        	  } else {
+	        		 insert = true;
+	        	  }
+	          }
+	          
 	        } else {
 	        	sdmStatus = 0;
 	        }
+	        
+	        if(update && contractType == 3)
+	        {
+	        //update data hiring ==> hirestat menjadi diterima
+      		  SdmHiring.updateHiring(sdmId);
+      		  if(updateAssign) {
+      			insertAssign = false;
+          		  SdmAssignment.updateDataAssignHire(sdmhiringId, startContract, endContract);
+          		System.out.println(startContract);
+      			System.out.println(endContract);
+          		System.out.println("Berhasil di update hiring dan update assign");
+      		  } else if(insertAssign){
+      			SdmAssignment.insertDataAssignHire(sdmhiringId, startContract, endContract, sdmassignPicclient, sdmassignPicclientphone, 1);
+      			System.out.println(startContract);
+      			System.out.println(endContract);
+      			System.out.println("Berhasil di update hiring dan insert assign");
+      		  }
+      		  
+	        } else if (insert && contractType == 3){
+	         //insert data hiring baru
+      		  SdmHiring.insertHiring(sdmId);
+      		  SdmAssignment.insertDataAssignHire(sdmhiringId, startContract, endContract, sdmassignPicclient, sdmassignPicclientphone, 1);
+      		  System.out.println("Berhasil di insert hiring dan assign");
+	        }
+	        
 	        item.set("sdm_status", sdmStatus);
 	        item.save();
 	        
 		return result;
 	}
 
-
+/* (non-Javadoc)
+ * @see core.javalite.controllers.CRUDController#customOnInsert(org.javalite.activejdbc.Model, java.util.Map)
+ */
+@Override
+public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapRequest) throws Exception {
+	// TODO Auto-generated method stub
+	Map<String, Object> result = super.customOnInsert(item, mapRequest);
+	String startContract = Convert.toString(mapRequest.get("sdm_startcontract"));
+	String endContract = Convert.toString(mapRequest.get("sdm_endcontract"));
+	int sdmStatus = Convert.toInteger(mapRequest.get("sdm_status"));
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    
+	Date currentDate = new Date();
+ 
+    Date startContractDate = sdf.parse(startContract);
+    Date endContractDate = sdf.parse(endContract);
+	
+    if (currentDate.compareTo(startContractDate) <= 0 && currentDate.compareTo(endContractDate) >= 0) {
+        sdmStatus = 1;
+      
+     } else {
+     	sdmStatus = 0;
+     }
+	
+	item.set("sdm_status", sdmStatus);
+	item.save();
+	return result;
+}
 }
