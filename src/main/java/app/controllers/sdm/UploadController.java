@@ -26,7 +26,6 @@ public class UploadController extends CommonController{
 	@POST
 	public void upload() {
 		String sdmId = Convert.toString(param("$sdm_id"));
-		
 		File file = new File("assets\\");
 		if (!file.exists()) {
 			if (file.mkdir()) {
@@ -42,6 +41,10 @@ public class UploadController extends CommonController{
 				String fileName = item.getFileName();
 				String folderPath = "assets\\";
 				String filePath = folderPath + fileName;
+				File fileFoto = new File(filePath);
+				if(fileFoto.exists()) {
+					fileFoto.delete();
+				}
 				System.out.println("3");
 				try {
 					System.out.println("4");
