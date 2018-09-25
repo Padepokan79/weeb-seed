@@ -103,6 +103,7 @@ public class SdmSkill extends Model {
     			"				) as SDMSKILL  ");
     	query.append("WHERE SDMSKILL.SDM_ID = ?");
     	params.add(sdmId);
+    	System.out.println("query : "+query.toString());
     	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
     	return listdata;
     }
@@ -111,9 +112,10 @@ public class SdmSkill extends Model {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
     	query.append("SELECT sdm.SDM_ID, sdm.SDM_NIK, sdm.SDM_STATUS, sdm.SDM_NAME, sdm.SDM_STARTCONTRACT , sdm.SDM_ENDCONTRACT FROM sdmskill, sdm WHERE sdmskill.sdm_id = sdm.sdm_id\r\n" + 
-    			"GROUP BY sdm.SDM_ID ORDER BY sdm.SDM_ID ASC");
+    			"GROUP BY sdm.SDM_ID ORDER BY sdm.SDM_NAME ASC");
 //    	query.append("WHERE SDMSKILL.SDM_ID = ?");
 //    	params.add(sdmId);
+    	System.out.println("query : "+query.toString());
     	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
     	return listdata;
     }
@@ -123,6 +125,7 @@ public class SdmSkill extends Model {
     	query.append("Select project.project_enddate from sdm INNER JOIN project ON sdm.sdm_id = project.sdm_id WHERE sdm.sdm_id = ? ORDER BY project.PROJECT_ENDDATE DESC LIMIT 1\r\n" + 
     			"");
     	params.add(sdmId);
+//    	System.out.println("query : "+query.toString());
     	List<Map> listdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
     	return listdata;
     }
@@ -137,11 +140,12 @@ public class SdmSkill extends Model {
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
 				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" +
-				" where sdmskill.SDM_ID = ?");
-		System.out.println("query : "+query.toString());
+				"where sdmskill.SDM_ID = ? " + 
+				"GROUP BY sdmskill.SDM_ID");
 		
 		params.add(sdmId);
 		query.append(" ORDER BY sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
     	return lisdata;
@@ -172,7 +176,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
-		
+		query.append(" GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -224,7 +228,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
-		
+		query.append("  GROUP BY sdmskill.SDM_ID");
 		System.out.println("query : "+query.toString());
 		query.append(" ORDER BY sdm.SDM_NAME");
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -259,7 +263,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
-		
+		query.append(" GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -332,6 +336,7 @@ public class SdmSkill extends Model {
 				}
 				index++;
 			}
+			query.append("  GROUP BY sdmskill.SDM_ID");
 //		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -366,7 +371,7 @@ public class SdmSkill extends Model {
 			index++;
 		}
 		
-		
+		query.append(" GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -422,7 +427,7 @@ public class SdmSkill extends Model {
 			index++;
 		}
 		
-		
+		query.append("  GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -430,7 +435,7 @@ public class SdmSkill extends Model {
     	return lisdata;
     }    
     
-    
+    //perlu di tinjau kembali 240918 cek hasil
     public static List<Map> getbySdmCategoryValueOR(List<Map<String, Object>> listParams){
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
@@ -458,7 +463,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
-		
+		query.append(" GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		
@@ -536,6 +541,7 @@ public class SdmSkill extends Model {
 				}
 				index++;
 			}
+			query.append("  GROUP BY sdmskill.SDM_ID");
 //		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -550,11 +556,10 @@ public class SdmSkill extends Model {
 				"FROM sdmskill\r\n" + 
 				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
 				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
-				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n");
-		System.out.println("query : "+query.toString());
-		
-		
+				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
+				"GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
+		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
     	return lisdata;
@@ -598,6 +603,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
+		query.append(" GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		
@@ -714,6 +720,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
+		query.append("  GROUP BY sdmskill.SDM_ID");
 //		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -745,7 +752,7 @@ public class SdmSkill extends Model {
 			}
 			index++;
 		}
-		
+		query.append(" GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -799,6 +806,7 @@ public class SdmSkill extends Model {
 		}
 		
 		System.out.println("query : "+query.toString());
+		query.append("  GROUP BY sdmskill.SDM_ID");
 		query.append(" ORDER BY sdm.SDM_NAME");
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
