@@ -357,8 +357,10 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		
 		String startContract = Convert.toString(mapRequest.get("sdm_startcontract"));
 		String endContract = Convert.toString(mapRequest.get("sdm_endcontract"));
+		System.out.println("hai");
 		int sdmId = Convert.toInteger(mapRequest.get("sdm_id"));
 		int contractType = Convert.toInteger(mapRequest.get("contracttype_id"));
+		System.out.println("halo");
 		int sdmStatus;
 		int sdmhiringId=0; 
 		String sdmassignPicclient="-";
@@ -410,11 +412,20 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	        	sdmStatus = 0;
 	        	System.out.println(sdmStatus);
 	        }
-	        
+	       /*
+			 * Updated (Commented) by Ryan Ahmad N
+			 * 25 September 2018, 14:50
+			 */
 	        if(update && contractType == 3)
 	        {
 	        //update data hiring ==> hirestat menjadi diterima
       		  SdmHiring.updateHiring(sdmId);
+      		  List<Map> sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
+      		  for(Map data : sdmhiring_id) {
+      			  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+      		  }
+//      		  sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
+//      		  sdmhiringId = sdmhiring_id.get(index)
       		  if(updateAssign) {
       			insertAssign = false;
           		  SdmAssignment.updateDataAssignHire(sdmhiringId, startContract, endContract);
@@ -431,6 +442,11 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	        } else if (insert && contractType == 3){
 	         //insert data hiring baru
       		  SdmHiring.insertHiring(sdmId);
+      		  List<Map> sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
+    		  for(Map data : sdmhiring_id) {
+    			  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+    		  }
+      		  System.out.println(Convert.toInteger(SdmHiring.getSdmHiring_id(sdmId)));
       		  SdmAssignment.insertDataAssignHire(sdmhiringId, startContract, endContract, sdmassignPicclient, sdmassignPicclientphone, 1);
       		  System.out.println("Berhasil di insert hiring dan assign");
 	        }
