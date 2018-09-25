@@ -75,6 +75,8 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			int sdmassignId=0;
 			Date startdate = new Date();
 			Date enddate = new Date();
+			Date currentDate = new Date();
+			Date enddate79 = new Date();
 			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
@@ -134,7 +136,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 					System.out.println(Convert.toInteger(assign.get("sdmassign_id")));
 					
 					System.out.println(client);
-					sdmAssign.updateEndDateWhenOutsource(sdmassignDto.sdmassign_startdate, sdmassignnId, client);
+//					sdmAssign.updateEndDateWhenOutsource(sdmassignDto.sdmassign_startdate, sdmassignnId, client);
 				}
 				sdmAssign.fromMap(sdmassignDto.toModelMap());
 				System.out.println("SDM Hiring DTO : " + JsonHelper.toJson(sdmassignDto.toMap()));
@@ -152,10 +154,15 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 						cekHiring = true;
 					}
 				}
-				
+				String newenddate79 = format.format(enddate79);
+				System.out.println(newenddate79); System.out.println("woi");
+			    sdmAssign.updateEndDateCv79("2018-01-02" , 1, 1);
+				System.out.println(newenddate79); System.out.println("wai");
+
 				if (cekHiring == false) {	
 					//apabila data belum ada yang berelasi dengan sdmhiring_id, maka insert data baru
 					sdmAssign.insert();
+					
 					System.out.println("Inserted Assignment : " + sdmassignDto);
 					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listAssign);
 				}

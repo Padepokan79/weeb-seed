@@ -162,6 +162,10 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			
 			
 			String endContractProject="-";
+			int sdmskillId = 0;
+			int sdmskillValue =0;
+			String skillName = "-";
+			String skilltypeName = "-";
 			MultiFilteringDTO dto = new MultiFilteringDTO();
 			
 				for (Map map : listData) {
@@ -171,14 +175,19 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 						for(Map mapproject : dataFromQuery) {
 							endContractProject = Convert.toString(mapproject.get("project_enddate"));
 						}
-						
-					dto.sdmskillId = Convert.toInteger(map.get("sdmskill_id"));
-					dto.sdmskillValue = Convert.toInteger(map.get("sdmskill_value"));;
-					dto.skillName = Convert.toString(map.get("skill_name"));;
-					dto.skilltypeName = Convert.toString(map.get("skilltype_name"));;
+//					
+//					dto.sdmskillId = Convert.toInteger(map.get("sdmskill_id"));
+//					dto.sdmskillValue = Convert.toInteger(map.get("sdmskill_value"));;
+//					dto.skillName = Convert.toString(map.get("skill_name"));;
+//					dto.skilltypeName = Convert.toString(map.get("skilltype_name"));;
+//					
 					dto.sdmName = Convert.toString(map.get("sdm_name"));
 					dto.sdmNik = Convert.toString(map.get("sdm_nik"));
+					
+					
 					System.out.println(endContractProject);
+					
+					
 					if(endContractProject.equals("-")) {
 						dto.endContractproject = endContractProject;
 					}

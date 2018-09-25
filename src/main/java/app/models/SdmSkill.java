@@ -135,16 +135,17 @@ public class SdmSkill extends Model {
     public static List<Map> getbySdm(int sdmId){
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS \r\n" + 
-				"FROM sdmskill\r\n" + 
-				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
-				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
-				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" +
-				"where sdmskill.SDM_ID = ? " + 
-				"GROUP BY sdmskill.SDM_ID");
-		
+		query.append("SELECT sdm.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
+				"				FROM sdm\r\n" + 
+				"				LEFT JOIN sdmskill ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"				LEFT JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID  \r\n" + 
+				"				LEFT JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
+				"				where sdm.SDM_ID = ? \r\n" + 
+				"				AND sdm.SDM_STATUS = 1 \r\n" + 
+				"				AND sdm.CONTRACTTYPE_ID = 3\r\n" + 
+				"				GROUP BY sdm.SDM_ID\r\n" + 
+				"		    ORDER BY sdm.SDM_NAME");
 		params.add(sdmId);
-		query.append(" ORDER BY sdm.SDM_NAME");
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
@@ -552,13 +553,16 @@ public class SdmSkill extends Model {
     public static List<Map> getAllSdmSkill(){
     	List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT sdmskill.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, sdm.SDM_NAME, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS\r\n" + 
-				"FROM sdmskill\r\n" + 
-				"INNER JOIN sdm ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
-				"INNER JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID \r\n" + 
-				"INNER JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
-				"GROUP BY sdmskill.SDM_ID");
-		query.append(" ORDER BY sdm.SDM_NAME");
+		query.append("SELECT sdm.SDM_ID, sdm.SDM_NAME,  sdm.SDM_NIK, sdm.SDM_ENDCONTRACT, sdmskill.SDMSKILL_iD, skilltype.SKILLTYPE_NAME, skills.SKILL_NAME, sdmskill.SDMSKILL_VALUE, sdm.SDM_STATUS \r\n" + 
+				"				FROM sdm\r\n" + 
+				"				LEFT JOIN sdmskill ON sdm.SDM_ID = sdmskill.SDM_ID \r\n" + 
+				"				LEFT JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
+				"				LEFT JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
+				"				WHERE sdm.SDM_STATUS = 1  \r\n" + 
+				"				AND sdm.CONTRACTTYPE_ID = 3 \r\n" + 
+				"			GROUP BY sdm.SDM_ID\r\n" + 
+				"			ORDER BY sdm.SDM_NAME");
+		
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		

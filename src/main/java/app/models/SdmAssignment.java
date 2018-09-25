@@ -159,5 +159,20 @@ public static int insertDataAssignHire(int sdmhiringId, String startDateProject,
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
     
+public static int updateEndDateCv79(String endDate, int sdmId, int clientId) {
+	
+	List<Object> params = new ArrayList<>();
+	System.out.println("masuk query 79");
+	StringBuilder query = new StringBuilder();
+	query.append("UPDATE sdm_assignment "
+			+ "SET SDMASSIGN_ENDDATE = ? "
+			+ "WHERE SDM_ID = ? && CLIENT_ID = ?");
+	System.out.println("query : "+query.toString());
+	params.add(endDate);
+	params.add(sdmId);
+	params.add(clientId);
+	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+}
+
       
 }
