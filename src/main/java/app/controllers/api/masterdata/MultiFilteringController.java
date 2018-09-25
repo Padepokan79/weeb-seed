@@ -161,7 +161,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			
 			
 			
-			String endContractProject="";
+			String endContractProject="-";
 			MultiFilteringDTO dto = new MultiFilteringDTO();
 			
 				for (Map map : listData) {
@@ -171,14 +171,20 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 						for(Map mapproject : dataFromQuery) {
 							endContractProject = Convert.toString(mapproject.get("project_enddate"));
 						}
-					
+						
 					dto.sdmskillId = Convert.toInteger(map.get("sdmskill_id"));
 					dto.sdmskillValue = Convert.toInteger(map.get("sdmskill_value"));;
 					dto.skillName = Convert.toString(map.get("skill_name"));;
 					dto.skilltypeName = Convert.toString(map.get("skilltype_name"));;
 					dto.sdmName = Convert.toString(map.get("sdm_name"));
 					dto.sdmNik = Convert.toString(map.get("sdm_nik"));
-					dto.endContractproject = getConvertEndProject(endContractProject);
+					System.out.println(endContractProject);
+					if(endContractProject.equals("-")) {
+						dto.endContractproject = endContractProject;
+					}
+					else {
+						dto.endContractproject = getConvertEndProject(endContractProject);
+					}
 					dto.sdmId = Convert.toInteger(map.get("sdm_id"));
 					
 					java.util.Date judAwl = dateAwal.parse(getCurrentDate());
@@ -192,7 +198,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 		            cal1.setTime(TGLAwal);
 		            cal2.setTime(TGLAkhir);
 		            String diff = Convert.toString(mothsBetween(cal1, cal2));
-		            
+		          
 		            if (Integer.parseInt(diff) == 0) {
 		            	dto.sdm_notification = "black"; // notif warna hitam
 		            	

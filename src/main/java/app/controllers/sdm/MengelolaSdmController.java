@@ -176,7 +176,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			
 			
             String status = Convert.toString(sdm.get("sdm_status"));
-			if(status.equals("1")) {
+            if(status.equals("1")) {
 				dto.sdm_status = "Active";
 			}
 			else {
@@ -408,6 +408,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	          
 	        } else {
 	        	sdmStatus = 0;
+	        	System.out.println(sdmStatus);
 	        }
 	        
 	        if(update && contractType == 3)
@@ -458,13 +459,14 @@ public Map<String, Object> customOnInsert(Sdm item, Map<String, Object> mapReque
     Date startContractDate = sdf.parse(startContract);
     Date endContractDate = sdf.parse(endContract);
 	
-    if (currentDate.compareTo(startContractDate) <= 0 && currentDate.compareTo(endContractDate) >= 0) {
-        sdmStatus = 1;
-      
-     } else {
-     	sdmStatus = 0;
-     }
-	
+//    if (currentDate.compareTo(startContractDate) <= 0 && currentDate.compareTo(endContractDate) >= 0) {
+//        sdmStatus = 1;
+//      
+//     } else {
+//     	sdmStatus = 0;
+//     	System.out.println();
+//     }
+	System.out.println("sdm status : " + sdmStatus);
 	item.set("sdm_status", sdmStatus);
 	item.save();
 	return result;
