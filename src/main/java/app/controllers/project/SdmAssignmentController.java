@@ -223,7 +223,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
     }
 	
 	/*
-	 * Updated by Hendra Kurniawan dan Dewi Roaza 
+	 * Updated by Dewi Roaza  dan  Hendra Kurniawan
 	 * 2018-09-19
 	 * 
 	 */
@@ -256,17 +256,18 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		String endAssign = Convert.toString(mapRequest.get("sdmassign_enddate"));
 		Integer sdmId = Convert.toInteger(mapRequest.get("sdm_id"));
 		
-		java.util.Date endass = sdf.parse(endAssign);
+		java.util.Date endassign = sdf.parse(endAssign);
 		for(Sdm data : listenddate) {
 			if(sdmId == Convert.toInteger(data.get("sdm_id"))) {
 				String endsdm = data.getString("sdm_endcontract");
 				
 				java.util.Date endcontract = sdf.parse(endsdm);		
-				if (endass.compareTo(endcontract) <= 0) {
-					System.out.println("OK");
+				System.out.println(endcontract);
+				System.out.println(endassign);
+				System.out.println(endassign.compareTo(endcontract) <= 0);
+				if (endassign.compareTo(endcontract) >= 0) {
 					Validation.required(null, "Tanggal tidak boleh melebihi kontrak");
 				} else {
-					System.out.println("Gagal");
 					item.save();
 				}
 			}
