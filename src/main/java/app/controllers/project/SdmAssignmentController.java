@@ -7,8 +7,9 @@
 
 package app.controllers.project;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		List<Map<String, Object>> listMapSdmHiring 		= new ArrayList<Map<String, Object>>();
 		LazyList<SdmHiring> listSdmHiring				= SdmHiring.findAll();
 		List<Map> listdata = new ArrayList<>();
-
+		cekDataAssign();
 		params.setOrderBy("sdmassign_id");
 		Long totalItems = this.getTotalItems(params);
 		
@@ -276,10 +277,40 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		return result;
 	}
 
-	public void cekDataAssign(){
+	public void cekDataAssign() throws ParseException{
 		List<Map> listData = new ArrayList<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentDate = new Date();
+		Date assignEndDate = new Date();
+		boolean update79 = false;
+		int sdmhiringId = 0 ,sdmId =0;
+		listData = SdmAssignment.getDataAssign();
+		System.out.println("woi");
+		for(Map dataAssign : listData) {
+			System.out.println("hai");	
+			for(Map dataContractSdm : listData) {
+				System.out.println("hui");
+				 sdmhiringId = Convert.toInteger(dataAssign.get("sdmhiring_id"));
+				 String sdmEncContract = Convert.toString(dataContractSdm.get("sdm_endcontract"));
+				 String sdmAssignEndContract = Convert.toString(dataAssign.get("sdmassign_enddate"));
+				 sdmId = Convert.toInteger(dataContractSdm.get("sdm_id"));
+				 int sdmIdAssign = Convert.toInteger(dataAssign.get("sdm_id"));
+				 Date sdmEncContractDate = sdf.parse(sdmEncContract);
+				 Date sdmAssignEndContractDate = sdf.parse(sdmAssignEndContract);
+				 
+				 if(sdmEncContractDate.compareTo(currentDate) >= 0 && sdmId == sdmIdAssign) {
+					 update79 = true;
+					 System.out.println("xd");
+				 }
+			}
+		}
 		
-	}
+		if(update79) {
+			System.out.println("xaxax");
+//			SdmAssignment.updateStatusCv79(sdmId);
+//			SdmAssignment.updateStatusOff(sdmhiringId);
+		}
+		
+		}
 }
 

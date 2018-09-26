@@ -112,7 +112,7 @@ public class SdmSkill extends Model {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
     	query.append("SELECT sdm.SDM_ID, sdm.SDM_NIK, sdm.SDM_STATUS, sdm.SDM_NAME, sdm.SDM_STARTCONTRACT , sdm.SDM_ENDCONTRACT FROM sdmskill, sdm WHERE sdmskill.sdm_id = sdm.sdm_id\r\n" + 
-    			"GROUP BY sdm.SDM_ID ORDER BY sdm.SDM_NAME ASC");
+    			"GROUP BY sdm.SDM_ID ORDER BY sdm.SDM_ENDCONTRACT ASC");
 //    	query.append("WHERE SDMSKILL.SDM_ID = ?");
 //    	params.add(sdmId);
     	System.out.println("query : "+query.toString());
