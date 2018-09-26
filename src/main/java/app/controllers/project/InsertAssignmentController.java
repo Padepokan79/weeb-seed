@@ -81,7 +81,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
 			for (Map<String, Object> assign : listAssign) {
-				
+				System.out.println(listAssign);
 				InputAssignDTO sdmassignDto = new InputAssignDTO();
 				sdmassignDto.fromMap(assign);
 
@@ -116,7 +116,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				sdmassignDto.sdmhiring_id = Convert.toInteger(assign.get("sdmhiring_id"));
 				sdmassignDto.sdmassign_picclient = clientPIC;
 				sdmassignDto.sdmassign_picclientphone = clientPhone;
-				sdmassignDto.sdmassign_startdate = format.format(startdate);
+				sdmassignDto.sdmassign_startdate = format.format(currentDate);
 				sdmassignDto.sdmassign_enddate = format.format(enddate);
 				workPlace = Convert.toInteger(assign.get("method_id"));
 				if(workPlace == 1) {
@@ -129,7 +129,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				int sdmId = Convert.toInteger(assign.get("sdm_id"));
 				
 //				int sdmassign = Convert.toInteger(assign.get("sdmassign_id"));
-				System.out.println("ini cleint : " + clientId);
+				System.out.println("ini client : " + clientId);
 				if(clientId!=1) {
 					sdmAssign.updateHireStatIdWhenOutsource(sdmId, client);
 					System.out.println(sdmassignDto.sdmassign_startdate);
@@ -154,9 +154,20 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 						cekHiring = true;
 					}
 				}
+				
+				//get data sdmhiring id cv79
+				int cv79 =1 ;
+				listData = sdmAssign.getSdmHiringIdCv79(sdmId);
+				for(Map dataHiring : listData) {
+					System.out.println(dataHiring);
+					System.out.println(dataHiring.get("sdmhiring_id"));
+					int hiringId = Convert.toInteger(dataHiring.get("sdmhiring_id"));
+					sdmAssign.updateEndDateCv79( format.format(enddate79) , hiringId , 1);	
+				}
+				
 				String newenddate79 = format.format(enddate79);
 				System.out.println(newenddate79); System.out.println("woi");
-			    sdmAssign.updateEndDateCv79("2018-01-02" , 1, 1);
+//			    sdmAssign.updateEndDateCv79( sdmassignDto.sdmassign_startdate , , 1);
 				System.out.println(newenddate79); System.out.println("wai");
 
 				if (cekHiring == false) {	
