@@ -307,9 +307,10 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		
 		if(update79) {
 			System.out.println("xaxax");
-//			SdmAssignment.updateStatusCv79(sdmId);
-//			SdmAssignment.updateStatusOff(sdmhiringId);
-		}
+			SdmAssignment.updateStatusCv79(sdmId);
+			SdmAssignment.updateStatusOff(sdmhiringId);
+//		SdmAssignment.updateStartDateEnddateAssignCv79(clientId, sdmhiringId, sdmassignStartdate, sdmassignEnddate);
+			}
 		
 		}
 }

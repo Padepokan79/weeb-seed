@@ -229,4 +229,23 @@ public static int updateStatusCv79(int sdmId) {
 
 	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 }
+
+public static int updateStartDateEnddateAssignCv79(int clientId, int sdmhiringId, String sdmassignStartdate, String sdmassignEnddate) {
+	
+	List<Object> params = new ArrayList<>();
+	System.out.println("masuk query 79");
+	StringBuilder query = new StringBuilder();
+	query.append("UPDATE sdm_assignment  \r\n" + 
+			"			SET SDMASSIGN_STARTDATE = ? ,\r\n" + 
+			"			SDMASSIGN_ENDDATE = ? \r\n" + 
+			"			WHERE CLIENT_ID = ? AND SDMHIRING_ID = ? ;\r\n" + 
+			"");	
+	System.out.println("query : "+query.toString());
+	params.add(sdmassignStartdate);
+	params.add(sdmassignEnddate);
+	params.add(clientId);
+	params.add(sdmhiringId);
+
+	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+}
 }
