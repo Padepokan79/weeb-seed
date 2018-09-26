@@ -166,7 +166,7 @@ public static int updateEndDateCv79(String endDate, int sdmId, int clientId) {
 	StringBuilder query = new StringBuilder();
 	query.append("UPDATE sdm_assignment "
 			+ "SET SDMASSIGN_ENDDATE = ? "
-			+ "WHERE SDM_ID = ? && CLIENT_ID = ?");
+			+ "WHERE SDMHIRING_ID = ? && CLIENT_ID = ?");
 	System.out.println("query : "+query.toString());
 	params.add(endDate);
 	params.add(sdmId);
@@ -174,5 +174,16 @@ public static int updateEndDateCv79(String endDate, int sdmId, int clientId) {
 	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 }
 
+public static List<Map> getSdmHiringIdCv79(int sdmId) {
+	List<Object> params = new ArrayList<Object>();
+	System.out.println("masuk query");
+	StringBuilder query = new StringBuilder();
+	query.append("SELECT SDMHIRING_ID FROM sdm_hiring WHERE CLIENT_ID = 1 && SDM_ID = ? ");
+	params.add(sdmId);
+	System.out.println("query : "+query.toString());
+	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+	return lisdata;		
+}
       
 }
