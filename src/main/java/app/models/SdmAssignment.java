@@ -113,7 +113,7 @@ public class SdmAssignment extends Model{
   		List<Object> params = new ArrayList<Object>();
 //  		System.out.println("masuk query");
   		StringBuilder query = new StringBuilder();
-  		query.append("SELECT sdm.SDM_ENDCONTRACT, sdm.SDM_ID from sdm INNER JOIN sdm_hiring ON  sdm.SDM_ID = sdm_hiring.SDM_ID WHERE SDMHIRING_ID = ? ");
+  		query.append("SELECT sdm.SDM_ENDCONTRACT, sdm.SDM_STARTCONTRACT , sdm.SDM_ID from sdm INNER JOIN sdm_hiring ON  sdm.SDM_ID = sdm_hiring.SDM_ID WHERE SDMHIRING_ID = ? ");
   		params.add(sdmhiringId);
 //  		System.out.println("query : "+query.toString());
   		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -185,5 +185,48 @@ public static List<Map> getSdmHiringIdCv79(int sdmId) {
 	
 	return lisdata;		
 }
-      
+
+public static List<Map> getDataAssign() {
+	List<Object> params = new ArrayList<Object>();
+	System.out.println("masuk query");
+	StringBuilder query = new StringBuilder();
+	query.append("SELECT sdm.SDM_ID, sdm_assignment.SDMASSIGN_ID, sdm_hiring.SDMHIRING_ID,  sdm.SDM_STARTCONTRACT, "
+			+ "sdm.SDM_ENDCONTRACT , sdm_assignment.SDMASSIGN_STARTDATE, sdm_assignment.SDMASSIGN_ENDDATE FROM sdm_assignment \r\n" + 
+			"INNER JOIN sdm_hiring ON sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID \r\n" + 
+			"INNER JOIN sdm ON sdm.SDM_ID = sdm_hiring.SDM_ID");
+	
+	System.out.println("query : "+query.toString());
+	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+	return lisdata;		
+	}
+   
+
+public static int updateStatusOff(int sdmhiringId) {
+	
+	List<Object> params = new ArrayList<>();
+	System.out.println("masuk query 79");
+	StringBuilder query = new StringBuilder();
+	query.append("UPDATE sdm_hiring "
+			+ "SET HIRESTAT_ID = 9 "
+			+ "WHERE SDMHIRING_ID = ? ");
+	System.out.println("query : "+query.toString());
+	params.add(sdmhiringId);
+
+	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+}
+
+public static int updateStatusCv79(int sdmId) {
+	
+	List<Object> params = new ArrayList<>();
+	System.out.println("masuk query 79");
+	StringBuilder query = new StringBuilder();
+	query.append("UPDATE sdm_hiring "
+			+ "SET HIRESTAT_ID = 4 "
+			+ "WHERE SDM_ID = ?  && CLIENT_ID = 1");
+	System.out.println("query : "+query.toString());
+	params.add(sdmId);
+
+	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+}
 }

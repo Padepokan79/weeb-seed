@@ -65,8 +65,8 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 				dto.sdm_nik = Convert.toString(sdm.get("sdm_nik"));
 				dto.sdm_address = Convert.toString(sdm.get("sdm_address"));
 				dto.sdm_phone = Convert.toString(sdm.get("sdm_phone"));
-				dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
-				dto.sdm_endcontract = Convert.toString(sdm.get("sdm_endcontract"));
+				dto.sdm_startcontract = Convert.toString(history.get("sdmhistory_startdate"));
+				dto.sdm_endcontract = Convert.toString(history.get("sdmhistory_enddate"));
 				String status = Convert.toString(sdm.get("sdm_status"));
 				if(status.equals("1")) {
 					dto.sdm_status = "Aktif";
