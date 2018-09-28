@@ -10,12 +10,14 @@ import java.util.Map;
 
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
+import org.javalite.activeweb.annotations.GET;
 import org.javalite.common.Convert;
 
 import app.controllers.sdm.CourseController.CourseDTO;
 import app.models.Course;
 import app.models.Sdm;
 import app.models.SdmHistory;
+import core.io.enums.HttpResponses;
 import core.io.helper.Validation;
 import core.io.model.CorePage;
 import core.io.model.DTOModel;
@@ -99,5 +101,21 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 			sukses = true;
 		}
 		System.out.println("Cek status SDM berhasil");
-	}	
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@GET
+	public void insertHistori() {
+		int sdmId = Convert.toInteger(param("$sdm_id"));
+		String startDate = Convert.toString(param("$start_date"));
+		String endDate = Convert.toString(param("$end_date"));
+		
+		try {
+			SdmHistory.insertSdmHistory(sdmId, startDate, endDate);
+			response().setResponseBody(HttpResponses.ON_SUCCESS);
+		} catch (Exception e) {
+			response().setResponseBody(e, 400);
+		}
+		sendResponse();
+	}
 }
