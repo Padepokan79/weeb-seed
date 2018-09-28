@@ -143,4 +143,7 @@ public class SdmHiring extends Model {
 		params.add(sdmId);
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
+	
+	
+	
 }

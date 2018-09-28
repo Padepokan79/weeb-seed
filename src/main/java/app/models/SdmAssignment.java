@@ -191,9 +191,9 @@ public static List<Map> getDataAssign() {
 	System.out.println("masuk query");
 	StringBuilder query = new StringBuilder();
 	query.append("SELECT sdm.SDM_ID, sdm_assignment.SDMASSIGN_ID, sdm_hiring.SDMHIRING_ID,  sdm.SDM_STARTCONTRACT, "
-			+ "sdm.SDM_ENDCONTRACT , sdm_assignment.SDMASSIGN_STARTDATE, sdm_assignment.SDMASSIGN_ENDDATE FROM sdm_assignment \r\n" + 
+			+ "sdm.SDM_ENDCONTRACT , sdm_assignment.SDMASSIGN_STARTDATE, sdm_assignment.SDMASSIGN_ENDDATE, sdm_assignment.CLIENT_ID FROM sdm_assignment \r\n" + 
 			"INNER JOIN sdm_hiring ON sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID \r\n" + 
-			"INNER JOIN sdm ON sdm.SDM_ID = sdm_hiring.SDM_ID");
+			"INNER JOIN sdm ON sdm.SDM_ID = sdm_hiring.SDM_ID ORDER BY sdm_assignment.SDMASSIGN_ENDDATE");
 	
 	System.out.println("query : "+query.toString());
 	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -248,4 +248,18 @@ public static int updateStartDateEnddateAssignCv79(int clientId, int sdmhiringId
 
 	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 }
+
+
+public static List<Map> getDataHirindId() {
+	List<Object> params = new ArrayList<Object>();
+	System.out.println("masuk query");
+	StringBuilder query = new StringBuilder();
+	query.append("select sdmhiring_id from sdm_hiring client_id = 1");
+	
+	System.out.println("query : "+query.toString());
+	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+	return lisdata;		
+	}
+
 }

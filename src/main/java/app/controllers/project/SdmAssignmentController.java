@@ -82,7 +82,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		int number = 1;
 		if(params.limit() != null)
 			number = params.limit().intValue()*params.offset().intValue()+1;
-
+		
 		for(SdmAssignment sdmassign : listSdmAssignment) {
 			ProjectMethod method 	= sdmassign.parent(ProjectMethod.class);
 			SdmHiring hiring 		= sdmassign.parent(SdmHiring.class);
@@ -279,38 +279,56 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 
 	public void cekDataAssign() throws ParseException{
 		List<Map> listData = new ArrayList<>();
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date currentDate = new Date();
 		Date assignEndDate = new Date();
-		boolean update79 = false;
+		boolean update79 = false, update = false;
 		int sdmhiringId = 0 ,sdmId =0;
+		String sdmEncContract ="";
 		listData = SdmAssignment.getDataAssign();
-		System.out.println("woi");
+	
 		for(Map dataAssign : listData) {
-			System.out.println("hai");	
+			
 			for(Map dataContractSdm : listData) {
-				System.out.println("hui");
+				
 				 sdmhiringId = Convert.toInteger(dataAssign.get("sdmhiring_id"));
-				 String sdmEncContract = Convert.toString(dataContractSdm.get("sdm_endcontract"));
+				 sdmEncContract = Convert.toString(dataContractSdm.get("sdm_endcontract"));
 				 String sdmAssignEndContract = Convert.toString(dataAssign.get("sdmassign_enddate"));
 				 sdmId = Convert.toInteger(dataContractSdm.get("sdm_id"));
 				 int sdmIdAssign = Convert.toInteger(dataAssign.get("sdm_id"));
 				 Date sdmEncContractDate = sdf.parse(sdmEncContract);
 				 Date sdmAssignEndContractDate = sdf.parse(sdmAssignEndContract);
+				 int clientId = Convert.toInteger(dataContractSdm.get("client_id"));
 				 
-				 if(sdmEncContractDate.compareTo(currentDate) >= 0 && sdmId == sdmIdAssign) {
+				 if(sdmAssignEndContractDate.compareTo(currentDate) <= 0 && sdmId == sdmIdAssign && clientId != 1) {
 					 update79 = true;
-					 System.out.println("xd");
+					System.out.println(sdmEncContractDate);
+					System.out.println(currentDate);
+					System.out.println(clientId);
 				 }
 			}
 		}
 		
-		if(update79) {
-			System.out.println("xaxax");
-			SdmAssignment.updateStatusCv79(sdmId);
-			SdmAssignment.updateStatusOff(sdmhiringId);
-//		SdmAssignment.updateStartDateEnddateAssignCv79(clientId, sdmhiringId, sdmassignStartdate, sdmassignEnddate);
-			}
+		
+//		if(update79) {
+////			SdmAssignment sdma = new SdmAssignment();
+////			SdmHiring sdmh = new SdmHiring();
+//			System.out.println("xaxax");
+//			SdmAssignment.updateStatusCv79(sdmId);
+//			SdmAssignment.updateStatusOff(sdmhiringId);
+//			
+//			System.out.println("hello");
+//			listData = SdmAssignment.getSdmHiringIdCv79(sdmId);
+//			System.out.println("hello");
+//			System.out.println(listData);
+//			for (Map data : listData) {
+//				sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+//				System.out.println("hai " + sdmhiringId);
+//			}			
+//			
+//			SdmAssignment.updateStartDateEnddateAssignCv79(1, sdmhiringId, sdf.format(currentDate), sdmEncContract);
+//			}
 		
 		}
 }
