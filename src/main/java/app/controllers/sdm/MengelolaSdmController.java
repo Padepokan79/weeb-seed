@@ -377,11 +377,11 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	      
 	       if (currentDate.compareTo(startContractDate) >= 0 && currentDate.compareTo(endContractDate) <= 0 ) {
 	           sdmStatus = 1;
-	           //cek data hiring sdm
+	          System.out.println("cek");
 	          LazyList<SdmHiring> listDatahiring = SdmHiring.findAll();
 	          LazyList<Clients> listDataclient = Clients.findAll();
 	          LazyList<SdmAssignment> listDataAssigment = SdmAssignment.findAll();
-	        
+	          System.out.println(listDatahiring);
         	  for (Clients client : listDataclient) {
         		  if(client.getInteger("client_id") == 1) {
         			  sdmassignPicclient = client.getString("client_picclient");
@@ -390,10 +390,13 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
         	  }
 	          
 	          for(SdmHiring data : listDatahiring) {
+	        	  System.out.println(Convert.toInteger(data.get("sdmhiring_id")));
 	        	  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
 	        	  if(sdmId == data.getInteger("sdm_id") && data.getInteger("client_id") == 1 ) {
-	        		update = true;
+	        		  System.out.println("ceklagi");
+	        		  update = true;
 	        		for(SdmAssignment dataAssign : listDataAssigment) {
+	        			System.out.println("ceklagilagi");
 	        			int sdmhiringIdAssign =  Convert.toInteger(dataAssign.get("sdmhiring_id"));
 	        			if(sdmhiringId == sdmhiringIdAssign){
 	        				updateAssign = true;
@@ -418,7 +421,6 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			 */
 	        if(update && contractType == 3)
 	        {
-	        //update data hiring ==> hirestat menjadi diterima
       		  SdmHiring.updateHiring(sdmId);
       		  List<Map> sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
       		  for(Map data : sdmhiring_id) {
@@ -442,11 +444,11 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	        } else if (insert && contractType == 3){
 	         //insert data hiring baru
       		  SdmHiring.insertHiring(sdmId);
+      		  System.out.println("cek insert");
       		  List<Map> sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
     		  for(Map data : sdmhiring_id) {
     			  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
     		  }
-      		  System.out.println(Convert.toInteger(SdmHiring.getSdmHiring_id(sdmId)));
       		  SdmAssignment.insertDataAssignHire(sdmhiringId, startContract, endContract, sdmassignPicclient, sdmassignPicclientphone, 1);
       		  System.out.println("Berhasil di insert hiring dan assign");
 	        }
