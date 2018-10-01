@@ -307,6 +307,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 				 Date sdmEncContractDate = sdf.parse(sdmEncContract);
 				 Date sdmAssignEndContractDate = sdf.parse(sdmAssignEndContract);
 				 clientId = Convert.toInteger(dataContractSdm.get("client_id"));
+				 sdmStatus = Convert.toInteger(dataContractSdm.get("sdm_status"));
 				 
 				 if(sdmAssignEndContractDate.compareTo(currentDate) <= 0 && sdmId == sdmIdAssign && clientId != 1 && hirestatId == 4) {
 					 update79 = true;
@@ -316,16 +317,14 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 					System.out.println("hiringid "+sdmhiringId);
 					System.out.println("clientid "+clientId);
 				 }
-				 if(sdmAssignEndContractDate.compareTo(currentDate) <= 0 && sdmId == sdmIdAssign && clientId == 1 ) {
-					 
+				 if(sdmId == sdmIdAssign && clientId == 1 && sdmStatus == 0) {
+					 System.out.println("masuk sini");
 					 update = true;
 					System.out.println(sdmEncContractDate);
 					System.out.println(currentDate);
 					System.out.println("hiringid "+sdmhiringId);
 					System.out.println("clientid "+clientId);
 				 }
-				 
-				 
 				 
 				 if(update79) {
 						if(clientId != 1) {
