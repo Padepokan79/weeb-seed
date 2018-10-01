@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cetakCV" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9125c092-27f6-4197-a1bb-f9fe09305935">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
@@ -1143,7 +1143,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Certivication]]></text>
+								<text><![CDATA[Certification]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table 2_TD" height="60">
@@ -1257,7 +1257,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Contaract Start date]]></text>
+								<text><![CDATA[Contract Start Date]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table 3_TD" height="30">

@@ -111,7 +111,7 @@ public class SdmSkill extends Model {
     public static List<Map> getAllDataSdmSkillGroupBy() {
     	List<Object> params = new ArrayList<Object>();
     	StringBuilder query = new StringBuilder();
-    	query.append("SELECT sdm.SDM_ID, sdm.SDM_NIK, sdm.SDM_STATUS, sdm.SDM_NAME, sdm.SDM_STARTCONTRACT , sdm.SDM_ENDCONTRACT FROM sdmskill, sdm WHERE sdmskill.sdm_id = sdm.sdm_id\r\n" + 
+    	query.append("SELECT sdmskill.SDMSKILL_ID, sdm.SDM_ID, sdm.SDM_NIK, sdm.SDM_STATUS, sdm.SDM_NAME, sdm.SDM_STARTCONTRACT , sdm.SDM_ENDCONTRACT FROM sdmskill, sdm WHERE sdmskill.sdm_id = sdm.sdm_id\r\n" + 
     			"GROUP BY sdm.SDM_ID ORDER BY sdm.SDM_ENDCONTRACT ASC");
 //    	query.append("WHERE SDMSKILL.SDM_ID = ?");
 //    	params.add(sdmId);
@@ -818,6 +818,17 @@ public class SdmSkill extends Model {
 		
     }
     
+    public static int deleteDataSkillSdm(int sdmId) {
+		
+		List<Object> params = new ArrayList<>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("DELETE FROM sdmskill\r\n" + 
+				"WHERE SDM_ID = ?");
+		System.out.println("query : "+query.toString());
+		params.add(sdmId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
     
     
 }
