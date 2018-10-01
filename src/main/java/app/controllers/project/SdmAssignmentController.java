@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.util.CloseIgnoringInputStream;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.common.Convert;
@@ -72,9 +73,11 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		LazyList<SdmHiring> listSdmHiring				= SdmHiring.findAll();
 		List<Map> listdata = new ArrayList<>();
 		cekDataAssign();
+
 		params.setOrderBy("sdmassign_id");
+
 		Long totalItems = this.getTotalItems(params);
-		
+	
 		/*
 		 * Updated by Alifhar Juliansyah	
 		 * 30/08/2018
@@ -82,7 +85,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		int number = 1;
 		if(params.limit() != null)
 			number = params.limit().intValue()*params.offset().intValue()+1;
-		
+	
 		for(SdmAssignment sdmassign : listSdmAssignment) {
 			ProjectMethod method 	= sdmassign.parent(ProjectMethod.class);
 			SdmHiring hiring 		= sdmassign.parent(SdmHiring.class);
@@ -100,7 +103,6 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 				dto.sdmEndcontract = Convert.toString(datasdm.get("sdm_endcontract"));
 				dto.sdmId = Convert.toInteger(datasdm.get("sdm_id"));
 			}
-			
 //			int asmAssId = Convert.toInteger(sdmassign.get("sdmassign_id"));
 //			
 //			listData = Sdm.getDataSdmId(sdmAssId);
@@ -112,6 +114,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			 * Updated by Alifhar Juliansyah
 			 * 10 August 2018
 			 */
+
 			java.util.Date currDate = date.parse(getCurrentDate());
 			java.util.Date endDate = date.parse(getConvertBulan(sdmassign.get("sdmassign_enddate").toString()));
 			java.sql.Date currDate2 = new java.sql.Date(currDate.getTime());
@@ -284,52 +287,69 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		Date currentDate = new Date();
 		Date assignEndDate = new Date();
 		boolean update79 = false, update = false;
-		int sdmhiringId = 0 ,sdmId =0;
+		int sdmhiringId = 0 ,sdmId =0, clientId=0,hirestatId =0, sdmStatus = 0;
 		String sdmEncContract ="";
 		listData = SdmAssignment.getDataAssign();
-	
-		for(Map dataAssign : listData) {
-			
+		System.out.println(listData.size());
+		
+			System.out.println("AWAL PERULANGAN");
+			System.out.println("==============");
 			for(Map dataContractSdm : listData) {
+				update79 = false;
+				update = false;
 				
-				 sdmhiringId = Convert.toInteger(dataAssign.get("sdmhiring_id"));
+				 sdmhiringId = Convert.toInteger(dataContractSdm.get("sdmhiring_id"));
+				 hirestatId = Convert.toInteger(dataContractSdm.get("hirestat_id"));
 				 sdmEncContract = Convert.toString(dataContractSdm.get("sdm_endcontract"));
-				 String sdmAssignEndContract = Convert.toString(dataAssign.get("sdmassign_enddate"));
+				 String sdmAssignEndContract = Convert.toString(dataContractSdm.get("sdmassign_enddate"));
 				 sdmId = Convert.toInteger(dataContractSdm.get("sdm_id"));
-				 int sdmIdAssign = Convert.toInteger(dataAssign.get("sdm_id"));
+				 int sdmIdAssign = Convert.toInteger(dataContractSdm.get("sdm_id"));
 				 Date sdmEncContractDate = sdf.parse(sdmEncContract);
 				 Date sdmAssignEndContractDate = sdf.parse(sdmAssignEndContract);
-				 int clientId = Convert.toInteger(dataContractSdm.get("client_id"));
+				 clientId = Convert.toInteger(dataContractSdm.get("client_id"));
 				 
-				 if(sdmAssignEndContractDate.compareTo(currentDate) <= 0 && sdmId == sdmIdAssign && clientId != 1) {
+				 if(sdmAssignEndContractDate.compareTo(currentDate) <= 0 && sdmId == sdmIdAssign && clientId != 1 && hirestatId == 4) {
 					 update79 = true;
+					 
 					System.out.println(sdmEncContractDate);
 					System.out.println(currentDate);
-					System.out.println(clientId);
+					System.out.println("hiringid "+sdmhiringId);
+					System.out.println("clientid "+clientId);
 				 }
-			}
-		}
-		
-		
-//		if(update79) {
-////			SdmAssignment sdma = new SdmAssignment();
-////			SdmHiring sdmh = new SdmHiring();
-//			System.out.println("xaxax");
-//			SdmAssignment.updateStatusCv79(sdmId);
-//			SdmAssignment.updateStatusOff(sdmhiringId);
-//			
-//			System.out.println("hello");
-//			listData = SdmAssignment.getSdmHiringIdCv79(sdmId);
-//			System.out.println("hello");
-//			System.out.println(listData);
-//			for (Map data : listData) {
-//				sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
-//				System.out.println("hai " + sdmhiringId);
-//			}			
-//			
-//			SdmAssignment.updateStartDateEnddateAssignCv79(1, sdmhiringId, sdf.format(currentDate), sdmEncContract);
-//			}
-		
+				 if(sdmAssignEndContractDate.compareTo(currentDate) <= 0 && sdmId == sdmIdAssign && clientId == 1 ) {
+					 
+					 update = true;
+					System.out.println(sdmEncContractDate);
+					System.out.println(currentDate);
+					System.out.println("hiringid "+sdmhiringId);
+					System.out.println("clientid "+clientId);
+				 }
+				 
+				 
+				 
+				 if(update79) {
+						if(clientId != 1) {
+							System.out.println("hiringid "+sdmhiringId);
+							System.out.println("clientid "+clientId);
+							SdmAssignment.updateStatusOff(sdmhiringId);
+							SdmAssignment.updateStatusCv79(sdmId);	
+						}
+						
+//						listData = SdmAssignment.getSdmHiringIdCv79(sdmId);
+//						for (Map data : listData) {
+//							sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+//						}
+						listData = SdmAssignment.getSdmHiringIdCv79(sdmId);
+						for (Map data : listData) {
+							sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+							System.out.println("sdm hiring id : " + sdmhiringId);
+						}			
+						SdmAssignment.updateStartDateEnddateAssignCv79(1, sdmhiringId, sdf.format(currentDate), sdmEncContract);
+				 }
+				 if(update) {
+					 SdmAssignment.updateStatusOffcv79(sdmhiringId);
+				}
+			}	
 		}
 }
 

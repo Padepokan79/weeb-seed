@@ -77,11 +77,12 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 			Date enddate = new Date();
 			Date currentDate = new Date();
 			Date enddate79 = new Date();
-			
+			int sdmhiringId = 0;
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
 			for (Map<String, Object> assign : listAssign) {
 				System.out.println(listAssign);
+				sdmhiringId = Convert.toInteger(assign.get("sdmhiring_id"));
 				InputAssignDTO sdmassignDto = new InputAssignDTO();
 				sdmassignDto.fromMap(assign);
 
@@ -165,6 +166,10 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 					sdmAssign.updateEndDateCv79( format.format(enddate79) , hiringId , 1);	
 				}
 				
+				listData = sdmAssign.getAssignmentId(sdmhiringId);
+				for(Map data : listData){
+					sdmassignId = Convert.toInteger(data.get("sdmassign_id"));
+				}
 				String newenddate79 = format.format(enddate79);
 				System.out.println(newenddate79); System.out.println("woi");
 //			    sdmAssign.updateEndDateCv79( sdmassignDto.sdmassign_startdate , , 1);
@@ -173,14 +178,13 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				if (cekHiring == false) {	
 					//apabila data belum ada yang berelasi dengan sdmhiring_id, maka insert data baru
 					sdmAssign.insert();
-					
 					System.out.println("Inserted Assignment : " + sdmassignDto);
 					response().setResponseBody(HttpResponses.ON_SUCCESS_CREATE, listAssign);
 				}
 				else {
 					//apabila data assign ada yang berelasi dengan sdmhiring_id, maka update data
 					sdmAssign.updateDataAssign(sdmassignId, sdmassignDto.sdmassign_startdate, 	sdmassignDto.sdmassign_enddate);
-					System.out.println("Update disini");
+					System.out.println("Update Assignment : " + sdmassignId);
 					response().setResponseBody(HttpResponses.ON_SUCCESS_UPDATE, listAssign);
 				}
 			}

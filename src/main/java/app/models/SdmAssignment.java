@@ -190,8 +190,8 @@ public static List<Map> getDataAssign() {
 	List<Object> params = new ArrayList<Object>();
 	System.out.println("masuk query");
 	StringBuilder query = new StringBuilder();
-	query.append("SELECT sdm.SDM_ID, sdm_assignment.SDMASSIGN_ID, sdm_hiring.SDMHIRING_ID,  sdm.SDM_STARTCONTRACT, "
-			+ "sdm.SDM_ENDCONTRACT , sdm_assignment.SDMASSIGN_STARTDATE, sdm_assignment.SDMASSIGN_ENDDATE, sdm_assignment.CLIENT_ID FROM sdm_assignment \r\n" + 
+	query.append("SELECT sdm.SDM_ID, sdm_assignment.SDMASSIGN_ID, sdm_hiring.SDMHIRING_ID,  sdm_hiring.HIRESTAT_ID, sdm.SDM_STARTCONTRACT, "
+			+ "sdm.SDM_ENDCONTRACT , sdm_assignment.SDMASSIGN_STARTDATE, sdm_assignment.SDMASSIGN_ENDDATE, sdm_assignment.CLIENT_ID, sdm.SDM_STATUS FROM sdm_assignment \r\n" + 
 			"INNER JOIN sdm_hiring ON sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID \r\n" + 
 			"INNER JOIN sdm ON sdm.SDM_ID = sdm_hiring.SDM_ID ORDER BY sdm_assignment.SDMASSIGN_ENDDATE");
 	
@@ -205,11 +205,11 @@ public static List<Map> getDataAssign() {
 public static int updateStatusOff(int sdmhiringId) {
 	
 	List<Object> params = new ArrayList<>();
-	System.out.println("masuk query 79");
+	System.out.println("masuk query 79 off");
 	StringBuilder query = new StringBuilder();
 	query.append("UPDATE sdm_hiring "
 			+ "SET HIRESTAT_ID = 9 "
-			+ "WHERE SDMHIRING_ID = ? ");
+			+ "WHERE SDMHIRING_ID = ? AND CLIENT_ID != 1");
 	System.out.println("query : "+query.toString());
 	params.add(sdmhiringId);
 
@@ -219,7 +219,7 @@ public static int updateStatusOff(int sdmhiringId) {
 public static int updateStatusCv79(int sdmId) {
 	
 	List<Object> params = new ArrayList<>();
-	System.out.println("masuk query 79");
+	System.out.println("masuk query 79 diterima");
 	StringBuilder query = new StringBuilder();
 	query.append("UPDATE sdm_hiring "
 			+ "SET HIRESTAT_ID = 4 "
@@ -262,4 +262,29 @@ public static List<Map> getDataHirindId() {
 	return lisdata;		
 	}
 
+public static List<Map> getAssignmentId(int sdmhiringId) {
+	List<Object> params = new ArrayList<Object>();
+	System.out.println("masuk query");
+	StringBuilder query = new StringBuilder();
+	query.append("select sdmassign_id from sdm_assignment WHERE sdmhiring_id = ? ");
+	params.add(sdmhiringId);
+	System.out.println("query : "+query.toString());
+	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+	return lisdata;		
+	}
+
+public static int updateStatusOffcv79(int sdmhiringId) {
+	
+	List<Object> params = new ArrayList<>();
+	System.out.println("masuk query 79 off");
+	StringBuilder query = new StringBuilder();
+	query.append("UPDATE sdm_hiring "
+			+ "SET HIRESTAT_ID = 9 "
+			+ "WHERE SDMHIRING_ID = ? ");
+	System.out.println("query : "+query.toString());
+	params.add(sdmhiringId);
+
+	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+}
 }
