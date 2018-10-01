@@ -205,7 +205,7 @@ public static List<Map> getDataAssign() {
 public static int updateStatusOff(int sdmhiringId) {
 	
 	List<Object> params = new ArrayList<>();
-	System.out.println("masuk query 79 off");
+	System.out.println("masuk query off");
 	StringBuilder query = new StringBuilder();
 	query.append("UPDATE sdm_hiring "
 			+ "SET HIRESTAT_ID = 9 "
@@ -277,7 +277,7 @@ public static List<Map> getAssignmentId(int sdmhiringId) {
 public static int updateStatusOffcv79(int sdmhiringId) {
 	
 	List<Object> params = new ArrayList<>();
-	System.out.println("masuk query 79 off");
+	System.out.println("masuk query 79 off ");
 	StringBuilder query = new StringBuilder();
 	query.append("UPDATE sdm_hiring "
 			+ "SET HIRESTAT_ID = 9 "
