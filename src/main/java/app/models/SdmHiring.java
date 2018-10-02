@@ -48,11 +48,12 @@ public class SdmHiring extends Model {
 		return lisdata;
 	}
 	
-	public static List<Map> getDataSdmbyHirestat(){
+	public static List<Map> getDataSdmbyHirestat(int sdmId){
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
-		query.append("SELECT SDM_ID, HIRESTAT_ID, CLIENT_ID from sdm_hiring Where HIRESTAT_ID = 4");
+		query.append("SELECT SDM_ID, HIRESTAT_ID, CLIENT_ID from sdm_hiring Where HIRESTAT_ID = 4 AND SDM_ID = ? ");
+		params.add(sdmId);
 		
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 	

@@ -58,7 +58,10 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			
 			System.out.println(params.size());
 			//filter datasdm dengan id yang sama
+			
 			listHiring = validateRedudantInput(params);
+			System.out.println("Banyak data" + listHiring.size());
+			System.out.println(listHiring);
 			Integer cv79 = 1;
 			
 			for (Map<String, Object> hiring : listHiring) {
@@ -78,22 +81,30 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 				List<Map> listdata = new ArrayList<>();
 				listdata = SdmHiring.getDataSdmbyClient(clientId);
 				List<Map> listdataStatSdm = new ArrayList<>();
-				listdataStatSdm = SdmHiring.getDataSdmbyHirestat();
-				
+				listdataStatSdm = SdmHiring.getDataSdmbyHirestat(sdmId);
+				System.out.println("Banyak data stat sdm" + listdataStatSdm.size());
 				System.out.println("datahire" + listdata);
-				if(listdata.size() == 0 ) {
-					if(listdataStatSdm.size() == 0) {
+				int banyakSdmditerima = listdataStatSdm.size();
+				int banyakListdata = listdata.size();
+				System.out.println(banyakSdmditerima == 0);
+				System.out.println(banyakListdata == 0 );
+				if(banyakListdata == 0 ) {
+					if(banyakSdmditerima == 0) {
 						cekData = false;
 						sdmhiringDto.fromMap(hiring);
 						sdmModel.fromMap(sdmhiringDto.toModelMap());
+						System.out.println("1");
 					} else {
 						for(Map sdmHirestat : listdataStatSdm) {
 							System.out.println(sdmHirestat);
+							System.out.println(sdmHirestat.size());
 							if(sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79) {
 								validatebyHireStat = false;
+								System.out.println("2 xd");
 								System.out.println("tidak input (hirestat)" + sdmId);
 							} else if ( validatebyHireStat == true ){
 								cekData = false;
+								System.out.println("3 xc");
 								System.out.println("input data Hire" + sdmId);
 								sdmhiringDto.fromMap(hiring);
 								sdmModel.fromMap(sdmhiringDto.toModelMap());
@@ -102,20 +113,33 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 					}
 					
 				} else {
+					
 					for(Map dataHire : listdata) {
 						cekData = true;
+						if(banyakSdmditerima == 0) {
+							cekData = false;
+							validatebyClient = false;
+							sdmhiringDto.fromMap(hiring);
+							sdmModel.fromMap(sdmhiringDto.toModelMap());
+							System.out.println("4");
+						}
 						if(sdmId == dataHire.get("sdm_id")) {
+							System.out.println("sdm_id " + sdmId);
+							System.out.println(dataHire.get("sdm_id"));
+							System.out.println("5");
 							validatebyClient = false;
 							System.out.println("tidak input (by client)" + sdmId);
 						} else if ( validatebyClient == true ){
-							
+							System.out.println("6");
 							for(Map sdmHirestat : listdataStatSdm) {
 								System.out.println(sdmHirestat);
 								if(sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79 ) {
 									validatebyHireStat = false;
+									System.out.println("7");
 									System.out.println("tidak input (hirestat)" + sdmId);
 								} else if ( validatebyHireStat == true ){
 									cekData = false;
+									System.out.println("8");
 									System.out.println("input data Hire" + sdmId);
 									sdmhiringDto.fromMap(hiring);
 									sdmModel.fromMap(sdmhiringDto.toModelMap());
