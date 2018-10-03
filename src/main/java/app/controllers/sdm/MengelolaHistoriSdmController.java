@@ -82,7 +82,6 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		return new CorePage(listMapCourse, totalItems);				
 	}
 	
-	
 	@SuppressWarnings("rawtypes")
 	@GET
 	public void cekStatusSdm() {
@@ -101,6 +100,7 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 				SdmHistory.updateSdmStatus(sdmId);
 				System.out.println("Cek status SDM berhasil");
 				System.out.println("Sdm masuk history : "  + sdmId);
+
 				response().setResponseBody(HttpResponses.ON_SUCCESS);
 			} catch (Exception e) {
 				response().setResponseBody(e, 400);
