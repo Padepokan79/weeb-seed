@@ -91,7 +91,6 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 		boolean sukses = false;
 		String startContract;
 		String endContract;
-		
 		for(Map sdm : listData) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 			startContract =Convert.toString(sdm.get("SDM_STARTCONTRACT"));
@@ -100,6 +99,8 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 				SdmHistory.insertSdmHistory(sdmId, startContract, endContract);
 				SdmHistory.updateSdmStatus(sdmId);
 				System.out.println("Cek status SDM berhasil");
+				System.out.println("Sdm masuk history : "  + sdmId);
+
 				response().setResponseBody(HttpResponses.ON_SUCCESS);
 			} catch (Exception e) {
 				response().setResponseBody(e, 400);

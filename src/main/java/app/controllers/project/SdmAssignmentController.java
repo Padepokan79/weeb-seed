@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.javalite.activeweb.annotations.GET;
 import org.apache.poi.util.CloseIgnoringInputStream;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
@@ -64,7 +65,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception{
-		
+		// cekDataAssign();
 		DateFormat date = new SimpleDateFormat("dd/MM/yyyy"); 
 		
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
@@ -72,7 +73,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		List<Map<String, Object>> listMapSdmHiring 		= new ArrayList<Map<String, Object>>();
 		LazyList<SdmHiring> listSdmHiring				= SdmHiring.findAll();
 		List<Map> listdata = new ArrayList<>();
-		cekDataAssign();
+		
 
 		params.setOrderBy("sdmassign_id");
 
@@ -280,7 +281,9 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		return result;
 	}
 
-	public void cekDataAssign() throws ParseException{
+	@SuppressWarnings("rawtypes")
+	@GET
+	public void cekDataAssign() {
 		List<Map> listData = new ArrayList<>();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -292,8 +295,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		listData = SdmAssignment.getDataAssign();
 		System.out.println(listData.size());
 		
-			System.out.println("AWAL PERULANGAN");
-			System.out.println("==============");
+		try{
 			for(Map dataContractSdm : listData) {
 				update79 = false;
 				update = false;
@@ -345,10 +347,15 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 						}			
 						SdmAssignment.updateStartDateEnddateAssignCv79(1, sdmhiringId, sdf.format(currentDate), sdmEncContract);
 				 }
+				 
 				 if(update) {
 					 SdmAssignment.updateStatusOffcv79(sdmhiringId);
 				}
-			}	
+			}
+		} catch (Exception e){
+			response().setResponseBody(e, 400);
+			}
+			sendResponse();
 		}
 }
 
