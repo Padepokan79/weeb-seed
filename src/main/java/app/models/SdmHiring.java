@@ -114,7 +114,17 @@ public class SdmHiring extends Model {
 	public static List<Map> getSdmHiring_id(int sdmId){
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder query = new StringBuilder();
-		query.append("select sdmhiring_id from sdm_hiring where sdm_id=?");
+		query.append("select sdmhiring_id from sdm_hiring where sdm_id=? and hirestat_id = 4");
+		params.add(sdmId);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		
+		return lisdata;
+	}
+	
+	public static List<Map> getSdmHiring_idAll(int sdmId){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();
+		query.append("select sdmhiring_id from sdm_hiring where sdm_id=? ");
 		params.add(sdmId);
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		

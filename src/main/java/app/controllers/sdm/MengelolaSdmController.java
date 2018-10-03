@@ -353,16 +353,16 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	//update status sdm otomatis berdsarkan tanggal kontrak
 	@Override
 	public Map<String, Object> customOnUpdate(Sdm item, Map<String, Object> mapRequest) throws Exception {
+		System.out.println("Masuk custom onUpdate");
 		Map<String, Object> result = super.customOnUpdate(item, mapRequest);
 		
 		String startContract = Convert.toString(mapRequest.get("sdm_startcontract"));
 		String endContract = Convert.toString(mapRequest.get("sdm_endcontract"));
-		System.out.println("hai");
 		int sdmId = Convert.toInteger(mapRequest.get("sdm_id"));
 		int contractType = Convert.toInteger(mapRequest.get("contracttype_id"));
-		System.out.println("halo");
-		int sdmStatus;
-		int sdmhiringId=0; 
+		int sdmstatusAwal = Convert.toInteger(mapRequest.get("sdm_status")); 
+		int sdmStatus, sdmhiringId=0;
+		
 		String sdmassignPicclient="-";
     	String sdmassignPicclientphone="-";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -370,14 +370,11 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	       
 		Date currentDate = new Date();
 		 
-		System.out.println(sdf.format(currentDate));
-		 
 		Date startContractDate = sdf.parse(startContract);
 	    Date endContractDate = sdf.parse(endContract);
 	      
 	       if (currentDate.compareTo(startContractDate) >= 0 && currentDate.compareTo(endContractDate) <= 0 ) {
 	           sdmStatus = 1;
-	          System.out.println("cek");
 	          LazyList<SdmHiring> listDatahiring = SdmHiring.findAll();
 	          LazyList<Clients> listDataclient = Clients.findAll();
 	          LazyList<SdmAssignment> listDataAssigment = SdmAssignment.findAll();
@@ -390,19 +387,15 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
         	  }
 	          
 	          for(SdmHiring data : listDatahiring) {
-	        	  System.out.println(Convert.toInteger(data.get("sdmhiring_id")));
 	        	  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
 	        	  if(sdmId == data.getInteger("sdm_id") && data.getInteger("client_id") == 1 ) {
-	        		  System.out.println("ceklagi");
 	        		  update = true;
 	        		for(SdmAssignment dataAssign : listDataAssigment) {
-	        			System.out.println("ceklagilagi");
 	        			int sdmhiringIdAssign =  Convert.toInteger(dataAssign.get("sdmhiring_id"));
 	        			if(sdmhiringId == sdmhiringIdAssign){
 	        				updateAssign = true;
-	        				System.out.println("masuk pak eko");
 	        			}
-	        			else {System.out.println("hai cuy");
+	        			else {
 	        				insertAssign = true;
 	        			}
 	        		}
@@ -413,17 +406,19 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	          
 	        } else {
 	        	sdmStatus = 0;
-	        	List<Map> sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
+	        	sdmstatusAwal = 1;
+	        	List<Map> sdmhiring_idaktif = SdmHiring.getSdmHiring_idAktif(sdmId);
+	        	List<Map> sdmhiring_id = SdmHiring.getSdmHiring_idAll(sdmId);
 	      		for(Map data : sdmhiring_id) {
 	      			sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
 	      			SdmHiring.updateHireStatIdbyClient(sdmhiringId);
+	      			System.out.println("sdm hiring jadi off " + sdmhiringId);
 	      		}
-	      		List<Map> sdmhiring_idaktif = SdmHiring.getSdmHiring_idAktif(sdmId);
+	      		
 	      		for(Map data : sdmhiring_idaktif) {
 	      			sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
 	      			SdmAssignment.updateDataAssignHire1(sdmhiringId, endContract);
 	      		}
-	        	System.out.println(sdmStatus);
 	        }
 	       /*
 			 * Updated (Commented) by Ryan Ahmad N
@@ -431,7 +426,10 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			 */
 	        if(update && contractType == 3)
 	        {
-      		  SdmHiring.updateHiring(sdmId);
+	        	if(sdmstatusAwal == 0) {
+	        		SdmHiring.updateHiring(sdmId);
+	        	} 
+	        	
       		  List<Map> sdmhiring_id = SdmHiring.getSdmHiring_id(sdmId);
       		  for(Map data : sdmhiring_id) {
       			  sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
@@ -440,7 +438,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 //      		  sdmhiringId = sdmhiring_id.get(index)
       		  if(updateAssign) {
       			insertAssign = false;
-          		  SdmAssignment.updateDataAssignHire(sdmhiringId, startContract, endContract);
+          		SdmAssignment.updateDataAssignHire(sdmhiringId, startContract, endContract);
           		System.out.println(startContract);
       			System.out.println(endContract);
           		System.out.println("Berhasil di update hiring dan update assign");
