@@ -418,7 +418,11 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	      			sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
 	      			SdmHiring.updateHireStatIdbyClient(sdmhiringId);
 	      		}
-	      		SdmAssignment.updateDataAssignHire(sdmhiringId, startContract, endContract);
+	      		List<Map> sdmhiring_idaktif = SdmHiring.getSdmHiring_idAktif(sdmId);
+	      		for(Map data : sdmhiring_idaktif) {
+	      			sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
+	      			SdmAssignment.updateDataAssignHire1(sdmhiringId, endContract);
+	      		}
 	        	System.out.println(sdmStatus);
 	        }
 	       /*

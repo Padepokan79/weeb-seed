@@ -140,6 +140,18 @@ public class SdmAssignment extends Model{
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
     
+public static int updateDataAssignHire1(int sdmhiringId, String endDateProject) {
+		
+		List<Object> params = new ArrayList<>();
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE sdm_assignment SET \r\n" + 
+				"SDMASSIGN_ENDDATE = ? \r\n" + 
+				"WHERE SDMHIRING_ID = ? ");
+		params.add(endDateProject);
+		params.add(sdmhiringId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
+    
 public static int insertDataAssignHire(int sdmhiringId, String startDateProject, String endDateProject, String sdmassignPicclient, String sdmassignPicclientphone, int clientId) {
 		
 		List<Object> params = new ArrayList<>();
