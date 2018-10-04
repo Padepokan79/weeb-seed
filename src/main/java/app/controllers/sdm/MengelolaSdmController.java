@@ -31,6 +31,7 @@ import app.models.Religion;
 import app.models.Sdm;
 import app.models.SdmAssignment;
 import app.models.SdmHiring;
+import app.models.SdmHistory;
 import app.models.SdmLanguage;
 import app.models.SdmLvl;
 import core.io.helper.Validation;
@@ -419,6 +420,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 	      			sdmhiringId = Convert.toInteger(data.get("sdmhiring_id"));
 	      			SdmAssignment.updateDataAssignHire1(sdmhiringId, endContract);
 	      		}
+	      		SdmHistory.insertSdmHistory(sdmId, startContract, endContract);
 	        }
 	       /*
 			 * Updated (Commented) by Ryan Ahmad N
