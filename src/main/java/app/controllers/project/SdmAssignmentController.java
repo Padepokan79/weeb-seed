@@ -222,9 +222,19 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
             tanggal.add(Calendar.DAY_OF_MONTH, 1);
             lama++;
         }
-        double res=lama;
+//        double res=lama;
 //		System.out.println("--------------------------> lama  : "+lama);
-        return (res)/30;
+//        return (res)/30;
+        if (lama > 30) {
+        	lama = (lama)/30;
+        	
+		}else if(lama < 30 && lama >= 0) {
+			lama = 1;
+		
+		}else {
+			lama = 0;
+		}
+        return lama;
     }
 	
 	/*
