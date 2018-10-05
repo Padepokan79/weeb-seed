@@ -162,7 +162,7 @@ public class MengelolaSdmSkillController extends CRUDController<SdmSkill>{
         if (lama > 30) {
         	lama = (lama)/30;
         	
-		}else if(lama < 30 && lama > 0) {
+		}else if(lama < 30 && lama >= 0) {
 			lama = 1;
 		
 		}else {
