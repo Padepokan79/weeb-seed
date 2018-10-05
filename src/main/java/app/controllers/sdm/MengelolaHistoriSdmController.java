@@ -95,10 +95,8 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 			startContract =Convert.toString(sdm.get("SDM_STARTCONTRACT"));
 			endContract = Convert.toString(sdm.get("SDM_ENDCONTRACT"));
-			List<Model> listData2 = SdmHistory.findAll();
-			for(Model history : listData2) {
-				int sdmIdH = Convert.toInteger(history.get("sdm_id"));
-				if (sdmIdH != sdmId) {
+			List<SdmHistory> listData2 = SdmHistory.where("sdm_id =?",sdmId);
+				if (listData2.size() == 0) {
 					try {
 						SdmHistory.insertSdmHistory(sdmId, startContract, endContract);
 						SdmHistory.updateSdmStatus(sdmId);
@@ -110,7 +108,6 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 						response().setResponseBody(e, 400);
 					}
 				}
-			}
 		}
 		sendResponse();
 	}
