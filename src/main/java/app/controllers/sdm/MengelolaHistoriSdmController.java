@@ -87,23 +87,29 @@ public class MengelolaHistoriSdmController extends CRUDController<SdmHistory> {
 	public void cekStatusSdm() {
 		List<Map> listData = new ArrayList<>();
 		listData = SdmHistory.getSdmActive();
-		int sdmId;
 		boolean sukses = false;
+		int sdmId;
 		String startContract;
 		String endContract;
 		for(Map sdm : listData) {
 			sdmId = Convert.toInteger(sdm.get("sdm_id"));
 			startContract =Convert.toString(sdm.get("SDM_STARTCONTRACT"));
 			endContract = Convert.toString(sdm.get("SDM_ENDCONTRACT"));
-			try {
-				SdmHistory.insertSdmHistory(sdmId, startContract, endContract);
-				SdmHistory.updateSdmStatus(sdmId);
-				System.out.println("Cek status SDM berhasil");
-				System.out.println("Sdm masuk history : "  + sdmId);
+			List<Model> listData2 = SdmHistory.findAll();
+			for(Model history : listData2) {
+				int sdmIdH = Convert.toInteger(history.get("sdm_id"));
+				if (sdmIdH != sdmId) {
+					try {
+						SdmHistory.insertSdmHistory(sdmId, startContract, endContract);
+						SdmHistory.updateSdmStatus(sdmId);
+						System.out.println("Cek status SDM berhasil");
+						System.out.println("Sdm masuk history : "  + sdmId);
 
-				response().setResponseBody(HttpResponses.ON_SUCCESS);
-			} catch (Exception e) {
-				response().setResponseBody(e, 400);
+						response().setResponseBody(HttpResponses.ON_SUCCESS);
+					} catch (Exception e) {
+						response().setResponseBody(e, 400);
+					}
+				}
 			}
 		}
 		sendResponse();
