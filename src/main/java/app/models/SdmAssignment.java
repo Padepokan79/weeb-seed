@@ -183,6 +183,9 @@ public static int updateEndDateCv79(String endDate, int sdmId, int clientId) {
 	params.add(endDate);
 	params.add(sdmId);
 	params.add(clientId);
+	System.out.print(endDate);
+	System.out.print(sdmId);
+	System.out.print(clientId);
 	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 }
 

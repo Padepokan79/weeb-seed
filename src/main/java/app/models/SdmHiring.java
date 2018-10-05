@@ -47,6 +47,22 @@ public class SdmHiring extends Model {
 	
 		return lisdata;
 	}
+
+	// Created by  : Ryan Ahmad N
+	// Date			: 04-10-2018
+	public static List<Map> getDataSdmbyOnProject(int sdmhiring){
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();		
+		query.append("select sdm.sdm_id, SDMHIRING_ID, HIRESTAT_ID, CLIENT_ID, sdm_endcontract from "+ 
+				"sdm_hiring inner join sdm on sdm_hiring.sdm_id=sdm.sdm_id " + 
+				  "where sdm_hiring.sdm_id=(select sdm_id from sdm_hiring where sdmhiring_id=?)");
+		params.add(sdmhiring);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+		return lisdata;
+	}
+	
 	
 	public static List<Map> getDataSdmbyHirestat(int sdmId){
 		List<Object> params = new ArrayList<Object>();
@@ -66,6 +82,31 @@ public class SdmHiring extends Model {
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE sdm_hiring \r\n" + 
 				"SET HIRESTAT_ID = 9 \r\n" + 
+				"WHERE SDMHIRING_ID = ? ");
+		System.out.println("query : "+query.toString());
+		params.add(sdmhiringId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
+	
+	public static int updateHire(int sdmhiringId, int hirestat){
+		List<Object> params = new ArrayList<>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE sdm_hiring \r\n" + 
+				"SET HIRESTAT_ID = ? \r\n" + 
+				"WHERE SDMHIRING_ID = ? ");
+		System.out.println("query : "+query.toString());
+		params.add(hirestat);
+		params.add(sdmhiringId);
+		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+	}
+	
+	public static int updateHireStat79(int sdmhiringId){
+		List<Object> params = new ArrayList<>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE sdm_hiring \r\n" + 
+				"SET HIRESTAT_ID = 4 \r\n" + 
 				"WHERE SDMHIRING_ID = ? ");
 		System.out.println("query : "+query.toString());
 		params.add(sdmhiringId);
