@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
+import org.javalite.activeweb.annotations.GET;
 import org.javalite.common.Convert;
 
 import com.ibm.icu.util.Calendar;
@@ -34,6 +35,7 @@ import app.models.SdmHiring;
 import app.models.SdmHistory;
 import app.models.SdmLanguage;
 import app.models.SdmLvl;
+import core.io.enums.HttpResponses;
 import core.io.helper.Validation;
 import core.io.model.CorePage;
 import core.io.model.DTOModel;
@@ -149,27 +151,6 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
             cal1.setTime(TGLAwal);
             cal2.setTime(TGLAkhir);
             String diff = Convert.toString(mothsBetween(cal1, cal2));
-            
-            if (Integer.parseInt(diff) == 0) {
-            	dto.sdm_notification = "black"; // notif warna hitam
-            	
-			}else if(Integer.parseInt(diff) <= 1) {
-				dto.sdm_notification = "red"; // notif warna merah
-				
-			}else if(Integer.parseInt(diff) <= 2) {
-				dto.sdm_notification = "yellow"; // notif warna kuning
-				
-			}else if(Integer.parseInt(diff) <= 4) {
-				dto.sdm_notification = "green"; // notif warna hijau
-				
-			}else if(Integer.parseInt(diff) > 4) {
-				dto.sdm_notification = "grey"; // notif warna grey
-			}
-            
-
-//			dto.sdm_startcontract =getConvertBulan(sdm.get("sdm_startcontract").toString());
-//			dto.sdm_endcontract = getConvertBulan(sdm.get("sdm_endcontract").toString());
-//			dto.sdm_datebirth = getConvertBulan(sdm.get("sdm_datebirth").toString());
 			
             dto.sdm_datebirth = Convert.toString(sdm.get("sdm_datebirth"));
 			dto.sdm_startcontract = Convert.toString(sdm.get("sdm_startcontract"));
@@ -179,9 +160,25 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
             String status = Convert.toString(sdm.get("sdm_status"));
             if(status.equals("1")) {
 				dto.sdm_status = "Active";
+				if (Integer.parseInt(diff) == 0) {
+	            	dto.sdm_notification = "black"; // notif warna hitam
+	            	
+				}else if(Integer.parseInt(diff) <= 1) {
+					dto.sdm_notification = "red"; // notif warna merah
+					
+				}else if(Integer.parseInt(diff) <= 2) {
+					dto.sdm_notification = "yellow"; // notif warna kuning
+					
+				}else if(Integer.parseInt(diff) <= 4) {
+					dto.sdm_notification = "green"; // notif warna hijau
+					
+				}else if(Integer.parseInt(diff) > 4) {
+					dto.sdm_notification = "grey"; // notif warna grey
+				}
 			}
 			else {
 				dto.sdm_status = "Non-Active";
+				dto.sdm_notification = "black";
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
