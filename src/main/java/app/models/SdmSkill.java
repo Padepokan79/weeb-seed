@@ -142,7 +142,7 @@ public class SdmSkill extends Model {
 				"				LEFT JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID \r\n" + 
 				"				where sdm.SDM_ID = ? \r\n" + 
 				"				AND sdm.SDM_STATUS = 1 \r\n" + 
-				"				AND sdm.CONTRACTTYPE_ID = 3\r\n" + 
+				"				AND (sdm.CONTRACTTYPE_ID = 3 OR sdm.CONTRACTTYPE_ID = 2) \r\n" + 
 				"				GROUP BY sdm.SDM_ID\r\n" + 
 				"		    ORDER BY sdm.SDM_NAME");
 		params.add(sdmId);
@@ -559,7 +559,7 @@ public class SdmSkill extends Model {
 				"				LEFT JOIN skills ON skills.SKILL_ID = sdmskill.SKILL_ID\r\n" + 
 				"				LEFT JOIN skilltype ON skilltype.SKILLTYPE_ID = sdmskill.SKILLTYPE_ID\r\n" + 
 				"				WHERE sdm.SDM_STATUS = 1  \r\n" + 
-				"				AND sdm.CONTRACTTYPE_ID = 3 \r\n" + 
+				"				AND ( sdm.CONTRACTTYPE_ID = 3 OR sdm.CONTRACTTYPE_ID = 2 )\r\n" + 
 				"			GROUP BY sdm.SDM_ID\r\n" + 
 				"			ORDER BY sdm.SDM_NAME");
 		
