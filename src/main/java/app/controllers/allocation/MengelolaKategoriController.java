@@ -19,6 +19,7 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 	public class MengelolaCategoryDTO extends DTOModel {
 		public int skilltypeId;
 		public String skilltypeName;
+		public int norut;
 	}
 
 //	Update By 	: Malik Chaudhary
@@ -29,6 +30,7 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 		public String skilltypeName;
 		public int skilltypeId;
 		public String skillName;
+		
 	}
 	
 //	Update By 	: Nurdhiat Chaudhary Malik
@@ -40,10 +42,17 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 	    params.setOrderBy("skilltype_id");
 	    
 	    Long totalItems = this.getTotalItems(params);
+	    
+	    int number =1 ;
+	    if(params.limit()!=null)
+	    	number = params.limit().intValue() * params.offset().intValue() + 1;
 		for (SkillType catg : listCategory) {
 					
 			MengelolaCategoryDTO dto = new MengelolaCategoryDTO();
 			dto.fromModelMap(catg.toMap());
+			dto.norut = number;
+			number++;
+			
 			listMapCategory.add(dto.toModelMap());
 		}
 	    return new CorePage(listMapCategory, totalItems);

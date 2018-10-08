@@ -108,21 +108,21 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		String nama_client = Convert.toString(mapRequest.get("client_name"));
 		String client_address = Convert.toString(mapRequest.get("client_address"));
 		String client_pic = Convert.toString(mapRequest.get("client_picclient"));
-		String client_mobile = "0" + Convert.toString(mapRequest.get("client_mobileclient"));
+		String client_mobile = Convert.toString(mapRequest.get("client_mobileclient"));
 		
 		if(nama_client == "")
 		{  
 			nama_client = "-";
 		}
-		if(client_address == "")
+		if(client_address == "" || client_address == null)
 		{  
 			client_address = "-";
 		}
-		if(client_pic == "")
+		if(client_pic == "" || client_pic == null)
 		{  
 			client_pic = "-";
 		}
-		if(client_mobile == "")
+		if(client_mobile == "" || client_mobile == null)
 		{  
 			client_mobile = "-";
 		}
@@ -143,12 +143,6 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		String client_address = Convert.toString(mapRequest.get("client_address"));
 		String client_pic = Convert.toString(mapRequest.get("client_picclient"));
 		String client_mobile = Convert.toString(mapRequest.get("client_mobileclient"));
-		//penambahan 0 di depan nomor telp
-		if(client_mobile.substring(0,1).equals(0)) {
-			
-		} else {
-			client_mobile = "0"+ client_mobile;
-		}
 		item.set("client_name", nama_client);
 		item.set("client_address", client_address);
 		item.set("client_picclient", client_pic);
