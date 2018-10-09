@@ -109,4 +109,23 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		return result;
 	}
 	
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customOnUpdate(org.javalite.activejdbc.Model, java.util.Map)
+	 */
+	@Override
+	public Map<String, Object> customOnUpdate(Skill item, Map<String, Object> mapRequest) throws Exception {
+		// TODO Auto-generated method stub
+		LazyList<Skill> list = Skill.findAll();
+		Map<String, Object> result = null ;
+		for (Skill type: list) {
+			MengelolaSdmSkillDTO dto = new MengelolaSdmSkillDTO();
+			dto.fromModelMap(type.toMap());
+			if (item.getString("skill_name").equalsIgnoreCase(Convert.toString(dto.skillName))) {
+				Validation.required(null, "Skill tidak bisa diinput, skill ini sudah ada");
+			}
+		}
+		result = super.customOnUpdate(item, mapRequest);
+		return result;
+	}
+	
 }
