@@ -7,6 +7,7 @@ import java.util.Map;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.common.Convert;
 
+import app.controllers.allocation.MengelolaSkillController.MengelolaSdmSkillDTO;
 import app.models.Skill;
 import app.models.SkillType;
 import core.io.helper.Validation;
@@ -92,6 +93,26 @@ public class MengelolaKategoriController extends CRUDController<SkillType>{
 		result = super.customOnDelete(item, mapRequest);
 		return result;
 		
+	}
+	
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customOnUpdate(org.javalite.activejdbc.Model, java.util.Map)
+	 */
+	@Override
+	public Map<String, Object> customOnUpdate(SkillType item, Map<String, Object> mapRequest) throws Exception {
+		// TODO Auto-generated method stub
+		LazyList<SkillType> list = SkillType.findAll();
+		Map<String, Object> result = null ;
+		String equal = Convert.toString(mapRequest.get("skilltype_name"));
+		for (SkillType type: list) {
+			KelolaSkill dto = new KelolaSkill();
+			dto.fromModelMap(type.toMap());
+			if (equal.equalsIgnoreCase(Convert.toString(dto.skilltypeName))) {
+				Validation.required(null, "Skill tidak bisa diinput, skill ini sudah ada");
+			}
+		}
+		result = super.customOnUpdate(item, mapRequest);
+		return result;
 	}
 	
 }
