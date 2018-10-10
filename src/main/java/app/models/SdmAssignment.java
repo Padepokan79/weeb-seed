@@ -302,4 +302,18 @@ public static int updateStatusOffcv79(int sdmhiringId) {
 
 	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 }
+
+public static int updateStatusOffbySdmId(int sdmId) {
+	
+	List<Object> params = new ArrayList<>();
+	System.out.println("masuk query off");
+	StringBuilder query = new StringBuilder();
+	query.append("UPDATE sdm_hiring "
+			+ "SET HIRESTAT_ID = 9 "
+			+ "WHERE SDM_ID = ? AND CLIENT_ID != 1 AND HIRESTAT_ID != 4");
+	System.out.println("query : "+query.toString());
+	params.add(sdmId);
+
+	return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
+}
 }

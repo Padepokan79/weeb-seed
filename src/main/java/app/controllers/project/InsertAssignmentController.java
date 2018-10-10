@@ -133,6 +133,7 @@ public class InsertAssignmentController extends CRUDController<SdmAssignment>{
 				System.out.println("ini client : " + clientId);
 				if(clientId!=1) {
 					sdmAssign.updateHireStatIdWhenOutsource(sdmId, client);
+					sdmAssign.updateStatusOffbySdmId(sdmId);
 					System.out.println(sdmassignDto.sdmassign_startdate);
 					System.out.println(Convert.toInteger(assign.get("sdmassign_id")));
 					

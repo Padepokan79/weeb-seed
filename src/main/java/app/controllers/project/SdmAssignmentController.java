@@ -65,7 +65,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception{
-		// cekDataAssign();
+		cekDataAssign();
 		DateFormat date = new SimpleDateFormat("dd/MM/yyyy"); 
 		
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
@@ -120,6 +120,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			java.util.Date endDate = date.parse(getConvertBulan(sdmassign.get("sdmassign_enddate").toString()));
 			java.sql.Date currDate2 = new java.sql.Date(currDate.getTime());
 			java.sql.Date endDate2 = new java.sql.Date(endDate.getTime());
+			
 			Date currentDate = currDate2;
             Date endProject = endDate2;
             Calendar cal1 = Calendar.getInstance();
@@ -143,6 +144,10 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			}else if(Double.parseDouble(diff) > 4) {
 				dto.sdmassign_notification = "grey"; // notif warna grey
 			}
+			else {
+				dto.sdmassign_notification = "black"; // notif warna hitam
+			}
+           
 //			System.out.println("----------------------------> "+dto.sdmassign_notification+"\n");
 
 			listMapSdmAssignment.add(dto.toModelMap());
@@ -216,9 +221,12 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	 * 09 August 2018
 	 */
 	private static double mothsBetween(Calendar date1, Calendar date2) {
-        long lama = 0;
+        long lama = -1;
         Calendar tanggal = (Calendar) date1.clone();
         while (tanggal.before(date2)) {
+        	if(lama < 0) {
+               lama = lama + 1;
+        	}
             tanggal.add(Calendar.DAY_OF_MONTH, 1);
             lama++;
         }
@@ -227,13 +235,14 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 //        return (res)/30;
         if (lama > 30) {
         	lama = (lama)/30;
-        	
+
 		}else if(lama < 30 && lama >= 0) {
 			lama = 1;
-		
 		}else {
 			lama = 0;
 		}
+        
+        
         return lama;
     }
 	
