@@ -206,6 +206,19 @@ public class SdmHiring extends Model {
 		return Base.exec(query.toString(), params.toArray(new Object[params.size()]));
 	}
 	
+	public static List<Map> getDataStatusActive(){
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT sdm.SDM_NAME, sdm.SDM_PHONE, clients.CLIENT_ID, clients.CLIENT_NAME, clients.CLIENT_ADDRESS, \r\n" +
+				" clients.CLIENT_PICCLIENT, statushiring.HIRESTAT_NAME, clients.CLIENT_MOBILECLIENT, \r\n" +
+				" statushiring.HIRESTAT_ID, sdm.SDM_STATUS FROM sdm,sdm_hiring,statushiring,clients  \r\n" +
+				"WHERE sdm.SDM_ID = sdm_hiring.SDM_ID AND sdm_hiring.HIRESTAT_ID = statushiring.HIRESTAT_ID \r\n" +
+				" AND sdm_hiring.CLIENT_ID = clients.CLIENT_ID AND sdm.SDM_STATUS = '1'");
+		
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 	
+		return lisdata;
+	}
 	
 }
