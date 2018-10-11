@@ -65,7 +65,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception{
-		cekDataAssign();
+		//cekDataAssign();
 		DateFormat date = new SimpleDateFormat("dd/MM/yyyy"); 
 		
 		List<Map<String, Object>> listMapSdmAssignment 	= new ArrayList<Map<String, Object>>();
