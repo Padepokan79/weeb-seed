@@ -122,17 +122,23 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				dto.fromModelMap(hiring.toMap());
 				// dto.clientId = Convert.toInteger(client.get("client_id"));
 				// dto.sdmhiringId = Convert.toInteger(SdmHiring.get("sdmhiring_id"));
-				dto.norut = number;
-				number++;
-				dto.sdmName = Convert.toString(sdm.get("sdm_name"));
-				dto.sdmPhone = Convert.toString(sdm.get("sdm_phone"));
-				dto.clientName = Convert.toString(clients.get("client_name"));
-				dto.clientAddress = Convert.toString(clients.get("client_address"));
-				dto.clientPicclient = Convert.toString(clients.get("client_picclient"));
-				dto.hirestatName = Convert.toString(statushiring.get("hirestat_name"));
-				dto.clientMobileclient = Convert.toString(clients.get("client_mobileclient"));
-				dto.hirestatId = Convert.toInteger(statushiring.get("hirestat_id")).intValue();
-				listMapHiring.add(dto.toModelMap());
+				String status = Convert.toString(sdm.get("sdm_status"));
+				if(status.equals("1")) {
+					dto.norut = number;
+					number++;
+					dto.sdmName = Convert.toString(sdm.get("sdm_name"));
+					dto.sdmPhone = Convert.toString(sdm.get("sdm_phone"));
+					dto.clientName = Convert.toString(clients.get("client_name"));
+					dto.clientAddress = Convert.toString(clients.get("client_address"));
+					dto.clientPicclient = Convert.toString(clients.get("client_picclient"));
+					dto.hirestatName = Convert.toString(statushiring.get("hirestat_name"));
+					dto.clientMobileclient = Convert.toString(clients.get("client_mobileclient"));
+					dto.hirestatId = Convert.toInteger(statushiring.get("hirestat_id")).intValue();
+					listMapHiring.add(dto.toModelMap());
+				}else {
+					System.out.println("non-aktif boss!!");
+				}
+				
 			}
 		
 		return new CorePage(listMapHiring, totalItems);		
