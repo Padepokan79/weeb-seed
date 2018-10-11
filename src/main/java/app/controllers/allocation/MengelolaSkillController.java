@@ -117,12 +117,14 @@ public class MengelolaSkillController extends CRUDController<Skill>{
 		// TODO Auto-generated method stub
 		LazyList<Skill> list = Skill.findAll();
 		Map<String, Object> result = null ;
+		String equal = Convert.toString(mapRequest.get("skill_name"));
 		for (Skill type: list) {
 			MengelolaSdmSkillDTO dto = new MengelolaSdmSkillDTO();
 			dto.fromModelMap(type.toMap());
-			if (item.getString("skill_name").equalsIgnoreCase(Convert.toString(dto.skillName))) {
+			if (equal.equalsIgnoreCase(Convert.toString(dto.skillName))) {
 				Validation.required(null, "Skill tidak bisa diinput, skill ini sudah ada");
 			}
+//			System.out.println(mapRequest.get("skill_name"));
 		}
 		result = super.customOnUpdate(item, mapRequest);
 		return result;
