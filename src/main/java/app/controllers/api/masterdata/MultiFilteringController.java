@@ -169,10 +169,12 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			MultiFilteringDTO dto = new MultiFilteringDTO();
 			
 				for (Map map : listData) {
-					
-					int sdm_id = Convert.toInteger(map.get("sdm_id"));	
+					endContractProject="-";
+					int sdm_id = Convert.toInteger(map.get("sdm_id"));
 					List<Map> dataFromQuery = SdmSkill.getEndContract(sdm_id);
+					System.out.println("ini data " + dataFromQuery);
 						for(Map mapproject : dataFromQuery) {
+							
 							endContractProject = Convert.toString(mapproject.get("project_enddate"));
 						}
 //					
