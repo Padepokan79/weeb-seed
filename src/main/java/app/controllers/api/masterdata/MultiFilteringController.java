@@ -183,51 +183,63 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 //					dto.skillName = Convert.toString(map.get("skill_name"));;
 //					dto.skilltypeName = Convert.toString(map.get("skilltype_name"));;
 //					
-					dto.sdmName = Convert.toString(map.get("sdm_name"));
-					dto.sdmNik = Convert.toString(map.get("sdm_nik"));
-					
-					
-					System.out.println(endContractProject);
-					
-					
-					if(endContractProject.equals("-")) {
-						dto.endContractproject = endContractProject;
+					String getnikTeknis = Convert.toString(map.get("sdm_nik"));
+					if(getnikTeknis.equals("-")) {
+						getnikTeknis = "000000000";
 					}
-					else {
-						dto.endContractproject = getConvertEndProject(endContractProject);
-					}
-					dto.sdmId = Convert.toInteger(map.get("sdm_id"));
-					
-					java.util.Date judAwl = dateAwal.parse(getCurrentDate());
-					java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(map.get("sdm_endcontract").toString()));
-					java.sql.Date tglAwal = new java.sql.Date(judAwl.getTime());
-					java.sql.Date tglAkhir = new java.sql.Date(judAkhir.getTime());
-					Date TGLAwal = tglAwal;
-		            Date TGLAkhir = tglAkhir;
-		            Calendar cal1 = Calendar.getInstance();
-		            Calendar cal2 = Calendar.getInstance();
-		            cal1.setTime(TGLAwal);
-		            cal2.setTime(TGLAkhir);
-		            String diff = Convert.toString(mothsBetween(cal1, cal2));
-		          
-		            if (Integer.parseInt(diff) == 0) {
-		            	dto.sdm_notification = "black"; // notif warna hitam
-		            	
-					}else if(Integer.parseInt(diff) <= 1) {
-						dto.sdm_notification = "red"; // notif warna merah
+					System.out.println("get : " + getnikTeknis);
+					String nikTeknis = getnikTeknis.substring(0, 2);
+					System.out.println("nik : "+nikTeknis);
+					Boolean b = !nikTeknis.equals("01");
+					System.out.println("ini boole : " + b);
+					if(!nikTeknis.equals("01")) {
+						dto.sdmName = Convert.toString(map.get("sdm_name"));
+						dto.sdmNik = Convert.toString(map.get("sdm_nik"));
 						
-					}else if(Integer.parseInt(diff) <= 2) {
-						dto.sdm_notification = "yellow"; // notif warna kuning
 						
-					}else if(Integer.parseInt(diff) <= 4) {
-						dto.sdm_notification = "green"; // notif warna hijau
+						System.out.println(endContractProject);
 						
-					}else if(Integer.parseInt(diff) > 4) {
-						dto.sdm_notification = "grey"; // notif warna grey
+						
+						if(endContractProject.equals("-")) {
+							dto.endContractproject = endContractProject;
+						}
+						else {
+							dto.endContractproject = getConvertEndProject(endContractProject);
+						}
+						dto.sdmId = Convert.toInteger(map.get("sdm_id"));
+						
+						java.util.Date judAwl = dateAwal.parse(getCurrentDate());
+						java.util.Date judAkhir = dateAkhir.parse(getConvertBulan(map.get("sdm_endcontract").toString()));
+						java.sql.Date tglAwal = new java.sql.Date(judAwl.getTime());
+						java.sql.Date tglAkhir = new java.sql.Date(judAkhir.getTime());
+						Date TGLAwal = tglAwal;
+			            Date TGLAkhir = tglAkhir;
+			            Calendar cal1 = Calendar.getInstance();
+			            Calendar cal2 = Calendar.getInstance();
+			            cal1.setTime(TGLAwal);
+			            cal2.setTime(TGLAkhir);
+			            String diff = Convert.toString(mothsBetween(cal1, cal2));
+			          
+			            if (Integer.parseInt(diff) == 0) {
+			            	dto.sdm_notification = "black"; // notif warna hitam
+			            	
+						}else if(Integer.parseInt(diff) <= 1) {
+							dto.sdm_notification = "red"; // notif warna merah
+							
+						}else if(Integer.parseInt(diff) <= 2) {
+							dto.sdm_notification = "yellow"; // notif warna kuning
+							
+						}else if(Integer.parseInt(diff) <= 4) {
+							dto.sdm_notification = "green"; // notif warna hijau
+							
+						}else if(Integer.parseInt(diff) > 4) {
+							dto.sdm_notification = "grey"; // notif warna grey
+						}
+						if(Convert.toInteger(map.get("sdm_status")) == 1) {
+							listMapSdmSkill.add(dto.toModelMap());	
+						}
 					}
-					if(Convert.toInteger(map.get("sdm_status")) == 1) {
-						listMapSdmSkill.add(dto.toModelMap());	
-					}
+
 					
 				}
 				
