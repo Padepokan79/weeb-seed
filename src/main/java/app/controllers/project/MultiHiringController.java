@@ -58,12 +58,12 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 			
 			System.out.println(params.size());
 			//filter datasdm dengan id yang sama
-			
 			listHiring = validateRedudantInput(params);
 			System.out.println("Banyak data" + listHiring.size());
 			System.out.println(listHiring);
 			Integer cv79 = 1;
 			
+			System.out.println("INI MULTIHIRING");
 			for (Map<String, Object> hiring : listHiring) {
 //				System.out.println("SDM Hiring : " + JsonHelper.toJson(hiring));
 				InputHiringDTO sdmhiringDto = new InputHiringDTO ();
@@ -75,34 +75,39 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 				Integer sdmId = Convert.toInteger(hiring.get("sdm_id"));
 				Integer clientId = Convert.toInteger(hiring.get("client_id"));
 				Integer hirestatId = Convert.toInteger(hiring.get("hirestat_id"));
-				boolean cekData = true, validatebyClient = true, validatebyHireStat = true;
+				boolean cekData = true, validatebyClient = true , validatebyHireStat = true;
 				SdmHiring sdmModel = new SdmHiring();
 				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
 				List<Map> listdata = new ArrayList<>();
 				listdata = SdmHiring.getDataSdmbyClient(clientId);
 				List<Map> listdataStatSdm = new ArrayList<>();
 				listdataStatSdm = SdmHiring.getDataSdmbyHirestat(sdmId);
-				System.out.println("Banyak data stat sdm" + listdataStatSdm.size());
+				System.out.println("Banyak data stat sdm " + listdataStatSdm.size());
 				System.out.println("datahire" + listdata);
 				int banyakSdmditerima = listdataStatSdm.size();
 				int banyakListdata = listdata.size();
 				System.out.println(banyakSdmditerima == 0);
-				System.out.println(banyakListdata == 0 );
+				System.out.println("Banyak " + banyakSdmditerima);
+				//cek validasi : 1 sdm  hanya bisa 1 kali hire di sebuah perusahaan sebelum 
 				if(banyakListdata == 0 ) {
 					if(banyakSdmditerima == 0) {
+						System.out.println("Hallo aku disini");
 						cekData = false;
 						sdmhiringDto.fromMap(hiring);
 						sdmModel.fromMap(sdmhiringDto.toModelMap());
 						System.out.println("1");
 					} else {
 						for(Map sdmHirestat : listdataStatSdm) {
+							System.out.println("Aku disini");
 							System.out.println(sdmHirestat);
 							System.out.println(sdmHirestat.size());
+							System.out.println("Cek looping "+sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79);
+							System.out.println("WOi " + (sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79));
 							if(sdmId == sdmHirestat.get("sdm_id") && sdmHirestat.get("client_id") != cv79) {
 								validatebyHireStat = false;
 								System.out.println("2 xd");
 								System.out.println("tidak input (hirestat)" + sdmId);
-							} else if ( validatebyHireStat == true ){
+							} else if (validatebyHireStat == true ){
 								cekData = false;
 								System.out.println("3 xc");
 								System.out.println("input data Hire" + sdmId);
@@ -112,7 +117,8 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 						}
 					}
 					
-				} else {
+				} 		
+					else {
 					
 					for(Map dataHire : listdata) {
 						cekData = true;
@@ -148,6 +154,21 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 						}
 					}
 				}
+				//Tanpa validasi sdm bisa di input lebih dari 1 kali di 1 client
+//				if(cekData == false) {
+//					sdmhiringDto.fromMap(hiring);
+//					sdmModel.fromMap(sdmhiringDto.toModelMap());		
+//				}
+				
+				listdataStatSdm = SdmHiring.getDataSdmbyHirestatDiterima(sdmId);
+				banyakSdmditerima = listdataStatSdm.size();
+				System.out.println("woiiii" + banyakSdmditerima);
+				if(banyakSdmditerima == 0) {
+					cekData = false;
+					sdmhiringDto.fromMap(hiring);
+					sdmModel.fromMap(sdmhiringDto.toModelMap());
+				}
+				
 				 //menambah respon field sdmhiring_id untuk FE
 				int sdmhiringId=0;
 				if (cekData == false) {
