@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.BelongsTo;
+import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -21,6 +23,8 @@ import org.javalite.activejdbc.annotations.Table;
  */
 @Table("psychologicals")
 @IdName("psyco_id")
+
+
 public class Psychologicals extends Model{
 	
 }

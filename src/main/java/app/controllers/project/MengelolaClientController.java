@@ -51,7 +51,8 @@ public class MengelolaClientController extends CRUDController<Clients> {
 		List<Map<String, Object>> listMapClient = new ArrayList<Map<String, Object>>();
 		LazyList<Clients> listClients = (LazyList<Clients>)this.getItems(params);	
 		params.setOrderBy("client_id");
-
+//        int clientId = Convert.toInteger();
+		System.out.println("HAi " + params.toString());
 		Long totalItems = this.getTotalItems(params);
 		/*
 		* Created By  : Rizaldi
