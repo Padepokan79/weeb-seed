@@ -49,17 +49,21 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
+		System.out.println("Read All");
 		int clientId=1;
 		LazyList<SdmPsycological> items = (LazyList<SdmPsycological>)this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
-//		clientId = Convert.toInteger(param("client_id"));
+
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
+		List<Map> listData;
 		System.out.println("Read All");
-//        System.out.println(param("clientId"));
-        if(param("clientId") == null){
-        	clientId = 1;
+		System.out.println(param("client_id") == null);
+        if(param("client_id") == null){
+        	listData = SdmPsycological.readAllData();
         } else {
         	clientId = Convert.toInteger(param("client_id"));
+        	listData = SdmPsycological.getAllData(clientId);
+    			
         }
 		/*
 		 * Updated by Alifhar Juliansyah
@@ -68,7 +72,6 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 		int number = 1;
 		if(params.limit() != null)
 			number = params.limit().intValue() * params.offset().intValue() + 1;
-		List<Map> listData = SdmPsycological.getAllData(clientId);
 		System.out.println(listData);
 //		
 //		for(SdmPsycological sdmPsy : items) {
@@ -96,6 +99,8 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 	@Override
 	public SdmPsycological customInsertValidation(SdmPsycological item) throws Exception {
 		Integer sdm = item.getInteger("sdm_id");
+		int sdmhiringId = item.getInteger("sdmhiring_id");
+		System.out.println(sdmhiringId);
 		List<Map> listData = new ArrayList<>();
 		listData = SdmPsycological.getStatus(sdm);
 		
@@ -107,6 +112,15 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 			}
 			
   		}
+		//CEK data untuk mencegah duplicate data
+		listData = SdmPsycological.cekDataPsycological(sdm);
+		 for (Map cek: listData) {
+			 int sdmhiringIdDb = Convert.toInteger(cek.get("sdmhiring_id"));
+			 if(sdmhiringId == sdmhiringIdDb) {
+				 Validation.required(null, "Psychological Data Already Exist!!");					
+			 }
+		 }
+		
 		return super.customInsertValidation(item);
 	}
 	
