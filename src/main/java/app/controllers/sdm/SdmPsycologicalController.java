@@ -57,7 +57,11 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
 		List<Map> listData;
-		//tes
+
+//		Add comment for testing purpose
+//		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
+//		List<Map> listData2;
+		
 		System.out.println(param("client_id") == null);
         if(param("client_id") == null){
         	listData = SdmPsycological.readAllData();
