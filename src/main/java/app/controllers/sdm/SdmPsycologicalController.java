@@ -49,17 +49,24 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 	 */
 	@Override
 	public CorePage customOnReadAll(PagingParams params) throws Exception {
-		System.out.println("Read All");
+		System.out.println("Read All sdmpsycological_id");
 		int clientId=1;
+		int psycologocalId=1;
 		LazyList<SdmPsycological> items = (LazyList<SdmPsycological>)this.getItems(params);
 		Long totalItems = this.getTotalItems(params);
 
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
 		List<Map> listData;
-		System.out.println("Read All");
+		
 		System.out.println(param("client_id") == null);
         if(param("client_id") == null){
         	listData = SdmPsycological.readAllData();
+			
+			if(param("sdmpsycological_id") != null){
+			
+				psycologocalId = Convert.toInteger(param("sdmpsycological_id"));
+				listData = SdmPsycological.getDatabySdmPsycological(psycologocalId);
+			}
         } else {
         	clientId = Convert.toInteger(param("client_id"));
         	listData = SdmPsycological.getAllData(clientId);
@@ -86,11 +93,13 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 			//			System.out.println(sdmPsy.toMap());
 			dto.norut = number;
 			number++;
+			dto.sdmpsycologicalId = Convert.toInteger(data.get("sdmpsycological_id"));
 			dto.sdmName = Convert.toString(data.get("sdm_name"));
 			dto.psycoName = Convert.toString(data.get("psyco_name"));
 			dto.clientId = Convert.toInteger(data.get("client_id"));
 			dto.psycologicalDate = Convert.toString(data.get("psycological_date"));
 			dto.sdmpsycologicalDesc = Convert.toString(data.get("sdmpsycological_desc"));
+			dto.clientName = Convert.toString(data.get("client_name"));
 			ListMapSdmPsy.add(dto.toModelMap());
 		}
 		return new CorePage(ListMapSdmPsy, totalItems);
