@@ -160,8 +160,6 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 				
 			}
 			
-			
-			
 			String endContractProject="-";
 			int jumlahDataHiring = 0;
 			int sdmskillId = 0;

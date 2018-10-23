@@ -57,7 +57,15 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 
 		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
 		List<Map> listData;
+<<<<<<< HEAD
 		//tes
+=======
+
+//		Add comment for testing purpose
+//		List<Map<String, Object>> ListMapSdmPsy = new ArrayList<Map<String,Object>>();
+//		List<Map> listData2;
+		
+>>>>>>> 942db30b8c8bff8e60ea2b78eef34ff52ca9e76f
 		System.out.println(param("client_id") == null);
         if(param("client_id") == null){
         	listData = SdmPsycological.readAllData();
@@ -65,7 +73,11 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 			if(param("sdmpsycological_id") != null){
 			
 				psycologocalId = Convert.toInteger(param("sdmpsycological_id"));
+<<<<<<< HEAD
 				listData = SdmPsycological.getDatabysdmspycologicalid(psycologocalId);
+=======
+				listData = SdmPsycological.getDatabySdmPsycological(psycologocalId);
+>>>>>>> 942db30b8c8bff8e60ea2b78eef34ff52ca9e76f
 			}
         } else {
         	clientId = Convert.toInteger(param("client_id"));

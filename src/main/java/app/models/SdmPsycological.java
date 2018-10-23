@@ -66,6 +66,7 @@ public class SdmPsycological extends Model {
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
+<<<<<<< HEAD
 		query.append("SElECT sdm.SDM_NAME, sdmpsycological.SDMPSYCOLOGICAL_ID, sdmpsycological.SDMPSYCOLOGICAL_DESC, \r\n" + 
 				"				sdmpsycological.PSYCOLOGICAL_DATE, sdmpsycological.PSYCO_ID, sdm_hiring.CLIENT_ID, sdm_hiring.SDM_ID, \r\n" + 
 				"				sdm_hiring.SDMHIRING_ID, psychologicals.PSYCO_NAME, sdm_hiring.SDM_ID, clients.client_name \r\n" + 
@@ -75,6 +76,9 @@ public class SdmPsycological extends Model {
 				"				INNER join psychologicals on sdmpsycological.PSYCO_ID = psychologicals.PSYCO_ID \r\n" + 
 				"				INNER JOIN clients on sdm_hiring.client_id = clients.client_id  " + 
 				"where sdm_hiring.CLIENT_ID = ? ");
+=======
+		query.append("SElECT sdm.SDM_NAME, sdmpsycological.SDMPSYCOLOGICAL_ID, sdmpsycological.SDMPSYCOLOGICAL_DESC, sdmpsycological.PSYCOLOGICAL_DATE, sdmpsycological.PSYCO_ID, sdm_hiring.CLIENT_ID, sdm_hiring.SDM_ID, sdm_hiring.SDMHIRING_ID, psychologicals.PSYCO_NAME, clients.CLIENT_NAME FROM sdmpsycological INNER JOIN sdm_hiring ON sdmpsycological.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID INNER JOIN sdm ON sdmpsycological.SDM_ID = sdm.SDM_ID INNER join psychologicals on sdmpsycological.PSYCO_ID = psychologicals.PSYCO_ID INNER JOIN clients on clients.CLIENT_ID = sdm_hiring.CLIENT_ID where sdm_hiring.CLIENT_ID = ?");
+>>>>>>> 942db30b8c8bff8e60ea2b78eef34ff52ca9e76f
 		System.out.println("query : "+query.toString());
 		params.add(clientId);
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
@@ -86,6 +90,7 @@ public class SdmPsycological extends Model {
 		List<Object> params = new ArrayList<Object>();
 		System.out.println("masuk query");
 		StringBuilder query = new StringBuilder();		
+<<<<<<< HEAD
 		query.append("SElECT sdm.SDM_NAME, sdmpsycological.SDMPSYCOLOGICAL_ID, sdmpsycological.SDMPSYCOLOGICAL_DESC, "
 				+ "sdmpsycological.PSYCOLOGICAL_DATE, sdmpsycological.PSYCO_ID, sdm_hiring.CLIENT_ID, sdm_hiring.SDM_ID, "
 				+ "sdm_hiring.SDMHIRING_ID, psychologicals.PSYCO_NAME, sdm_hiring.SDM_ID, clients.client_name "
@@ -94,6 +99,9 @@ public class SdmPsycological extends Model {
 				+ "INNER JOIN sdm ON sdmpsycological.SDM_ID = sdm.SDM_ID "
 				+ "INNER join psychologicals on sdmpsycological.PSYCO_ID = psychologicals.PSYCO_ID " 
 				+ "INNER JOIN clients on sdm_hiring.client_id = clients.client_id  ");
+=======
+		query.append("SElECT sdm.SDM_NAME, sdmpsycological.SDMPSYCOLOGICAL_ID, sdmpsycological.SDMPSYCOLOGICAL_DESC, sdmpsycological.PSYCOLOGICAL_DATE, sdmpsycological.PSYCO_ID, sdm_hiring.CLIENT_ID, sdm_hiring.SDM_ID, sdm_hiring.SDMHIRING_ID, psychologicals.PSYCO_NAME, clients.CLIENT_NAME FROM sdmpsycological INNER JOIN sdm_hiring ON sdmpsycological.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID INNER JOIN sdm ON sdmpsycological.SDM_ID = sdm.SDM_ID INNER join psychologicals on sdmpsycological.PSYCO_ID = psychologicals.PSYCO_ID INNER JOIN clients on clients.CLIENT_ID = sdm_hiring.CLIENT_ID ");
+>>>>>>> 942db30b8c8bff8e60ea2b78eef34ff52ca9e76f
 		System.out.println("query : "+query.toString());
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		
@@ -112,6 +120,7 @@ public class SdmPsycological extends Model {
 		
 		return lisdata;
 	}
+<<<<<<< HEAD
 	
 
 	public static List<Map> getDatabysdmspycologicalid(int sdmpsycologicalId) {	
@@ -127,6 +136,14 @@ public class SdmPsycological extends Model {
 				"				INNER join psychologicals on sdmpsycological.PSYCO_ID = psychologicals.PSYCO_ID\r\n" + 
 				"			INNER JOIN clients on sdm_hiring.client_id = clients.client_id\r\n" + 
 				"				where sdmpsycological.SDMPSYCOLOGICAL_ID = ?");
+=======
+
+	public static List<Map> getDatabySdmPsycological(int sdmpsycologicalId) {	
+		List<Object> params = new ArrayList<Object>();
+		System.out.println("masuk query");
+		StringBuilder query = new StringBuilder();		
+		query.append("SElECT sdm.SDM_NAME, sdmpsycological.SDMPSYCOLOGICAL_ID, sdmpsycological.SDMPSYCOLOGICAL_DESC, sdmpsycological.PSYCOLOGICAL_DATE, sdmpsycological.PSYCO_ID, sdm_hiring.CLIENT_ID, sdm_hiring.SDM_ID, sdm_hiring.SDMHIRING_ID, psychologicals.PSYCO_NAME, clients.CLIENT_NAME FROM sdmpsycological INNER JOIN sdm_hiring ON sdmpsycological.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID INNER JOIN sdm ON sdmpsycological.SDM_ID = sdm.SDM_ID INNER join psychologicals on sdmpsycological.PSYCO_ID = psychologicals.PSYCO_ID INNER JOIN clients on clients.CLIENT_ID = sdm_hiring.CLIENT_ID where sdmpsycological.SDMPSYCOLOGICAL_ID = ?");
+>>>>>>> 942db30b8c8bff8e60ea2b78eef34ff52ca9e76f
 		System.out.println("query : "+query.toString());
 		params.add(sdmpsycologicalId);
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
