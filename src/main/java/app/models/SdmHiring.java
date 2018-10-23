@@ -232,4 +232,16 @@ public class SdmHiring extends Model {
 	
 		return lisdata;
 	}
+	
+	public static List<Map> getDataHiringBySdm(int sdmId) {	
+	List<Object> params = new ArrayList<Object>();
+	System.out.println("masuk query");
+	StringBuilder query = new StringBuilder();		
+	query.append("SELECT COUNT(SDMHIRING_ID) AS jumlah FROM sdm_hiring WHERE CLIENT_ID != 1 AND HIRESTAT_ID = 4 AND SDM_ID = ?");
+	System.out.println("query : "+query.toString());
+	params.add(sdmId);
+	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+	
+	return lisdata;
+}
 }

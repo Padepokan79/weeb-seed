@@ -20,6 +20,7 @@ import app.controllers.allocation.MultiInsertSdmController.InputSdmSkillDTO;
 import app.controllers.api.masterdata.MengelolaSdmSkillController.MengelolaSdmSkillDTO;
 import app.models.Sdm;
 import app.models.SdmSkill;
+import app.models.SdmHiring;
 import app.models.Skill;
 import app.models.SkillType;
 import core.io.enums.ActionTypes;
@@ -162,6 +163,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 			
 			
 			String endContractProject="-";
+			int jumlahDataHiring = 0;
 			int sdmskillId = 0;
 			int sdmskillValue =0;
 			String skillName = "-";
@@ -171,12 +173,21 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 				for (Map map : listData) {
 					endContractProject="-";
 					int sdm_id = Convert.toInteger(map.get("sdm_id"));
+					System.out.println("sdm id nya : " + sdm_id);
 					List<Map> dataFromQuery = SdmSkill.getEndContract(sdm_id);
+					
+					List<Map> dataFromQuery2 = SdmHiring.getDataHiringBySdm(sdm_id);
+
 					System.out.println("ini data " + dataFromQuery);
 						for(Map mapproject : dataFromQuery) {
 							
 							endContractProject = Convert.toString(mapproject.get("project_enddate"));
 						}
+						for(Map mapproject2 : dataFromQuery2) {
+							
+							jumlahDataHiring = Convert.toInteger(mapproject2.get("jumlah"));
+						}
+					System.out.println("jumlah hiring : " + jumlahDataHiring);
 //					
 //					dto.sdmskillId = Convert.toInteger(map.get("sdmskill_id"));
 //					dto.sdmskillValue = Convert.toInteger(map.get("sdmskill_value"));;
@@ -192,7 +203,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					System.out.println("nik : "+nikTeknis);
 					Boolean b = !nikTeknis.equals("01");
 					System.out.println("ini boole : " + b);
-					if(!nikTeknis.equals("01")) {
+//					if(!nikTeknis.equals("01") && jumlahDataHiring == 0) {
 						dto.sdmName = Convert.toString(map.get("sdm_name"));
 						dto.sdmNik = Convert.toString(map.get("sdm_nik"));
 						
@@ -241,7 +252,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 					}
 
 					
-				}
+//				}
 				
 			response().setResponseBody(HttpResponses.ON_SUCCESS_READ_ALL, listMapSdmSkill);
 
