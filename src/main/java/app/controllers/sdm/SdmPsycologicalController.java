@@ -103,6 +103,8 @@ public class SdmPsycologicalController extends CRUDController<SdmPsycological> {
 			dto.psycologicalDate = Convert.toString(data.get("psycological_date"));
 			dto.sdmpsycologicalDesc = Convert.toString(data.get("sdmpsycological_desc"));
 			dto.clientName = Convert.toString(data.get("client_name"));
+			dto.psycoId = Convert.toInteger(data.get("psyco_id"));
+			dto.sdmId = Convert.toInteger(data.get("sdm_id"));
 			ListMapSdmPsy.add(dto.toModelMap());
 		}
 		return new CorePage(ListMapSdmPsy, totalItems);
