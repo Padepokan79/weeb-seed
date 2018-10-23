@@ -159,8 +159,6 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 				
 			}
 			
-			
-			
 			String endContractProject="-";
 			int sdmskillId = 0;
 			int sdmskillValue =0;

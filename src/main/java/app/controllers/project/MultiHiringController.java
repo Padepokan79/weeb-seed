@@ -159,7 +159,7 @@ public class MultiHiringController extends CRUDController<SdmHiring>{
 //					sdmhiringDto.fromMap(hiring);
 //					sdmModel.fromMap(sdmhiringDto.toModelMap());		
 //				}
-				
+				cekData = true;
 				listdataStatSdm = SdmHiring.getDataSdmbyHirestatDiterima(sdmId);
 				banyakSdmditerima = listdataStatSdm.size();
 				System.out.println("woiiii" + banyakSdmditerima);
