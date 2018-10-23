@@ -59,10 +59,10 @@ public class Sdm extends Model{
 	public static List<Map> getDataLanguage(int sdmId) {	
 		List<Object> params = new ArrayList<Object>();		
 		StringBuilder query = new StringBuilder();		
-		query.append("SELECT GROUP_CONCAT(l.LANGUAGE_NAME SEPARATOR ', ') AS LANGUAGE_NAME\r\n" + 
-				"FROM sdmlanguage AS sl, languages AS l\r\n" + 
-				"WHERE sl.LANGUAGE_ID = l.LANGUAGE_ID\r\n" + 
-				"AND sl.SDM_ID = ? ");
+		query.append("SELECT GROUP_CONCAT(l.LANGUAGE_NAME SEPARATOR ', ') AS LANGUAGE_NAME, sl.sdm_id, r.RELIGION_NAME\r\n" + 
+				"				 FROM sdmlanguage AS sl, languages AS l, sdm s, religion r\r\n" + 
+				"				 WHERE sl.LANGUAGE_ID = l.LANGUAGE_ID AND s.sdm_id = sl.sdm_id AND s.RELIGION_ID = r.RELIGION_ID\r\n" + 
+				"				 AND sl.SDM_ID = ? ");
 		System.out.println("query : "+query.toString());
 		params.add(sdmId);
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
