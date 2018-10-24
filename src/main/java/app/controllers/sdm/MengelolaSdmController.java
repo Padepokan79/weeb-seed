@@ -80,6 +80,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public int norut;
 		public String sdm_datebirth;
 		public String sdm_notification;
+		public int sdmStatusBank;
 		
 	}
 
@@ -182,6 +183,10 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
+			//dto.sdmStatusBank = Convert.toInteger(sdm.get("sdm_status_bank"));
+
+
+
 //			//dto.sdm_contractloc = Convert.toString(sdm.get("sdm_contractloc"));
 //			String contraklok = Convert.toString(sdm.get("sdm_contractloc"));
 //			if(contraklok.equals("1")) {
