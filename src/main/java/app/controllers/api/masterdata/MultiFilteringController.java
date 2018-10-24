@@ -48,6 +48,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 		public String endContractproject;
 		public String sdm_notification;
 		public int sdmStatus;
+		public int sdmStatusBank;
 		
 	}
 
@@ -204,7 +205,7 @@ public class MultiFilteringController extends CRUDController<SdmSkill>{
 //					if(!nikTeknis.equals("01") && jumlahDataHiring == 0) {
 						dto.sdmName = Convert.toString(map.get("sdm_name"));
 						dto.sdmNik = Convert.toString(map.get("sdm_nik"));
-						
+						//dto.sdmStatusBank = Convert.toInteger(map.get("sdm_status_bank"));
 						
 						System.out.println(endContractProject);
 						
