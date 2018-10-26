@@ -159,7 +159,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 	int sdmhiring_id = Convert.toInteger(param("sdmhiring_id"));
 	int hireStat_id = Convert.toInteger(param("hirestat_id"));
 	int client_id = Convert.toInteger(param("client_id"));
-	
+	System.out.println("aku update sdm");
 	
 //	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //	Date curren = new Date();
@@ -195,7 +195,7 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 			if(hireId != 4) {
 				if(clientId1 == 1 && hireId != 4) {
 					System.out.println("Masuk sini gak");
-					SdmHiring.updateHireStat79(sdmhiringId1);
+//					SdmHiring.updateHireStat79(sdmhiringId1);
 					SdmAssignment.updateStartDateEnddateAssignCv79(clientId1,  sdmhiringId1, currentDate, akhirKontrak);
 				}
 			}
@@ -228,5 +228,13 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 			return result;
 			
 	}
-	
+	/* (non-Javadoc)
+	 * @see core.javalite.controllers.CRUDController#customOnUpdate(org.javalite.activejdbc.Model, java.util.Map)
+	 */
+	@Override
+	public Map<String, Object> customOnUpdate(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("aku custom on update");
+		return super.customOnUpdate(item, mapRequest);
+	}
 }
