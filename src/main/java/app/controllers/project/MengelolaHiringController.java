@@ -123,7 +123,11 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 				// dto.clientId = Convert.toInteger(client.get("client_id"));
 				// dto.sdmhiringId = Convert.toInteger(SdmHiring.get("sdmhiring_id"));
 				String status = Convert.toString(sdm.get("sdm_status"));
-				if(status.equals("1")) {
+				String sdmNik = Convert.toString(sdm.get("sdm_nik"));
+				if(sdmNik.equals("-")) {
+					sdmNik = "000000000";
+				}
+				if(status.equals("1") && sdmNik.substring(0, 2).equals("02")) {
 					dto.norut = number;
 					number++;
 					dto.sdmName = Convert.toString(sdm.get("sdm_name"));
