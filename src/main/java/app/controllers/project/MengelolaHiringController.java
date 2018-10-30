@@ -185,6 +185,10 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 			System.out.println(sdmhiring_id);
 			System.out.println(client_id);
 			SdmAssignment.updateEndDateCv79(currentDate, sdmhiring_id, client_id);
+			if(client_id != 1 && hireStat_id == 9) {
+				System.out.println("Masuk sini gak 2");
+				
+			}
 		}
 		listdata2 = SdmHiring.getDataSdmbyOnProject(sdmhiring_id);
 		for(Map dataSdm : listdata2) {
@@ -196,12 +200,17 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
 			System.out.println("Ini listdata2");
 			System.out.println(clientId1);
 			System.out.println(hireId);
+			
 			if(hireId != 4) {
 				if(clientId1 == 1 && hireId != 4) {
 					System.out.println("Masuk sini gak");
-//					SdmHiring.updateHireStat79(sdmhiringId1);
 					SdmAssignment.updateStartDateEnddateAssignCv79(clientId1,  sdmhiringId1, currentDate, akhirKontrak);
+					if(hireStat_id == 9 && client_id != 1) {
+						SdmHiring.updateHireStat79(sdmhiringId1);
+					}
+						
 				}
+				
 			}
 			else {
 				
