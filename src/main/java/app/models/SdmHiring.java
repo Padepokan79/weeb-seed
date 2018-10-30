@@ -244,4 +244,5 @@ public class SdmHiring extends Model {
 	
 	return lisdata;
 }
+
 }
