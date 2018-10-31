@@ -228,13 +228,17 @@ public class MengelolaHiringController extends CRUDController<SdmHiring>{
     //Date        : 10/09/2018 
     @Override
 	public Map<String, Object> customOnDelete(SdmHiring item, Map<String, Object> mapRequest) throws Exception {
-			LazyList<SdmAssignment> list = SdmAssignment.findAll();
+		
+    	System.out.println("masuk custom delete");
+    	LazyList<SdmAssignment> list = SdmAssignment.findAll();
 			Map<String, Object> result = null;
 			for(SdmAssignment type: list) {
+				
 					HiringDTO dto = new HiringDTO();
 					dto.fromModelMap(type.toMap());
 					if (item.getString("sdmhiring_id").equalsIgnoreCase(Convert.toString(dto.sdmhiringId))) {
-							Validation.required(null, "Hiring SDM tidak bisa dihapus, masih terdata pada SDM Assignment");
+						System.out.println("hai aku errror");
+						Validation.required(null, "Hiring SDM tidak bisa dihapus, masih terdata pada SDM Assignment");
 					}
 			}
 			result = super.customOnDelete(item, mapRequest);
