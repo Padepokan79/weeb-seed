@@ -347,4 +347,16 @@ public class Sdm extends Model{
 		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 		return lisdata;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List<Map> getLastNIK() {	
+		List<Object> params = new ArrayList<Object>();		
+		StringBuilder query = new StringBuilder();	
+		query.append("select SUBSTR(SDM_NIK,7,3) as last_NIK from sdm WHERe sdm_nik != '-' ORDER BY SUBSTR(SDM_NIK,7,3) desc limit 1");
+		System.out.println("query : "+query.toString());
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
+	
+	
 }

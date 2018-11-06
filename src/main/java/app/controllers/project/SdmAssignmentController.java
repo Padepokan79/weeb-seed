@@ -48,6 +48,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 		public String sdmPhone;
 		public String sdmEndcontract;
 		
+		
 		/*
 		 * Updated by Alifhar Juliansyah
 		 * 10 August 2018
@@ -128,11 +129,11 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
             cal1.setTime(currentDate);
             cal2.setTime(endProject);
             String diff = Convert.toString(mothsBetween(cal1, cal2));
-            
+         
 //            System.out.println("\nSekarang : "+currentDate);
 //            System.out.println("Habis    : "+endProject);
 //            System.out.println("---------------------------> dif : "+diff);
-            
+
             if (Double.parseDouble(diff) == 0) {
             	dto.sdmassign_notification = "black"; // notif warna hitam
 			}else if(Double.parseDouble(diff) <= 1) {
@@ -143,11 +144,10 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 				dto.sdmassign_notification = "green"; // notif warna hijau
 			}else if(Double.parseDouble(diff) > 4) {
 				dto.sdmassign_notification = "grey"; // notif warna grey
-			}
-			else {
-				dto.sdmassign_notification = "black"; // notif warna hitam
-			}
-           
+			}else{
+            	dto.sdmassign_notification = "black"; // notif warna hitam
+			} 
+			
 //			System.out.println("----------------------------> "+dto.sdmassign_notification+"\n");
 
 			listMapSdmAssignment.add(dto.toModelMap());
@@ -160,7 +160,7 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 			listdata = SdmHiring.getDataSdmbyEndProject();
 			
 			int sdmId, clientId, sdmhiringId, countstatusOff=0, statusoff=9, cv79=1;
-			System.out.println(listdata);
+//			System.out.println(listdata);
 			for(Map dataSdm : listdata)
 			{
 				sdmId = Convert.toInteger(dataSdm.get("sdm_id"));
@@ -221,24 +221,20 @@ public class SdmAssignmentController extends CRUDController<SdmAssignment>{
 	 * 09 August 2018
 	 */
 	private static double mothsBetween(Calendar date1, Calendar date2) {
-        long lama = -1;
+        long lama = 0;
         Calendar tanggal = (Calendar) date1.clone();
         while (tanggal.before(date2)) {
-        	if(lama < 0) {
-               lama = lama + 1;
-        	}
+     
             tanggal.add(Calendar.DAY_OF_MONTH, 1);
             lama++;
         }
-//        double res=lama;
-//		System.out.println("--------------------------> lama  : "+lama);
-//        return (res)/30;
+
         if (lama > 30) {
         	lama = (lama)/30;
-
-		}else if(lama < 30 && lama >= 0) {
+		}else if(lama <= 30 && lama > 0) {
 			lama = 1;
 		}else {
+			
 			lama = 0;
 		}
         
