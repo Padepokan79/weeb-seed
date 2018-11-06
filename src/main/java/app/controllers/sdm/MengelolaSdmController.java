@@ -81,6 +81,7 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 		public String sdm_datebirth;
 		public String sdm_notification;
 		public int sdmStatusBank;
+		public int last_nik;
 		
 	}
 
@@ -183,6 +184,11 @@ public class MengelolaSdmController extends CRUDController<Sdm> {
 			}
 			dto.sdm_level = Convert.toString(sdmlvl.get("sdmlvl_name"));
 			dto.contracttype = Convert.toString(ct.get("contracttype_name"));
+			List<Map> lisData = Sdm.getLastNIK();
+			for (Map data : lisData) {
+				dto.last_nik = Convert.toInteger(data.get("last_nik"));
+			}
+			
 			//dto.sdmStatusBank = Convert.toInteger(sdm.get("sdm_status_bank"));
 
 
