@@ -29,7 +29,7 @@ public class DefaultProcessController extends ProcessController {
 	}
 
 	@GET
-	public void hitungPajak() {
+	public void hitungPajak() throws Exception {
 		// Asumsi data didapat dari table
 		Map<String, Object> dataGajiMaret = new HashMap<String, Object>();
 		dataGajiMaret.put("user_id", 1);

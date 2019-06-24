@@ -42,7 +42,7 @@ public class ProcessGajiController extends ProcessController {
 	}
 	
 	@GET
-	public void hitungGajiPegawai() {
+	public void hitungGajiPegawai() throws Exception {
 		
 		LazyList<DataPegawai> listDataPegawai = DataPegawai.findAll();
 		List<Map<String, Object>> listDataGaji = new ArrayList<Map<String, Object>>();

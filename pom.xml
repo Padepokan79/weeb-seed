@@ -197,9 +197,9 @@
 		<dependency>
 			<groupId>io</groupId>
 			<artifactId>web-core</artifactId>
-			<version>3.0.0.beta</version>
+			<version>3.0.0-beta</version>
 			<scope>system</scope>
-			<systemPath>${basedir}\src\main\webapp\WEB-INF\lib\web-core-3.0.0.beta.jar</systemPath>
+			<systemPath>${basedir}\src\main\webapp\WEB-INF\lib\web-core-3.0.0-beta.jar</systemPath>
 		</dependency>
 			
 		<dependency>
