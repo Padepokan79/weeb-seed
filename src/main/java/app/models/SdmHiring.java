@@ -243,6 +243,87 @@ public class SdmHiring extends Model {
 	List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
 	
 	return lisdata;
-}
+	}
+	
+	public static List<Map> summaryTalentOnSite(int tahun){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT COUNT(sdm_hiring.SDM_ID) AS JML, clients.CLIENT_NAME, sdm_assignment.SDMASSIGN_STARTDATE\r\n" + 
+					"FROM sdm_hiring\r\n" + 
+					"INNER JOIN clients ON sdm_hiring.CLIENT_ID = clients.CLIENT_ID\r\n" + 
+					"INNER JOIN sdm_assignment ON sdm_assignment.CLIENT_ID = clients.CLIENT_ID \r\n" + 
+					"AND sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID\r\n" + 
+					"WHERE sdm_assignment.METHOD_ID = 1 AND YEAR(sdm_assignment.SDMASSIGN_STARTDATE) = ? \r\n" + 
+					"GROUP BY sdm_hiring.CLIENT_ID\r\n" + 
+					"ORDER BY clients.CLIENT_NAME ASC");
+		params.add(tahun);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
+	
+	public static List<Map> summaryTalentOnTest(int tahun){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT Count( sdm_hiring.SDM_ID ), clients.CLIENT_NAME, sdm_assignment.SDMASSIGN_STARTDATE \r\n" + 
+				"FROM sdm_hiring\r\n" + 
+				"INNER JOIN clients ON sdm_hiring.CLIENT_ID = clients.CLIENT_ID\r\n" + 
+				"INNER JOIN sdm_assignment ON sdm_assignment.CLIENT_ID = clients.CLIENT_ID \r\n" + 
+				"AND sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID \r\n" + 
+				"WHERE sdm_hiring.HIRESTAT_ID = 1 OR sdm_hiring.HIRESTAT_ID = 2 AND YEAR(sdm_assignment.SDMASSIGN_STARTDATE) = ? \r\n" + 
+				"GROUP BY clients.CLIENT_NAME \r\n" + 
+				"ORDER BY clients.CLIENT_NAME ASC");
+		params.add(tahun);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
+	
+	public static List<Map> summaryTalentPassedTest(int tahun){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT Count( sdm_hiring.SDM_ID ) AS JML, clients.CLIENT_NAME, sdm_assignment.SDMASSIGN_STARTDATE \r\n" + 
+					"FROM sdm_hiring\r\n" + 
+					"INNER JOIN clients ON sdm_hiring.CLIENT_ID = clients.CLIENT_ID\r\n" + 
+					"INNER JOIN sdm_assignment ON sdm_assignment.CLIENT_ID = clients.CLIENT_ID \r\n" + 
+					"AND sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID \r\n" + 
+					"WHERE sdm_hiring.HIRESTAT_ID = 4 AND YEAR(sdm_assignment.SDMASSIGN_STARTDATE) = ? \r\n" + 
+					"GROUP BY sdm_hiring.CLIENT_ID \r\n" + 
+					"ORDER BY clients.CLIENT_NAME ASC");
+		params.add(tahun);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
+	
+	public static List<Map> summaryTalentFailedTest(int tahun){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT Count( sdm_hiring.SDM_ID ) AS JML, clients.CLIENT_NAME, sdm_assignment.SDMASSIGN_STARTDATE \r\n" + 
+					"FROM sdm_hiring\r\n" + 
+					"INNER JOIN clients ON sdm_hiring.CLIENT_ID = clients.CLIENT_ID\r\n" + 
+					"INNER JOIN sdm_assignment ON sdm_assignment.CLIENT_ID = clients.CLIENT_ID \r\n" + 
+					"AND sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID \r\n" + 
+					"WHERE sdm_hiring.HIRESTAT_ID = 5 AND YEAR(sdm_assignment.SDMASSIGN_STARTDATE) = ? \r\n" + 
+					"GROUP BY sdm_hiring.CLIENT_ID \r\n" + 
+					"ORDER BY clients.CLIENT_NAME ASC");
+		params.add(tahun);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
+	
+	public static List<Map> summaryTalentByHireState(int tahun){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder query = new StringBuilder();		
+		query.append("SELECT Count( sdm_hiring.SDM_ID ) AS JML, clients.CLIENT_NAME, sdm_assignment.SDMASSIGN_STARTDATE, statushiring.HIRESTAT_NAME \r\n" + 
+				"FROM sdm_hiring\r\n" + 
+				"INNER JOIN clients ON sdm_hiring.CLIENT_ID = clients.CLIENT_ID\r\n" + 
+				"INNER JOIN sdm_assignment ON sdm_assignment.CLIENT_ID = clients.CLIENT_ID \r\n" + 
+				"AND sdm_assignment.SDMHIRING_ID = sdm_hiring.SDMHIRING_ID\r\n" + 
+				"INNER JOIN statushiring ON sdm_hiring.HIRESTAT_ID = statushiring.HIRESTAT_ID " +
+				"WHERE YEAR(sdm_assignment.SDMASSIGN_STARTDATE) = ? \r\n" + 
+				"GROUP BY sdm_hiring.CLIENT_ID \r\n" + 
+				"ORDER BY clients.CLIENT_NAME ASC");
+		params.add(tahun);
+		List<Map> lisdata = Base.findAll(query.toString(), params.toArray(new Object[params.size()]));
+		return lisdata;
+	}
 
 }
