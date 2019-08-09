@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.javalite.activeweb.annotations.GET;
+import org.javalite.common.Convert;
 
 import core.io.enums.HttpResponses;
 import core.javalite.controllers.CommonController;
@@ -24,12 +25,12 @@ public class ReadFileDATController extends CommonController
 	
 	try {
 		//String st; 
-			List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> listData = new ArrayList<Map<String, Object>>();
 			  
 			 // File file = new File("F:\\fega\\attlog.dat");   
 			  //br = new BufferedReader(new FileReader(file)); 
-			  
-			  String[] lines = Files.readAllLines(new File("F:\\fega\\attlogkaryawan.dat").toPath()).toArray(new String[0]);
+			  String filename = Convert.toString(param("$filename"));
+			  String[] lines = Files.readAllLines(new File("assets\\" + filename).toPath()).toArray(new String[0]);
 			  
 			  for(String line: lines) {
 				  Map<String, Object> map = new HashMap<>();
@@ -55,12 +56,15 @@ public class ReadFileDATController extends CommonController
 				    map.put("waktu", tgl2);
 				    map.put("stts_checkin", kd1+" "+kd2);
 				    //map.put("stts_checkin2", kd2);
-					result.add(map); 
+				    listData.add(map); 
 				} 
 			  /*while ((st = br.readLine()) != null) 
 			    System.out.println(st);
 			   map.put("dat", lines);
 				result.add(map);*/
+			 Map<String, Object> result = new HashMap<String, Object>();
+			 result.put("items", listData);
+			 result.put("totalItems", listData.size());
 			response().setData(result);
 			response().setResponseBody(HttpResponses.ON_SUCCESS, result );
 			

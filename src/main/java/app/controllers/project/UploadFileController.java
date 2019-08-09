@@ -12,13 +12,13 @@ import java.util.Map;
 import org.javalite.activeweb.FormItem;
 import org.javalite.activeweb.annotations.POST;
 
-public class UploadExcelController extends CommonController {
+public class UploadFileController extends CommonController {
 
 	@POST
 	public void upload(){ 
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<>();
-		File file = new File("D:\\FikryHandsome\\sdm\\web-seed\\assets\\");
+		File file = new File("assets\\");
 		if (!file.exists()){
 			if (file.mkdir()){
 			}
@@ -31,7 +31,7 @@ public class UploadExcelController extends CommonController {
 			FormItem item = iterator.next();
 			if(item.isFile()){
 				String fileName = item.getFileName();
-				String folderPath = "D:\\FikryHandsome\\sdm\\web-seed\\assets\\";
+				String folderPath = "assets\\";
 				String filePath = folderPath + fileName; 
 				try { 
 					item.saveTo(filePath);
