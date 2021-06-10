@@ -13,7 +13,7 @@
 		<activeweb.version>1.15</activeweb.version>
 		<jjwt.version>0.6.0</jjwt.version>
 		<dbcp.version>1.4</dbcp.version>
-		<jetty.version>9.3.4.RC1</jetty.version>
+		<jetty.version>9.4.41.v20210516</jetty.version>
 	    <jackson.version>2.8.10</jackson.version>
 	    <apache.commons.coll.version>4.1</apache.commons.coll.version>
 	    <apache.commons.lang.version>3.4</apache.commons.lang.version>
@@ -190,7 +190,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlets</artifactId>
-			<version>9.3.4.RC1</version>
+			<version>9.4.41.v20210516</version>
 		</dependency>
 
 		<!-- Web Core Engine -->
